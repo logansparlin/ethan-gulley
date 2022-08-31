@@ -1,0 +1,76 @@
+{
+  "name": "garden-variety",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Garden Variety Ecommerce",
+  "author": "Logan Sparlin <logan.sparlin@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "next",
+    "nextjs",
+    "next.js",
+    "sanity",
+    "sanityio",
+    "sanity.io",
+    "headless"
+  ],
+  "scripts": {
+    "build": "cd studio && sanity build ../public/studio -y && cd .. && next build",
+    "build:ci": "npm ci && npm run build",
+    "lint": "next lint",
+    "deploy:sanity": "cd studio && npm ci && npm run deploy",
+    "start": "concurrently 'next dev' 'npm:start:sanity'",
+    "dev": "concurrently 'next --port $PORT' 'cd studio && sanity start'",
+    "start:site": "next start",
+    "start:sanity": "cd studio && sanity start",
+    "husky:install": "husky install",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{tsx,ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@sanity/client": "^2.11.0",
+    "@styled-system/css": "^5.1.5",
+    "groq": "^0.142.0",
+    "next": "^11.1.0",
+    "next-sanity": "^0.3.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-icons": "^4.2.0",
+    "styled-components": "^5.3.0",
+    "styled-system": "^5.1.5"
+  },
+  "devDependencies": {
+    "@asbjorn/eslint-plugin-groq": "^1.0.0",
+    "@sanity/core": "^2.27.0",
+    "@sanity/cli": "^2.27.0",
+    "@sanity/image-url": "^0.140.22",
+    "@types/node": "^16.3.1",
+    "@types/react": "^17.0.14",
+    "@types/styled-system": "^5.1.12",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-styled-components": "^1.13.2",
+    "babel-preset-next": "^1.4.0",
+    "concurrently": "^6.2.0",
+    "eslint": "7.30.0",
+    "eslint-config-next": "11.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.5"
+  }
+}
