@@ -30,17 +30,21 @@ const Hero = ({ projects, activeProject, updateProject }) => {
           {projects.map(project => {
             const url = urlFor(project.image.src).auto('format').width(1000).url();
             const dimensions = getImageDimensions(project.image.src);
-            console.log(dimensions)
+            const aspect = dimensions.height / dimensions.width;
             return (
               <Box
                 position="absolute"
                 key={project._id}
                 opacity={project._id === activeProject._id ? '1' : '0'}
-                width="30vw"
-                height="0"
-                pb={`calc(50% * ${dimensions.aspectRatio})`}
               >
-                <Image src={project.image.url || url} layout="fill" objectFit="cover" alt={project.image.alt} loading="eager" />
+                <Box
+                  position="relative"
+                  width="25vw"
+                  height="0"
+                  pb={`calc(25vw * ${aspect})`}
+                >
+                  <Image src={project.image.url || url} layout="fill" objectFit="cover" alt={project.image.alt} loading="eager" />
+                </Box>
                 <Box pt="8px" fontSize="14px">
                   {project.title}
                 </Box>
