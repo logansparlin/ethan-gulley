@@ -38,7 +38,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
                 opacity={project._id === activeProject._id ? '1' : '0'}
                 width="30vw"
                 height="0"
-                pb={`calc(50% * ${dimensions.aspectRatio}%)`}
+                pb={`calc(50% * ${dimensions.aspectRatio})`}
               >
                 <Image src={project.image.url || url} layout="fill" objectFit="cover" alt={project.image.alt} loading="eager" />
                 <Box pt="8px" fontSize="14px">
