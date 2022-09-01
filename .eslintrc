@@ -6,49 +6,91 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "moduleDirectory": ["node_modules", "./"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        "moduleDirectory": [
+          "node_modules",
+          "./"
+        ]
       },
       "typescript": {}
     }
   },
-  "parserOptions": { 
-      "ecmaVersion": 8 ,
-      "sourceType": "module",
-      "allowImportExportEverywhere": true
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   },
-  "ignorePatterns": ["node_modules/*", ".next/*", ".out/*", "!.prettierrc.js", "studio/dist/*", "studio/node_modules/*"],
+  "ignorePatterns": [
+    "node_modules/*",
+    ".next/*",
+    ".out/*",
+    "!.prettierrc.js",
+    "studio/dist/*",
+    "studio/node_modules/*"
+  ],
   "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:jsx-a11y/recommended",
-      "plugin:@next/next/recommended",
-      "react-app",
-      "next"
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@next/next/recommended",
+    "react-app",
+    "next"
   ],
   "rules": {
-      "no-unused-vars": [
-        "error",
-        {
-          "varsIgnorePattern": "^_",
-          "ignoreRestSiblings": true
-        }
-      ],
-      "import/no-unresolved": [
-          2, 
-          {
-              "ignore": ["^(all|part):"] 
-          }
-      ],
-      "max-lines": "off",
-      "import/no-anonymous-default-export": "off"
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "import/no-unresolved": [
+      2,
+      {
+        "ignore": [
+          "^(all|part):"
+        ]
+      }
+    ],
+    "react/jsx-first-prop-new-line": [
+      2,
+      "multiline"
+    ],
+    "react/jsx-max-props-per-line": [
+      2,
+      {
+        "maximum": 1,
+        "when": "multiline"
+      }
+    ],
+    "react/jsx-indent-props": [
+      2,
+      2
+    ],
+    "react/jsx-closing-bracket-location": [
+      2,
+      "tag-aligned"
+    ],
+    "import/no-anonymous-default-export": "off"
   },
   "overrides": [
     {
-      "files": ["**/*.ts", "**/*.tsx"],
+      "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
       "parser": "@typescript-eslint/parser",
-      "settings": { "react": { "version": "detect" } },
+      "settings": {
+        "react": {
+          "version": "detect"
+        }
+      },
       "env": {
         "browser": true,
         "node": true,
@@ -63,7 +105,9 @@
         "react-app",
         "plugin:@asbjorn/groq/recommended"
       ],
-      "plugins": ["prettier"],
+      "plugins": [
+        "prettier"
+      ],
       "rules": {
         "react/no-unescaped-entities": "off",
         "react/prop-types": "off",
@@ -72,23 +116,26 @@
         "jsx-a11y/anchor-is-valid": "off",
         "@typescript-eslint/ban-types": "off",
         "@typescript-eslint/no-unused-vars": [
-            "error",
-            {
-              "varsIgnorePattern": "^_",
-              "ignoreRestSiblings": true
-            }
+          "error",
+          {
+            "varsIgnorePattern": "^_",
+            "ignoreRestSiblings": true
+          }
         ],
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off"
       }
     },
     {
-        "parser": "babel-parser",
-        "files": ["bin/**/*.js", "lib/**/*.js"],
-          "rules": {
-              "no-console": 0,
-              "no-process-exit": 0
-          }
+      "parser": "babel-parser",
+      "files": [
+        "bin/**/*.js",
+        "lib/**/*.js"
+      ],
+      "rules": {
+        "no-console": 0,
+        "no-process-exit": 0
+      }
     }
   ]
 }

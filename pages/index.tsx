@@ -1,18 +1,8 @@
-import Head from 'next/head'
 import { getHomePage } from '@lib/api';
-import { PortableText } from '@lib/sanity';
-import { Box } from '@components/box';
 
-const HomeHead = () => (
-  <Head>
-    <title>Garden Variety</title>
-    <meta name="description" content="Garden Variety is a creative development and product company." />
-    <link rel="icon" href="/favicon.ico" />
-  </Head>
-)
+import Layout, { HomeHead } from '@components/Home/Layout';
 
-const Home = ({ data }): JSX.Element => {
-  const { pageData = {} } = data;
+const Home = ({ pageData }): JSX.Element => {
 
   if(!pageData) {
     return (
@@ -23,14 +13,10 @@ const Home = ({ data }): JSX.Element => {
     )
   }
 
-  const { title, body } = pageData;
+  const { projects, site } = pageData;
   
   return (
-    <Box>
-      <HomeHead />
-      <h1>{title}</h1>
-      <PortableText blocks={body} />
-    </Box>
+    <Layout projects={projects} site={site} />
   )
 }
 
@@ -39,10 +25,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      data: {
-        pageData,
-        query
-      }
+      pageData,
+      query
     },
     revalidate: 1
   }

@@ -1,10 +1,10 @@
-import { BiBookContent } from 'react-icons/bi'
-;
+import { IoMdInformationCircleOutline } from 'react-icons/io';
+
 export default {
-    name: 'page',
-    title: 'Page',
+    name: 'informationPage',
+    title: 'Information',
     type: 'document',
-    icon: BiBookContent,
+    icon: IoMdInformationCircleOutline,
     fields: [
         {
             name: 'title',
@@ -19,10 +19,5 @@ export default {
                 source: 'title'
             }
         },
-        {
-            name: 'body',
-            title: 'Body',
-            type: 'blockContent'
-        }
     ]
 }

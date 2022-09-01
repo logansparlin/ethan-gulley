@@ -6,10 +6,14 @@ import schemaTypes from 'all:part:@sanity/base/schema-type';
 
 // Documents
 import homePage from './documents/homePage';
-import page from './documents/page';
+import informationPage from './documents/informationPage';
+import project from './documents/project';
+import headerSettings from './documents/settings/headerSettings';
 
 // Objects
 import blockContent from './objects/blockContent';
+import imgWithAlt from './objects/imgWithAlt';
+import pageLink from './objects/pageLink';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -20,9 +24,13 @@ export default createSchema({
   types: schemaTypes.concat([
     // Documents
     homePage,
-    page,
+    project,
+    headerSettings,
+    informationPage,
 
     // Objects
-    blockContent
+    blockContent,
+    imgWithAlt,
+    pageLink,
   ])
 });

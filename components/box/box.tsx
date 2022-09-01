@@ -18,7 +18,8 @@ import {
     SpaceProps,
     typography,
     TypographyProps,
-    compose 
+    compose,
+    system
 } from 'styled-system';
 
 type Props = BorderProps
@@ -31,7 +32,7 @@ type Props = BorderProps
     & SpaceProps
     & TypographyProps;
 
-const system = compose(
+const systemProps = compose(
     border,
     color,
     flexbox,
@@ -45,7 +46,12 @@ const system = compose(
 );
 
 const Box = styled.div<Props>`
-    ${system}
+    ${systemProps}
+    ${system({
+        cursor: {
+            property: 'cursor'
+        }
+    })}
 `;
 
 export default Box;

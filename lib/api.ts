@@ -5,12 +5,28 @@ export async function getHomePage() {
     const query = groq`
         *[_type == "homePage"][0] {
             title,
-            body
+            "projects": *[_type == "project"] {
+                ...,
+                image {
+                    src,
+                    alt,
+                    "lqip": src.asset -> metadata.lqip
+                },
+            },
+            "site": *[_type == "headerSettings"][0] {
+                title,
+                links[] {
+                    label,
+                    page ->,
+                    _key,
+                    _type
+                }
+            }
         }
     `
 
     const data = await sanityClient.fetch(query);
-    
+
     return {
         data,
         query
@@ -27,7 +43,7 @@ export async function getPage(slug: string) {
     `
 
     const data = await sanityClient.fetch(query);
-    
+
     return {
         data,
         query

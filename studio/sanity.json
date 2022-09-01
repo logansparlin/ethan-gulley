@@ -1,11 +1,11 @@
 {
   "root": true,
   "api": {
-    "projectId": "d7x3ay0b",
+    "projectId": "gkw0enpr",
     "dataset": "production"
   },
   "project": {
-    "name": "Garden Variety",
+    "name": "Ethan Gulley",
     "basePath": "/studio"
   },
   "plugins": [
