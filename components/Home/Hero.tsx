@@ -7,12 +7,12 @@ import Image from "next/image"
 import InfiniteSlider from "./InfiniteSlider";
 
 const Hero = ({ projects, activeProject, updateProject }) => {
-  const scroll = useRef({ target: 0, current: 0 })
+  const scroll = useRef({ target: 0, current: 0 });
 
   const handleWheel = (e) => {
     const normalized = NormalizeWheel(e);
     const speed = normalized.pixelY;
-    scroll.current.target += speed * 0.3;
+    scroll.current.target += speed * 0.6;
   }
 
   useEffect(() => {
