@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { urlFor } from "@lib/sanity"
 import NormalizeWheel from 'normalize-wheel';
+import { getImageDimensions } from '@sanity/asset-utils';
 
 import { Box } from "@components/box"
 import Image from "next/image"
@@ -24,13 +25,22 @@ const Hero = ({ projects, activeProject, updateProject }) => {
 
   return (
     <Box flex="1" display="flex" alignItems="center" justifyContent="center">
-      <Box height="100vh" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+      <Box height="100vh" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
         <Box flex="1" display="flex" alignItems="center" justifyContent="center">
           {projects.map(project => {
             const url = urlFor(project.image.src).auto('format').width(1000).url();
+            const dimensions = getImageDimensions(project.image.src);
+            console.log(dimensions)
             return (
-              <Box position="absolute" key={project._id} opacity={project._id === activeProject._id ? '1' : '0'}>
-                <Image src={project.image.url || url} layout="fixed" width="475px" height="600px" objectFit="cover" alt={project.image.alt} loading="eager" />
+              <Box
+                position="absolute"
+                key={project._id}
+                opacity={project._id === activeProject._id ? '1' : '0'}
+                width="30vw"
+                height="0"
+                pb={`calc(50% * ${dimensions.aspectRatio}%)`}
+              >
+                <Image src={project.image.url || url} layout="fill" objectFit="cover" alt={project.image.alt} loading="eager" />
                 <Box pt="8px" fontSize="14px">
                   {project.title}
                 </Box>
