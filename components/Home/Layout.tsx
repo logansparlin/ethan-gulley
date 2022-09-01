@@ -1,10 +1,8 @@
 import { urlFor } from "@lib/sanity"
 
-import { Box } from "@components/box"
-import Image from "next/image"
+import { Box } from "@components/box";
 import Head from 'next/head';
 import Header from "@components/Header";
-import InfiniteSlider from "./InfiniteSlider";
 import Hero from "./Hero";
 import { useState } from "react";
 

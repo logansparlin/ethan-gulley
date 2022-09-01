@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { 
+import {
     border,
     BorderProps,
     color,
@@ -24,7 +24,7 @@ import {
 
 type Props = BorderProps
     & ColorProps
-    & FlexboxProps  
+    & FlexboxProps
     & GridProps
     & LayoutProps
     & PositionProps
@@ -48,10 +48,13 @@ const systemProps = compose(
 const Box = styled.div<Props>`
     ${systemProps}
     ${system({
-        cursor: {
-            property: 'cursor'
-        }
-    })}
+    cursor: {
+        property: 'cursor'
+    },
+    transition: {
+        property: 'transition'
+    }
+})}
 `;
 
 export default Box;
