@@ -35,9 +35,10 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
       x: (i) => {
         return i * (itemWidth.current + GUTTER) + scroll
       },
+      z: 0,
       modifiers: {
         x: (x, target) => {
-          const s = gsap.utils.wrap(-itemWidth.current, wrapWidth.current - itemWidth.current, parseInt(x))
+          const s = gsap.utils.wrap(-itemWidth.current, wrapWidth.current - itemWidth.current, Number(x.replace('px', '')))
           return `${s}px`
         }
       }
@@ -46,11 +47,11 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
 
   animate(0);
 
-  useAnimationFrame(() => {
+  useAnimationFrame((val) => {
     itemWidth.current = itemRef.current.clientWidth;
     containerWidth.current = container.current.clientWidth;
     wrapWidth.current = projects.length * (itemWidth.current + GUTTER);
-    scroll.current = lerp(scroll.current, scroll.target, 0.03)
+    scroll.current = lerp(scroll.current, scroll.target, 0.05)
 
     const offset = window.innerWidth / 2;
 
@@ -73,7 +74,7 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
     <Box
       width="100%"
       height="90px"
-      style={{ whiteSpace: 'nowrap' }}
+      style={{ whiteSpace: 'nowrap', willChange: 'auto', transform: 'translate3d(0, 0, 0)' }}
       overflow="hidden"
       ref={container}
     >

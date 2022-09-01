@@ -13,7 +13,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
   const handleWheel = (e) => {
     const normalized = NormalizeWheel(e);
     const speed = normalized.pixelY;
-    scroll.current.target += speed * 0.6;
+    scroll.current.target += speed * 0.7;
   }
 
   useEffect(() => {
