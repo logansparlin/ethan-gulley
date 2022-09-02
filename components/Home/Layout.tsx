@@ -1,4 +1,4 @@
-import { urlFor } from "@lib/sanity"
+import { useHomeStore } from "@hooks/useHomeStore";
 
 import { Box } from "@components/box";
 import Head from 'next/head';
@@ -16,6 +16,7 @@ export const HomeHead = () => (
 
 const Layout = ({ projects, site }) => {
   const [activeProject, setActiveProject] = useState(projects[0]);
+  const { view } = useHomeStore();
 
   const updateProject = (project) => {
     setActiveProject(project)

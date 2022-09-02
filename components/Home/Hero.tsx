@@ -23,12 +23,12 @@ const Hero = ({ projects, activeProject, updateProject }) => {
     return () => {
       window.removeEventListener('wheel', handleWheel);
     }
-  }, [])
+  }, []);
 
   return (
-    <Box flex="1" display="flex" alignItems="center" justifyContent="center" opacity={view !== 'default' ? 0 : 1} transition="opacity 500ms ease-in-out">
+    <Box flex="1" display="flex" alignItems="center" justifyContent="center">
       <Box height="100vh" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
-        <Box flex="1" display="flex" alignItems="center" justifyContent="center" cursor="pointer">
+        <Box flex="1" display="flex" alignItems="center" justifyContent="center" cursor="pointer" opacity={view !== 'default' ? 0 : 1} transition="opacity 500ms ease-in-out">
           {projects.map(project => {
             const url = urlFor(project.image.src).auto('format').width(1000).url();
             const dimensions = getImageDimensions(project.image.src);

@@ -1,8 +1,8 @@
 import { useRef, useEffect } from "react";
+import { useAnimationFrame } from "@hooks/useAnimationFrame";
 import { urlFor } from "@lib/sanity"
 import styled from 'styled-components';
 import { lerp } from "@lib/helpers";
-import { useAnimationFrame } from "@hooks/useAnimationFrame";
 import gsap from "gsap";
 
 import { Box } from "@components/box"
@@ -26,7 +26,7 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
     if (typeof window === 'undefined') return;
 
     items.current = document.querySelectorAll('.infinite-item');
-  }, [])
+  }, []);
 
   const animate = (scroll) => {
     if (!items.current) return;
@@ -59,6 +59,7 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
     const activeIndex = scroll.current - offset <= 0
       ? Math.floor(-1 * (wrapWidth.current - (wrapWidth.current - ((scroll.current + (Math.abs(wrapWidth.current) * containerIndex)) - offset))) / (itemWidth.current + GUTTER))
       : Math.floor((wrapWidth.current - (wrapWidth.current - ((Math.abs(wrapWidth.current) * containerIndex) - scroll.current) - offset)) / (itemWidth.current + GUTTER));
+
     updateProject(projects[activeIndex])
 
     animate(scroll.current)
@@ -79,7 +80,7 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
       ref={container}
     >
       {projects.map((project, index) => {
-        const url = urlFor(project.image.src).auto('format').width(200).url();
+        const url = urlFor(project.image.src).auto('format').width(1000).url();
         return (
           <StyledImage
             ref={index === 0 ? itemRef : null}
