@@ -53,6 +53,9 @@ const Box = styled.div<Props>`
     },
     transition: {
         property: 'transition'
+    },
+    willChange: {
+        property: 'willChange'
     }
 })}
 `;
