@@ -3,10 +3,14 @@ import { urlFor } from "@lib/sanity"
 import NormalizeWheel from 'normalize-wheel';
 import { getImageDimensions } from '@sanity/asset-utils';
 import { useHomeStore } from "@hooks/useHomeStore";
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 import { Box } from "@components/box"
 import Image from "next/image"
 import InfiniteSlider from "./InfiniteSlider";
+
+const StyledHero = styled(motion(Box))``;
 
 const Hero = ({ projects, activeProject, updateProject }) => {
   const scroll = useRef({ target: 0, current: 0 });
@@ -26,9 +30,19 @@ const Hero = ({ projects, activeProject, updateProject }) => {
   }, []);
 
   return (
-    <Box flex="1" display="flex" alignItems="center" justifyContent="center">
+    <Box position="absolute" flex="1" display="flex" alignItems="center" justifyContent="center" minHeight="100vh" width="100%">
       <Box height="100vh" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
-        <Box flex="1" display="flex" alignItems="center" justifyContent="center" cursor="pointer" opacity={view !== 'default' ? 0 : 1} transition="opacity 500ms ease-in-out">
+        <StyledHero
+          flex="1"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          cursor="pointer"
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.05 }}
+          transition={{ duration: 1, ease: [.8, 0, .1, 0.9] }}
+        >
           {projects.map(project => {
             const url = urlFor(project.image.src).auto('format').width(1000).url();
             const dimensions = getImageDimensions(project.image.src);
@@ -55,7 +69,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
               </Box>
             )
           })}
-        </Box>
+        </StyledHero>
         <InfiniteSlider
           projects={projects}
           activeProject={activeProject}

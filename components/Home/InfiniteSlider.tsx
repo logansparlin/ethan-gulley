@@ -4,9 +4,14 @@ import { urlFor } from "@lib/sanity"
 import styled from 'styled-components';
 import { lerp } from "@lib/helpers";
 import gsap from "gsap";
+import { motion } from 'framer-motion';
 
 import { Box } from "@components/box"
 import Image from 'next/image'
+
+const Slider = styled(motion(Box))`
+
+`;
 
 const GUTTER = 5;
 
@@ -48,6 +53,7 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
   animate(0);
 
   useAnimationFrame((val) => {
+    if (!itemRef.current) return null;
     itemWidth.current = itemRef.current.clientWidth;
     containerWidth.current = container.current.clientWidth;
     wrapWidth.current = projects.length * (itemWidth.current + GUTTER);
@@ -72,12 +78,16 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
   }
 
   return (
-    <Box
+    <Slider
       width="100%"
       height="90px"
-      style={{ whiteSpace: 'nowrap', willChange: 'auto', transform: 'translate3d(0, 0, 0)' }}
+      style={{ whiteSpace: 'nowrap', willChange: 'auto' }}
       overflow="hidden"
       ref={container}
+      initial={{ opacity: 0, y: 90 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 90 }}
+      transition={{ duration: 1, ease: [.8, 0, .1, 0.9] }}
     >
       {projects.map((project, index) => {
         const url = urlFor(project.image.src).auto('format').width(1000).url();
@@ -109,7 +119,7 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
           </StyledImage>
         )
       })}
-    </Box>
+    </Slider>
   )
 }
 

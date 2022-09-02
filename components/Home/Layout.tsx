@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { useHomeStore } from "@hooks/useHomeStore";
+import { AnimatePresence } from "framer-motion";
 
 import { Box } from "@components/box";
 import Head from 'next/head';
 import Header from "@components/Header";
 import Hero from "./Hero";
-import { useState } from "react";
+import Grid from "./Grid";
+import List from "./List";
 
 export const HomeHead = () => (
   <Head>
@@ -26,7 +29,13 @@ const Layout = ({ projects, site }) => {
     <Box>
       <HomeHead />
       <Header {...site} />
-      <Hero projects={projects} activeProject={activeProject} updateProject={updateProject} />
+      <AnimatePresence exitBeforeEnter={true}>
+        <Box key={view}>
+          {view === 'default' && <Hero projects={projects} activeProject={activeProject} updateProject={updateProject} />}
+          {view === 'grid' && <Grid projects={projects} />}
+          {view === 'list' && <List projects={projects} />}
+        </Box>
+      </AnimatePresence>
     </Box>
   )
 }
