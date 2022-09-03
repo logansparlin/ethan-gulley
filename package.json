@@ -37,6 +37,7 @@
     "@styled-system/css": "^5.1.5",
     "groq": "^0.142.0",
     "gsap": "^3.11.0",
+    "locomotive-scroll": "^4.1.4",
     "next": "^11.1.0",
     "next-sanity": "^0.3.0",
     "react": "17.0.2",

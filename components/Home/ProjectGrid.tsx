@@ -36,6 +36,7 @@ const ProjectGrid = ({ projects, category }) => {
                   ease: 'easeInOut'
                 }
               }}
+              willChange="auto"
             >
               <Box
                 position="relative"

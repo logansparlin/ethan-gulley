@@ -1,5 +1,5 @@
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 import { Box } from "@components/box"
 import CategoryList from './CategoryList';
@@ -9,8 +9,63 @@ type Category = 'all' | 'editorial' | 'commercial' | 'personal';
 
 const Grid = ({ projects }) => {
   const [category, setCategory] = useState<Category>('all');
+  const scrollRef = useRef(null);
+  const container = useRef(null);
+
+  const handleChangeCategory = (category) => {
+    setCategory(category);
+  }
+
   return (
-    <Box flex="1" display="flex" pt="100px" px="20px" height="100vh" width="100%" overflow="scroll" willChange="auto">
+    <Box
+      flex="1"
+      pt="100px"
+      px="20px"
+      width="100%"
+      height="100vh"
+      overflow="hidden"
+      willChange="auto"
+    >
+      <GridView key={category} projects={projects} category={category} handleChangeCategory={handleChangeCategory} />
+    </Box>
+  )
+}
+
+const GridView = ({ projects, category, handleChangeCategory }) => {
+  const scrollRef = useRef(null);
+  const container = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !container.current) {
+      return;
+    }
+    console.log('mounting')
+
+    let scroll;
+    import("locomotive-scroll").then((LocomotiveScroll) => {
+      scroll = new LocomotiveScroll.default({
+        el: container.current,
+        smooth: true,
+        tablet: {
+          smooth: true
+        },
+        smartphone: {
+          smooth: true
+        }
+      });
+      scrollRef.current = scroll;
+      console.log(scroll)
+    });
+
+    return () => {
+      scroll.destroy()
+      scrollRef.current = null;
+    }
+  }, [])
+
+  return (
+    <Box width="100%" ref={container} pb="100px" minHeight="100vh">
+      <CategoryList category={category} setCategory={handleChangeCategory} />
       <motion.div
         style={{ flex: 1 }}
         initial={{ opacity: 0 }}
@@ -20,7 +75,6 @@ const Grid = ({ projects }) => {
           duration: 0.6
         }}
       >
-        <CategoryList category={category} setCategory={setCategory} />
         <ProjectGrid category={category} projects={projects} />
       </motion.div>
     </Box>
