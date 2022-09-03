@@ -26,7 +26,17 @@ const Grid = ({ projects }) => {
       overflow="hidden"
       willChange="auto"
     >
-      <GridView key={category} projects={projects} category={category} handleChangeCategory={handleChangeCategory} />
+      <motion.div
+        style={{ flex: 1 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          duration: 0.6
+        }}
+      >
+        <GridView key={category} projects={projects} category={category} handleChangeCategory={handleChangeCategory} />
+      </motion.div>
     </Box>
   )
 }
