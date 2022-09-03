@@ -2,6 +2,7 @@ import { useHomeStore } from "@hooks/useHomeStore";
 
 import { Box } from "./box";
 import Link from 'next/link';
+import TextButton from "./TextButton";
 
 const Header = ({ title, links }) => {
   const { view, setView } = useHomeStore();
@@ -9,7 +10,9 @@ const Header = ({ title, links }) => {
     <Box as="header" p="20px" width="100%" position="fixed" zIndex="10">
       <Box display="flex" justifyContent="space-between" width="100%">
         <Link href="/">
-          {title}
+          <TextButton onClick={() => setView('default')}>
+            {title}
+          </TextButton>
         </Link>
         <Box as="ul">
           <Box
