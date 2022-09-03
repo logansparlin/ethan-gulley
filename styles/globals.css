@@ -215,3 +215,7 @@ html.has-scroll-dragging {
   border-radius: 10px;
   margin: 2px;
 }
+
+img {
+  will-change: auto;
+}
