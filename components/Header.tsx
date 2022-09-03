@@ -16,7 +16,7 @@ const Header = ({ title, links }) => {
             as="li"
             display="inline-block"
             cursor="pointer"
-            pr="2px"
+            pr="4px"
             onClick={() => setView(view === 'grid' ? 'default' : 'grid')}
             color={view === 'list' ? '#D7D7D7' : '#000'}
             transition="color 250ms ease-in-out"
