@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { urlFor } from "@lib/sanity"
 import NormalizeWheel from 'normalize-wheel';
 import { getImageDimensions } from '@sanity/asset-utils';
@@ -14,7 +14,7 @@ const StyledHero = styled(motion(Box))``;
 
 const Hero = ({ projects, activeProject, updateProject }) => {
   const scroll = useRef({ target: 0, current: 0 });
-  const { view } = useHomeStore();
+  const { loaded, setLoaded } = useHomeStore();
 
   const handleWheel = (e) => {
     const normalized = NormalizeWheel(e);
@@ -38,7 +38,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
           alignItems="center"
           justifyContent="center"
           cursor="pointer"
-          initial={{ opacity: 0, scale: 1.05 }}
+          initial={{ opacity: !loaded ? 1 : 0, scale: !loaded ? 1 : 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 1, ease: [.8, 0, .1, 0.9] }}

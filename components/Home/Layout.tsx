@@ -8,6 +8,7 @@ import Header from "@components/Header";
 import Hero from "./Hero";
 import Grid from "./Grid";
 import List from "./List";
+import Loading from './Loading';
 
 export const HomeHead = () => (
   <Head>
@@ -31,7 +32,14 @@ const Layout = ({ projects, site }) => {
       <Header {...site} />
       <AnimatePresence exitBeforeEnter={true}>
         <Box key={view}>
-          {view === 'default' && <Hero projects={projects} activeProject={activeProject} updateProject={updateProject} />}
+          {view === 'loading' && <Loading projects={projects} site={site} />}
+          {(view === 'default' || view === 'loading') &&
+            <Hero
+              projects={projects}
+              activeProject={activeProject}
+              updateProject={updateProject}
+            />
+          }
           {view === 'grid' && <Grid projects={projects} />}
           {view === 'list' && <List projects={projects} />}
         </Box>
