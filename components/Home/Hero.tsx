@@ -12,6 +12,8 @@ import InfiniteSlider from "./InfiniteSlider";
 
 const StyledHero = styled(motion(Box))``;
 
+const StyledTitle = styled(motion(Box))``;
+
 const Hero = ({ projects, activeProject, updateProject }) => {
   const scroll = useRef({ target: 0, current: 0 });
   const { loaded, setLoaded } = useHomeStore();
@@ -38,7 +40,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
           alignItems="center"
           justifyContent="center"
           cursor="pointer"
-          initial={{ opacity: !loaded ? 1 : 0, scale: !loaded ? 1 : 1.05 }}
+          initial={{ opacity: !loaded ? 1 : 0, scale: !loaded ? 0.8 : 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 1, ease: [.8, 0, .1, 0.9] }}
@@ -63,9 +65,17 @@ const Hero = ({ projects, activeProject, updateProject }) => {
                 >
                   <Image src={project.image.url || url} layout="fill" objectFit="cover" alt={project.image.alt} loading="eager" />
                 </Box>
-                <Box pt="8px" fontSize="14px">
+                <StyledTitle
+                  pt="8px"
+                  fontSize="14px"
+                  opacity="0"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, delay: 1, ease: [.8, 0, .1, 0.9] }}
+                >
                   {project.title}
-                </Box>
+                </StyledTitle>
               </Box>
             )
           })}

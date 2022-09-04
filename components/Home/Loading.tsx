@@ -13,10 +13,6 @@ const StyledImage = styled(motion(Box))`
   position: absolute;
 `;
 
-const StyledTitle = styled(motion(Box))`
-  position: relative;
-`;
-
 const StyledHeaderOverlay = styled(motion(Box))`
   position: fixed;
 `;
@@ -78,7 +74,7 @@ const Loading = ({ projects, site }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 0 }}
         exit={{ opacity: 1 }}
-        transition={{ duration: 0.6, ease: [.8, 0, .1, 0.9] }}
+        transition={{ duration: 0, ease: [.8, 0, .1, 0.9] }}
       >
         <Header {...site} />
       </StyledHeaderOverlay>
@@ -94,8 +90,8 @@ const Loading = ({ projects, site }) => {
               opacity={activeIndex === index ? '1' : '0'}
               initial={{ scale: 0.8 }}
               animate={{ scale: 0.8 }}
-              exit={{ scale: 1 }}
-              transition={{ duration: 0.6, ease: [.8, 0, .1, 0.9] }}
+              exit={{ scale: 0.8 }}
+              transition={{ duration: 0, ease: [.8, 0, .1, 0.9] }}
             >
               <Box
                 position="relative"
@@ -105,17 +101,13 @@ const Loading = ({ projects, site }) => {
               >
                 <Image src={project.image.url || url} layout="fill" objectFit="cover" alt={project.image.alt} loading="eager" />
               </Box>
-              <StyledTitle
+              <Box
                 pt="8px"
                 fontSize="14px"
                 opacity="0"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0 }}
-                exit={{ opacity: 1 }}
-                transition={{ duration: 0.6, ease: [.8, 0, .1, 0.9] }}
               >
                 {project.title}
-              </StyledTitle>
+              </Box>
             </StyledImage>
           )
         })}
