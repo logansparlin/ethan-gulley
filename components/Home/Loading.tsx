@@ -11,6 +11,7 @@ import Header from "@components/Header";
 
 const StyledImage = styled(motion(Box))`
   position: absolute;
+  transform: scale(0.8);
 `;
 
 const StyledHeaderOverlay = styled(motion(Box))`
@@ -71,10 +72,6 @@ const Loading = ({ projects, site }) => {
         width="100%"
         top="0"
         left="0"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0 }}
-        exit={{ opacity: 1 }}
-        transition={{ duration: 0, ease: [.8, 0, .1, 0.9] }}
       >
         <Header {...site} />
       </StyledHeaderOverlay>
@@ -88,10 +85,6 @@ const Loading = ({ projects, site }) => {
               position="absolute"
               key={project._id}
               opacity={activeIndex === index ? '1' : '0'}
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 0.8 }}
-              exit={{ scale: 0.8 }}
-              transition={{ duration: 0, ease: [.8, 0, .1, 0.9] }}
             >
               <Box
                 position="relative"
