@@ -22,7 +22,6 @@ const Hero = ({ projects, activeProject, updateProject }) => {
 
   const handleWheel = (e) => {
     if (!loaded) return;
-
     const normalized = NormalizeWheel(e);
     const speed = normalized.pixelY;
     scroll.current.target += speed * 0.7;
@@ -33,7 +32,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
     return () => {
       window.removeEventListener('wheel', handleWheel);
     }
-  }, []);
+  }, [loaded]);
 
   useEffect(() => {
     let interval;
@@ -57,7 +56,9 @@ const Hero = ({ projects, activeProject, updateProject }) => {
           activeIndex.current = activeIndex.current + 1
         } else {
           clearInterval(interval)
-          setLoaded(true)
+          setTimeout(() => {
+            setLoaded(true)
+          }, 500)
         }
       }
       updateProject(projects[activeIndex.current])
@@ -80,7 +81,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
           initial={{ opacity: !loaded ? 1 : 0, scale: !loaded ? 0.8 : 1.05 }}
           animate={{ opacity: 1, scale: loaded ? 1 : 0.8 }}
           exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 1, ease: [.8, 0, .1, 0.9] }}
+          transition={{ duration: 1.2, ease: [.8, 0, .1, 0.9] }}
         >
           {projects.map(project => {
             const url = urlFor(project.image.src).auto('format').width(1000).url();
