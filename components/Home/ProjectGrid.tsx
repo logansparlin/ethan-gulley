@@ -36,7 +36,7 @@ const ProjectGrid = ({ projects, category }) => {
                 initial={{ y: -20, opacity: 0 }}
                 animate={{
                   y: 0, opacity: 1, transition: {
-                    duration: 1,
+                    duration: 1.8,
                     ease: 'circOut',
                     delay: index * 0.03
                   }

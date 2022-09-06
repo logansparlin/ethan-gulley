@@ -218,4 +218,5 @@ html.has-scroll-dragging {
 
 img {
   will-change: auto;
+  transform: translateZ(0);
 }

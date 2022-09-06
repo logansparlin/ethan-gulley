@@ -16,7 +16,12 @@ const Slider = styled(motion(Box))`
 const GUTTER = 5;
 
 const StyledImage = styled(Box)`
-  transition: opacity 350ms ease-in-out;
+  transition: opacity 850ms ease-in-out;
+  transition-delay: 200ms;
+  &:hover {
+    transition: opacity 250ms ease-in-out;
+    opacity: 0.4;
+  }
 `
 
 const InfiniteSlider = ({ projects, activeProject, updateProject, scroll, loading }) => {
