@@ -9,8 +9,6 @@ type Category = 'all' | 'editorial' | 'commercial' | 'personal';
 
 const Grid = ({ projects }) => {
   const [category, setCategory] = useState<Category>('all');
-  const scrollRef = useRef(null);
-  const container = useRef(null);
 
   const handleChangeCategory = (category) => {
     setCategory(category);

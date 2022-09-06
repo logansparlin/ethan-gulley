@@ -12,6 +12,7 @@ export async function getHomePage() {
                     alt,
                     "lqip": src.asset -> metadata.lqip
                 },
+                images
             },
             "site": *[_type == "headerSettings"][0] {
                 title,

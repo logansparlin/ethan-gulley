@@ -220,3 +220,11 @@ img {
   will-change: auto;
   transform: translateZ(0);
 }
+
+.list-view .list-view-item {
+  border-bottom: 1px solid #000;
+}
+
+.list-view .list-view-item:last-of-type {
+  border-bottom: none;
+}

@@ -32,7 +32,8 @@ const Layout = ({ projects, site }) => {
         initial={{ opacity: loaded ? 1 : 0 }}
         animate={{ opacity: loaded ? 1 : 0 }}
         transition={{
-          duration: 0.6
+          duration: 0.6,
+          delay: 0.4
         }}
       >
         <Header {...site} />
