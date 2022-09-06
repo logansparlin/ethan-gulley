@@ -1,6 +1,6 @@
 import create from 'zustand';
 
-type View = 'loading' | 'default' | 'grid' | 'list';
+type View = 'default' | 'grid' | 'list';
 
 interface HomeState {
   view: View;
@@ -10,7 +10,7 @@ interface HomeState {
 }
 
 export const useHomeStore = create<HomeState>((set) => ({
-  view: 'loading',
+  view: 'default',
   setView: (view) => {
     set({ view: view });
   },

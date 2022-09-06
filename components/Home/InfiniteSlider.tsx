@@ -19,13 +19,18 @@ const StyledImage = styled(Box)`
   transition: opacity 350ms ease-in-out;
 `
 
-const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
+const InfiniteSlider = ({ projects, activeProject, updateProject, scroll, loading }) => {
   const container = useRef(null);
   const itemRef = useRef(null);
   const itemWidth = useRef(0);
   const containerWidth = useRef(0);
   const items = useRef(null);
   const wrapWidth = useRef(0);
+  const loadingRef = useRef(loading);
+
+  useEffect(() => {
+    loadingRef.current = loading;
+  }, [loading])
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -53,7 +58,8 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
   animate(0);
 
   useAnimationFrame((val) => {
-    if (!itemRef.current) return null;
+    if (!itemRef.current) return;
+
     itemWidth.current = itemRef.current.clientWidth;
     containerWidth.current = container.current.clientWidth;
     wrapWidth.current = projects.length * (itemWidth.current + GUTTER);
@@ -68,6 +74,8 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
 
 
     window.localStorage.setItem('first-index', activeIndex.toString())
+
+    if (loadingRef.current) return;
 
 
     updateProject(projects[activeIndex])
@@ -89,7 +97,7 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll }) => {
       overflow="hidden"
       ref={container}
       initial={{ opacity: 0, y: 90 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: loading ? 90 : 0 }}
       exit={{ opacity: 0, y: 90 }}
       transition={{ duration: 1, ease: [.8, 0, .1, 0.9] }}
     >

@@ -17,8 +17,12 @@ const StyledTitle = styled(motion(Box))``;
 const Hero = ({ projects, activeProject, updateProject }) => {
   const scroll = useRef({ target: 0, current: 0 });
   const { loaded, setLoaded } = useHomeStore();
+  const activeIndex = useRef(0);
+  const loops = useRef(0);
 
   const handleWheel = (e) => {
+    if (!loaded) return;
+
     const normalized = NormalizeWheel(e);
     const speed = normalized.pixelY;
     scroll.current.target += speed * 0.7;
@@ -31,6 +35,39 @@ const Hero = ({ projects, activeProject, updateProject }) => {
     }
   }, []);
 
+  useEffect(() => {
+    let interval;
+
+    if (interval) clearInterval(interval)
+    if (typeof window === 'undefined') return null;
+    const firstIndex = Number(window.localStorage.getItem('first-index'));
+
+    interval = setInterval(() => {
+      if (loops.current === 0) {
+        if (activeIndex.current < projects.length - 1) {
+          activeIndex.current = activeIndex.current + 1
+        } else {
+          activeIndex.current = 0
+          loops.current = 1
+        }
+      }
+
+      if (loops.current > 0) {
+        if (activeIndex.current < firstIndex) {
+          activeIndex.current = activeIndex.current + 1
+        } else {
+          clearInterval(interval)
+          setLoaded(true)
+        }
+      }
+      updateProject(projects[activeIndex.current])
+    }, 75);
+
+    return (() => {
+      clearInterval(interval)
+    })
+  }, [])
+
   return (
     <Box position="absolute" flex="1" display="flex" alignItems="center" justifyContent="center" minHeight="100vh" width="100%">
       <Box height="100vh" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
@@ -41,7 +78,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
           justifyContent="center"
           cursor="pointer"
           initial={{ opacity: !loaded ? 1 : 0, scale: !loaded ? 0.8 : 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 1, scale: loaded ? 1 : 0.8 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 1, ease: [.8, 0, .1, 0.9] }}
         >
@@ -70,9 +107,9 @@ const Hero = ({ projects, activeProject, updateProject }) => {
                   fontSize="14px"
                   opacity="0"
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: loaded ? 1 : 0 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6, delay: 1, ease: [.8, 0, .1, 0.9] }}
+                  transition={{ duration: 0.6, ease: [.8, 0, .1, 0.9] }}
                 >
                   {project.title}
                 </StyledTitle>
@@ -81,6 +118,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
           })}
         </StyledHero>
         <InfiniteSlider
+          loading={!loaded}
           projects={projects}
           activeProject={activeProject}
           updateProject={updateProject}

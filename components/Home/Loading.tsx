@@ -25,6 +25,7 @@ const Loading = ({ projects, site }) => {
 
   useEffect(() => {
     let interval;
+
     if (interval) clearInterval(interval)
     if (typeof window === 'undefined') return null;
     const firstIndex = Number(window.localStorage.getItem('first-index'));
@@ -43,8 +44,8 @@ const Loading = ({ projects, site }) => {
         if (activeIndex < firstIndex) {
           setActiveIndex(activeIndex + 1)
         } else {
-          setView('default')
           clearInterval(interval)
+          setView('default')
         }
       }
     }, 75);
@@ -77,7 +78,7 @@ const Loading = ({ projects, site }) => {
       </StyledHeaderOverlay>
       <Box flex="1" width="100%" position="relative" height="100%" display="flex" alignItems="center" justifyContent="center">
         {projects.map((project, index) => {
-          const url = urlFor(project.image.src).auto('format').url();
+          const url = urlFor(project.image.src).url();
           const dimensions = getImageDimensions(project.image.src);
           const aspect = dimensions.height / dimensions.width;
           return (

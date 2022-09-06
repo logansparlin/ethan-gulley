@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { Box } from "@components/box"
 import CategoryList from './CategoryList';
@@ -49,7 +49,6 @@ const GridView = ({ projects, category, handleChangeCategory }) => {
     if (typeof window === "undefined" || !container.current) {
       return;
     }
-    console.log('mounting')
 
     let scroll;
     import("locomotive-scroll").then((LocomotiveScroll) => {
@@ -64,7 +63,6 @@ const GridView = ({ projects, category, handleChangeCategory }) => {
         }
       });
       scrollRef.current = scroll;
-      console.log(scroll)
     });
 
     return () => {
@@ -82,7 +80,8 @@ const GridView = ({ projects, category, handleChangeCategory }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{
-          duration: 0.6
+          duration: 0.6,
+          ease: 'linear'
         }}
       >
         <ProjectGrid category={category} projects={projects} />

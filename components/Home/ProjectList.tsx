@@ -12,7 +12,6 @@ const ProjectList = ({ projects }) => {
           return (
             <Box width="50%" key={project._id} display="flex" justifyContent="space-between" borderBottom="1px solid black" fontSize="15px" lineHeight="20px">
               <Box>{project.title}</Box>
-
             </Box>
           )
         })}

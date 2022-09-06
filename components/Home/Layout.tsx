@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHomeStore } from "@hooks/useHomeStore";
-import { AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { Box } from "@components/box";
 import Head from 'next/head';
@@ -8,7 +8,6 @@ import Header from "@components/Header";
 import Hero from "./Hero";
 import Grid from "./Grid";
 import List from "./List";
-import Loading from './Loading';
 
 export const HomeHead = () => (
   <Head>
@@ -20,7 +19,7 @@ export const HomeHead = () => (
 
 const Layout = ({ projects, site }) => {
   const [activeProject, setActiveProject] = useState(projects[0]);
-  const { view } = useHomeStore();
+  const { view, loaded } = useHomeStore();
 
   const updateProject = (project) => {
     setActiveProject(project)
@@ -29,11 +28,18 @@ const Layout = ({ projects, site }) => {
   return (
     <Box>
       <HomeHead />
-      <Header {...site} />
+      <motion.div
+        initial={{ opacity: loaded ? 1 : 0 }}
+        animate={{ opacity: loaded ? 1 : 0 }}
+        transition={{
+          duration: 0.6
+        }}
+      >
+        <Header {...site} />
+      </motion.div>
       <AnimatePresence exitBeforeEnter={true}>
         <Box key={view}>
-          {view === 'loading' && <Loading projects={projects} site={site} />}
-          {(view === 'default' || view === 'loading') &&
+          {view === 'default' &&
             <Hero
               projects={projects}
               activeProject={activeProject}
