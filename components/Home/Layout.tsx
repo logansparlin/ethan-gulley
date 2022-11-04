@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useHomeStore } from "@hooks/useHomeStore";
-import { useAppStore } from '@hooks/useAppStore';
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Box } from "@components/box";
@@ -22,7 +21,6 @@ export const HomeHead = () => (
 const Layout = ({ projects, site }) => {
   const [activeProject, setActiveProject] = useState(projects[0]);
   const { view, loaded } = useHomeStore();
-  const { informationOpen } = useAppStore();
 
   const updateProject = (project) => {
     setActiveProject(project)
@@ -30,9 +28,7 @@ const Layout = ({ projects, site }) => {
 
   return (
     <Box>
-      <AnimatePresence exitBeforeEnter>
-        {informationOpen && <Information />}
-      </AnimatePresence>
+      <Information />
       <HomeHead />
       <motion.div
         initial={{ opacity: loaded ? 1 : 0 }}
