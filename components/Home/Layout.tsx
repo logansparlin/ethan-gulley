@@ -30,7 +30,9 @@ const Layout = ({ projects, site }) => {
 
   return (
     <Box>
-      {informationOpen && <Information />}
+      <AnimatePresence exitBeforeEnter>
+        {informationOpen && <Information />}
+      </AnimatePresence>
       <HomeHead />
       <motion.div
         initial={{ opacity: loaded ? 1 : 0 }}

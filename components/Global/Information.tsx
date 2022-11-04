@@ -1,11 +1,35 @@
 import { useAppStore } from "@hooks/useAppStore";
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+
+const StyledContainer = styled(motion.div)`
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  color: white;
+  top: 0;
+  left: 0;
+  background: black;
+  z-index: 100;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 14px;
+  line-height: 14px;
+`
 
 import { Box } from "@components/box"
 
 const Information = () => {
   const { setInformationOpen } = useAppStore();
   return (
-    <Box position="fixed" width="100%" height="100vh" color="white" top="0" left="0" bg="black" zIndex="100" p="20px" display="flex" flexDirection="column" justifyContent="space-between" fontSize="14px" lineHeight="14px">
+    <StyledContainer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6, ease: 'easeInOut' }}
+    >
       <Box as="header" display="flex" justifyContent="space-between">
         <Box as="h1">Ethan Gulley</Box>
         <Box as="button" onClick={() => setInformationOpen(false)}>Close</Box>
@@ -118,7 +142,7 @@ const Information = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </StyledContainer>
   )
 }
 
