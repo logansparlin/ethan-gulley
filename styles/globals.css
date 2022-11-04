@@ -118,7 +118,7 @@ ul {
 
 ol li,
 ul li {
-  display: inline-block;
+  display: block;
 }
 
 blockquote,
@@ -227,4 +227,13 @@ img {
 
 .list-view .list-view-item:last-of-type {
   border-bottom: none;
+}
+
+button {
+  border: none;
+  background: transparent;
+  outline: none;
+  color: inherit;
+  font-size: inherit;
+  cursor: pointer;
 }

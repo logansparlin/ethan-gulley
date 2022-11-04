@@ -9,9 +9,7 @@ import { motion } from 'framer-motion';
 import { Box } from "@components/box"
 import Image from 'next/image'
 
-const Slider = styled(motion(Box))`
-
-`;
+const Slider = styled(motion(Box))``;
 
 const GUTTER = 5;
 
@@ -76,7 +74,6 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll, loadin
     const activeIndex = scroll.current - offset <= 0
       ? Math.floor(-1 * (wrapWidth.current - (wrapWidth.current - ((scroll.current + (Math.abs(wrapWidth.current) * containerIndex)) - offset))) / (itemWidth.current + GUTTER))
       : Math.floor((wrapWidth.current - (wrapWidth.current - ((Math.abs(wrapWidth.current) * containerIndex) - scroll.current) - offset)) / (itemWidth.current + GUTTER));
-
 
     window.localStorage.setItem('first-index', activeIndex.toString())
 

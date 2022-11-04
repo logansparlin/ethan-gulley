@@ -84,7 +84,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
           transition={{ duration: 1.2, ease: [.8, 0, .1, 0.9] }}
         >
           {projects.map(project => {
-            const url = urlFor(project.image.src).auto('format').width(1000).url();
+            const url = urlFor(project.image.src).auto('format').width(600).url();
             const dimensions = getImageDimensions(project.image.src);
             const aspect = dimensions.height / dimensions.width;
             return (

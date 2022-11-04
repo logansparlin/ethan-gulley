@@ -1,4 +1,5 @@
 import { useHomeStore } from "@hooks/useHomeStore";
+import { useAppStore } from "@hooks/useAppStore";
 
 import { Box } from "./box";
 import Link from 'next/link';
@@ -6,6 +7,7 @@ import TextButton from "./TextButton";
 
 const Header = ({ title, links }) => {
   const { view, setView } = useHomeStore();
+  const { setInformationOpen } = useAppStore();
   return (
     <Box as="header" p="20px" width="100%" position="fixed" zIndex="10">
       <Box display="flex" justifyContent="space-between" width="100%">
@@ -38,11 +40,9 @@ const Header = ({ title, links }) => {
           </Box>
         </Box>
         <Box as="ul">
-          {links.map(link => (
-            <Box as="li" key={link._key}>
-              <Link href={`/${link.page.slug.current}`}>{link.label}</Link>
-            </Box>
-          ))}
+          <Box as="li">
+            <Box as="button" onClick={() => setInformationOpen(true)}>Information</Box>
+          </Box>
         </Box>
       </Box>
     </Box>
