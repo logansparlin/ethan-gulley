@@ -110,6 +110,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                     pt="8px"
                     fontSize="14px"
                     opacity="0"
+                    textAlign="left"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: loaded ? 1 : 0 }}
                     exit={{ opacity: 0 }}
