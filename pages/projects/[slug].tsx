@@ -2,10 +2,14 @@ import { useState, useRef, useMemo } from "react";
 import { getProject, getProjectPaths } from "@lib/api";
 import { urlFor } from "@lib/sanity";
 import useKeypress from 'react-use-keypress';
+import styled from 'styled-components';
+import { motion } from "framer-motion";
 
 import { Box } from "@components/box";
 import { Cursor } from '@components/Project/Cursor';
 import Image from "next/image";
+
+const StyledImage = styled(motion(Box))``;
 
 const ProjectPage = ({ pageData }) => {
   const { title, images } = pageData;
@@ -54,7 +58,7 @@ const ProjectPage = ({ pageData }) => {
   }, [activeIndex])
 
   return (
-    <Box fontSize="14px" cursor="none">
+    <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
       <Cursor
         title={title}
         count={images.length}
@@ -69,9 +73,18 @@ const ProjectPage = ({ pageData }) => {
       {images.map((image, index) => {
         const img = urlFor(image).auto('format').width(1000).url();
         return (
-          <Box key={image._key} opacity={index === activeIndex ? '1' : '0'} width="70vw" height="calc(100vh)" position="absolute" top="0" left="15vw">
+          <StyledImage
+            key={image._key}
+            $active={index === activeIndex}
+            opacity={index === activeIndex ? '1' : '0'}
+            width="70vw"
+            height="calc(100vh)"
+            position="absolute"
+            top="0"
+            left="15vw"
+          >
             <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
-          </Box>
+          </StyledImage>
         )
       })}
       <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" left="20px">

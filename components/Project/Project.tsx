@@ -2,10 +2,14 @@ import { useState, useMemo } from "react";
 import { urlFor } from "@lib/sanity";
 import { useProjectStore } from "@hooks/useProjectStore";
 import useKeypress from 'react-use-keypress';
+import styled from 'styled-components';
+import { motion } from "framer-motion";
 
 import { Box } from "@components/box";
 import { Cursor } from '@components/Project/Cursor';
 import Image from "next/image";
+
+const StyledImage = styled(motion(Box))``;
 
 export const Project = () => {
   const { activeProject, setActiveProject } = useProjectStore();
@@ -68,11 +72,20 @@ export const Project = () => {
         <Box as="button" p="20px" onClick={() => setActiveProject(null)} position="relative" zIndex="10" cursor="pointer">Close</Box>
       </Box>
       {images.map((image, index) => {
-        const img = urlFor(image).auto('format').width(1000).url();
+        const img = urlFor(image).auto('format').width(1400).quality(80).url();
         return (
-          <Box key={image._key} opacity={index === activeIndex ? '1' : '0'} width="70vw" height="calc(100vh)" position="absolute" top="0" left="15vw">
+          <StyledImage
+            key={image._key}
+            $active={index === activeIndex}
+            opacity={index === activeIndex ? '1' : '0'}
+            width="70vw"
+            height="calc(100vh)"
+            position="absolute"
+            top="0"
+            left="15vw"
+          >
             <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
-          </Box>
+          </StyledImage>
         )
       })}
       <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" left="20px">

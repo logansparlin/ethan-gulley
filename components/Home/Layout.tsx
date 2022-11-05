@@ -30,7 +30,11 @@ const Layout = ({ projects, site }) => {
   }
 
   return (
-    <Box>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Information />
       {activeProject && <Project />}
       <HomeHead />
@@ -44,7 +48,7 @@ const Layout = ({ projects, site }) => {
       >
         <Header {...site} />
       </motion.div>
-      <AnimatePresence exitBeforeEnter={true}>
+      <AnimatePresence exitBeforeEnter={true} initial={false}>
         <Box key={view}>
           {view === 'default' &&
             <Hero
@@ -57,7 +61,7 @@ const Layout = ({ projects, site }) => {
           {view === 'list' && <List projects={projects} />}
         </Box>
       </AnimatePresence>
-    </Box>
+    </motion.div>
   )
 }
 

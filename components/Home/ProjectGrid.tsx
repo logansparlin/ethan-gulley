@@ -1,5 +1,6 @@
 import { urlFor } from "@lib/sanity";
 import { motion, AnimatePresence } from "framer-motion";
+import { useProjectStore } from "@hooks/useProjectStore";
 import styled from 'styled-components';
 
 import { Box } from "@components/box";
@@ -19,6 +20,7 @@ const breakpoints: Breakpoint[] = [
 
 
 const ProjectGrid = ({ projects, category }) => {
+  const { setActiveProject } = useProjectStore();
   const filteredProjects = category === 'all'
     ? projects
     : projects.filter(project => project.category === category);
@@ -49,16 +51,16 @@ const ProjectGrid = ({ projects, category }) => {
                 }}
                 willChange="auto"
               >
-                <a href={`/projects/${project.slug.current}`}>
-                  <Box
-                    position="relative"
-                    width="100%"
-                    height="0"
-                    pb={`${(dimensions.height / dimensions.width) * 100}%`}
-                  >
+                <Box
+                  position="relative"
+                  width="100%"
+                  height="0"
+                  pb={`${(dimensions.height / dimensions.width) * 100}%`}
+                >
+                  <Box as="button" onClick={() => setActiveProject(project)}>
                     <Image src={url} layout="fill" objectFit="cover" alt={project.image.alt} />
                   </Box>
-                </a>
+                </Box>
               </StyledImage>
             )
           })}

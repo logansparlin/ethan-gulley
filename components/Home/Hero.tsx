@@ -15,6 +15,8 @@ const StyledHero = styled(motion(Box))``;
 
 const StyledTitle = styled(motion(Box))``;
 
+const StyledImage = styled(motion(Box))``;
+
 const Hero = ({ projects, focusedProject, updateProject }) => {
   const scroll = useRef({ target: 0, current: 0 });
   const { loaded, setLoaded } = useHomeStore();
@@ -86,8 +88,12 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           transition={{ duration: 1.2, ease: [.8, 0, .1, 0.9] }}
         >
           {projects.map(project => {
-            const url = urlFor(project.image.src).auto('format').width(600).url();
-            const dimensions = getImageDimensions(project.image.src);
+            const url = project.images?.length >= 1
+              ? urlFor(project.images[0]).auto('format').width(1000).url()
+              : urlFor(project.image.src).auto('format').width(1000).url()
+            const dimensions = project.images?.length >= 1
+              ? getImageDimensions(project.images[0])
+              : getImageDimensions(project.image.src);
             const aspect = dimensions.height / dimensions.width;
             return (
               <Box
@@ -97,15 +103,15 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                 visibility={project._id === focusedProject._id ? 'visible' : 'hidden'}
                 zIndex={project._id === focusedProject._id ? 2 : 1}
               >
-                <Box as="button" onClick={() => setActiveProject(project)}>
-                  <Box
+                <Box as="a" href={`/projects/${project.slug.current}`}>
+                  <StyledImage
                     position="relative"
                     width="25vw"
                     height="0"
                     pb={`calc(25vw * ${aspect})`}
                   >
-                    <Image src={project.image.url || url} layout="fill" objectFit="cover" alt={project.image.alt} loading="eager" />
-                  </Box>
+                    <Image src={project.image.url || url} layout="fill" objectFit="contain" alt={project.image.alt} loading="eager" />
+                  </StyledImage>
                   <StyledTitle
                     pt="8px"
                     fontSize="14px"
