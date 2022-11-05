@@ -55,10 +55,16 @@ const ProjectPage = ({ pageData }) => {
 
   return (
     <Box p="20px" fontSize="14px" cursor="none">
-      <Cursor title={title} count={images.length} index={activeIndex + 1} />
+      <Cursor
+        title={title}
+        count={images.length}
+        index={activeIndex + 1}
+        onRightClick={nextImage}
+        onLeftClick={previousImage}
+      />
       <Box as="header" display="flex" justifyContent="space-between">
         <Box as="h1" position="relative" zIndex="100" cursor="pointer">{title}</Box>
-        <Box as="button" position="relative" zIndex="100" cursor="pointer">Close</Box>
+        <Box as="a" href="/" position="relative" zIndex="100" cursor="pointer">Close</Box>
       </Box>
       {images.map((image, index) => {
         const img = urlFor(image).auto('format').width(1000).url();
