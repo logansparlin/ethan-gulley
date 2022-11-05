@@ -11,6 +11,8 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick }) => {
     const { pageX, pageY } = e;
     const elPos = textRef.current?.getBoundingClientRect();
 
+    setVisible(true)
+
     setPos({
       x: pageX - (elPos.width / 2),
       y: pageY - (elPos.height / 2)
@@ -25,7 +27,6 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick }) => {
       zIndex="1"
       top="0"
       left="0"
-      onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
       onMouseMove={handleMouseMove}
     >

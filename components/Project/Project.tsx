@@ -1,14 +1,15 @@
-import { useState, useRef, useMemo } from "react";
-import { getProject, getProjectPaths } from "@lib/api";
+import { useState, useMemo } from "react";
 import { urlFor } from "@lib/sanity";
+import { useProjectStore } from "@hooks/useProjectStore";
 import useKeypress from 'react-use-keypress';
 
 import { Box } from "@components/box";
 import { Cursor } from '@components/Project/Cursor';
 import Image from "next/image";
 
-const ProjectPage = ({ pageData }) => {
-  const { title, images } = pageData;
+export const Project = () => {
+  const { activeProject, setActiveProject } = useProjectStore();
+  const { title, images } = activeProject;
   const [activeIndex, setActiveIndex] = useState(0);
 
   useKeypress(['ArrowLeft', 'ArrowRight'], (e) => {
@@ -54,7 +55,7 @@ const ProjectPage = ({ pageData }) => {
   }, [activeIndex])
 
   return (
-    <Box fontSize="14px" cursor="none">
+    <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
       <Cursor
         title={title}
         count={images.length}
@@ -64,7 +65,7 @@ const ProjectPage = ({ pageData }) => {
       />
       <Box as="header" display="flex" justifyContent="space-between">
         <Box as="h1" p="20px">{title}</Box>
-        <Box as="a" p="20px" href="/" position="relative" zIndex="10" cursor="pointer">Close</Box>
+        <Box as="button" p="20px" onClick={() => setActiveProject(null)} position="relative" zIndex="10" cursor="pointer">Close</Box>
       </Box>
       {images.map((image, index) => {
         const img = urlFor(image).auto('format').width(1000).url();
@@ -97,26 +98,3 @@ const ProjectPage = ({ pageData }) => {
     </Box>
   )
 }
-
-export async function getStaticProps({ params }) {
-  const { data: pageData, query } = await getProject(params.slug);
-
-  return {
-    props: {
-      pageData,
-      query
-    },
-    revalidate: 10
-  };
-}
-
-export async function getStaticPaths() {
-  const { data: paths } = await getProjectPaths();
-
-  return {
-    paths,
-    fallback: true
-  };
-}
-
-export default ProjectPage;

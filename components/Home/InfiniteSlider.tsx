@@ -22,7 +22,7 @@ const StyledImage = styled(Box)`
   }
 `
 
-const InfiniteSlider = ({ projects, activeProject, updateProject, scroll, loading }) => {
+const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loading }) => {
   const container = useRef(null);
   const itemRef = useRef(null);
   const itemWidth = useRef(0);
@@ -115,7 +115,7 @@ const InfiniteSlider = ({ projects, activeProject, updateProject, scroll, loadin
             key={project._id}
             display="inline-block"
             cursor="pointer"
-            opacity={activeProject._id === project._id ? '0.5' : '1'}
+            opacity={focusedProject._id === project._id ? '0.5' : '1'}
             bg="#eee"
             onClick={() => handleClick(project, index)}
             className="infinite-item"

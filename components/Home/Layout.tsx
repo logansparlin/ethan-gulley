@@ -9,6 +9,8 @@ import Hero from "./Hero";
 import Grid from "./Grid";
 import List from "./List";
 import Information from "@components/Global/Information";
+import { Project } from "@components/Project/Project";
+import { useProjectStore } from "@hooks/useProjectStore";
 
 export const HomeHead = () => (
   <Head>
@@ -19,16 +21,18 @@ export const HomeHead = () => (
 )
 
 const Layout = ({ projects, site }) => {
-  const [activeProject, setActiveProject] = useState(projects[0]);
+  const [focusedProject, setFocusedProject] = useState(projects[0]);
+  const { activeProject } = useProjectStore();
   const { view, loaded } = useHomeStore();
 
   const updateProject = (project) => {
-    setActiveProject(project)
+    setFocusedProject(project)
   }
 
   return (
     <Box>
       <Information />
+      {activeProject && <Project />}
       <HomeHead />
       <motion.div
         initial={{ opacity: loaded ? 1 : 0 }}
@@ -45,7 +49,7 @@ const Layout = ({ projects, site }) => {
           {view === 'default' &&
             <Hero
               projects={projects}
-              activeProject={activeProject}
+              focusedProject={focusedProject}
               updateProject={updateProject}
             />
           }

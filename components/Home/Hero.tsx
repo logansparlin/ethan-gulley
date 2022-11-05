@@ -9,14 +9,16 @@ import styled from 'styled-components';
 import { Box } from "@components/box"
 import Image from "next/image"
 import InfiniteSlider from "./InfiniteSlider";
+import { useProjectStore } from "@hooks/useProjectStore";
 
 const StyledHero = styled(motion(Box))``;
 
 const StyledTitle = styled(motion(Box))``;
 
-const Hero = ({ projects, activeProject, updateProject }) => {
+const Hero = ({ projects, focusedProject, updateProject }) => {
   const scroll = useRef({ target: 0, current: 0 });
   const { loaded, setLoaded } = useHomeStore();
+  const { setActiveProject } = useProjectStore();
   const activeIndex = useRef(0);
   const loops = useRef(0);
 
@@ -91,11 +93,11 @@ const Hero = ({ projects, activeProject, updateProject }) => {
               <Box
                 position="absolute"
                 key={project._id}
-                opacity={project._id === activeProject._id ? '1' : '0'}
-                visibility={project._id === activeProject._id ? 'visible' : 'hidden'}
-                zIndex={project._id === activeProject._id ? 2 : 1}
+                opacity={project._id === focusedProject._id ? '1' : '0'}
+                visibility={project._id === focusedProject._id ? 'visible' : 'hidden'}
+                zIndex={project._id === focusedProject._id ? 2 : 1}
               >
-                <a href={`/projects/${project.slug.current}`}>
+                <Box as="button" onClick={() => setActiveProject(project)}>
                   <Box
                     position="relative"
                     width="25vw"
@@ -115,7 +117,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
                   >
                     {project.title}
                   </StyledTitle>
-                </a>
+                </Box>
               </Box>
             )
           })}
@@ -123,7 +125,7 @@ const Hero = ({ projects, activeProject, updateProject }) => {
         <InfiniteSlider
           loading={!loaded}
           projects={projects}
-          activeProject={activeProject}
+          focusedProject={focusedProject}
           updateProject={updateProject}
           scroll={scroll.current}
         />
