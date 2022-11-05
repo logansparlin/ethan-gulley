@@ -49,14 +49,16 @@ const ProjectGrid = ({ projects, category }) => {
                 }}
                 willChange="auto"
               >
-                <Box
-                  position="relative"
-                  width="100%"
-                  height="0"
-                  pb={`${(dimensions.height / dimensions.width) * 100}%`}
-                >
-                  <Image src={url} layout="fill" objectFit="cover" alt={project.image.alt} />
-                </Box>
+                <a href={`/projects/${project.slug.current}`}>
+                  <Box
+                    position="relative"
+                    width="100%"
+                    height="0"
+                    pb={`${(dimensions.height / dimensions.width) * 100}%`}
+                  >
+                    <Image src={url} layout="fill" objectFit="cover" alt={project.image.alt} />
+                  </Box>
+                </a>
               </StyledImage>
             )
           })}

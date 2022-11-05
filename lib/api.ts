@@ -34,6 +34,36 @@ export async function getHomePage() {
     }
 }
 
+export async function getProject(slug: string) {
+    const query = groq`
+        *[_type == "project" && slug.current match '${slug}'][0] {
+            ...,
+            image {
+                src,
+                alt,
+                "lqip": src.asset -> metadata.lqip
+            },
+            images,
+            "site": *[_type == "headerSettings"][0] {
+                title,
+                links[] {
+                    label,
+                    page ->,
+                    _key,
+                    _type
+                }
+            }
+        }
+    `;
+
+    const data = await sanityClient.fetch(query);
+
+    return {
+        data,
+        query
+    }
+}
+
 export async function getPage(slug: string) {
     const query = groq`
         *[_type == "page" && slug.current match '${slug}'][0] {
@@ -49,4 +79,19 @@ export async function getPage(slug: string) {
         data,
         query
     }
+}
+
+export async function getProjectPaths() {
+    const query = groq`
+        *[_type == "project" && defined(slug)] {
+            "params": { "slug": slug.current }
+        }
+    `;
+
+    const data = await sanityClient.fetch(query);
+
+    return {
+        data,
+        query
+    };
 }

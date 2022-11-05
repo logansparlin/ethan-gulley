@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { Box } from "@components/box"
-import { images } from "next.config";
 
 const ProjectList = ({ projects }) => {
   const [years, setYears] = useState([]);
@@ -38,7 +37,7 @@ const ProjectList = ({ projects }) => {
                     lineHeight="20px"
                   >
                     <Box>{project.title}</Box>
-                    <Box>{project.images?.length.padStart(2, '0') || '00'}</Box>
+                    <Box>{project.images?.length.toString().padStart(2, '0') || '00'}</Box>
                   </Box>
                 )
               })}
