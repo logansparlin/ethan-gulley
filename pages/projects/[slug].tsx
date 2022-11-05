@@ -58,56 +58,63 @@ const ProjectPage = ({ pageData }) => {
   }, [activeIndex])
 
   return (
-    <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
-      <Cursor
-        title={title}
-        count={images.length}
-        index={activeIndex + 1}
-        onRightClick={nextImage}
-        onLeftClick={previousImage}
-      />
-      <Box as="header" display="flex" justifyContent="space-between">
-        <Box as="h1" p="20px">{title}</Box>
-        <Box as="a" p="20px" href="/" position="relative" zIndex="10" cursor="pointer">Close</Box>
-      </Box>
-      {images.map((image, index) => {
-        const img = urlFor(image).auto('format').width(1000).url();
-        return (
-          <StyledImage
-            key={image._key}
-            $active={index === activeIndex}
-            opacity={index === activeIndex ? '1' : '0'}
-            width="70vw"
-            height="calc(100vh)"
-            position="absolute"
-            top="0"
-            left="15vw"
-          >
-            <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
-          </StyledImage>
-        )
-      })}
-      <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" left="20px">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      key={title}
+    >
+      <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
+        <Cursor
+          title={title}
+          count={images.length}
+          index={activeIndex + 1}
+          onRightClick={nextImage}
+          onLeftClick={previousImage}
+        />
+        <Box as="header" display="flex" justifyContent="space-between">
+          <Box as="h1" p="20px">{title}</Box>
+          <Box as="a" p="20px" href="/" position="relative" zIndex="10" cursor="pointer">Close</Box>
+        </Box>
         {images.map((image, index) => {
-          const img = urlFor(image).auto('format').width(200).url();
+          const img = urlFor(image).auto('format').width(1000).url();
           return (
-            <Box key={image._key} opacity={index === beforeIndex ? 1 : 0}>
+            <StyledImage
+              key={image._key}
+              $active={index === activeIndex}
+              opacity={index === activeIndex ? '1' : '0'}
+              width="70vw"
+              height="calc(100vh)"
+              position="absolute"
+              top="0"
+              left="15vw"
+            >
               <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
-            </Box>
+            </StyledImage>
           )
         })}
+        <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" left="20px">
+          {images.map((image, index) => {
+            const img = urlFor(image).auto('format').width(200).url();
+            return (
+              <Box key={image._key} opacity={index === beforeIndex ? 1 : 0}>
+                <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
+              </Box>
+            )
+          })}
+        </Box>
+        <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" right="20px">
+          {images.map((image, index) => {
+            const img = urlFor(image).auto('format').width(200).url();
+            return (
+              <Box key={image._key} opacity={index === afterIndex ? 1 : 0}>
+                <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
+              </Box>
+            )
+          })}
+        </Box>
       </Box>
-      <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" right="20px">
-        {images.map((image, index) => {
-          const img = urlFor(image).auto('format').width(200).url();
-          return (
-            <Box key={image._key} opacity={index === afterIndex ? 1 : 0}>
-              <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
-            </Box>
-          )
-        })}
-      </Box>
-    </Box>
+    </motion.div>
   )
 }
 
