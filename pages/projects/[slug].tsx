@@ -12,6 +12,7 @@ import Image from "next/image";
 const StyledImage = styled(motion(Box))``;
 
 const ProjectPage = ({ pageData }) => {
+  if (!pageData) return "no page data"
   const { title, images } = pageData;
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -26,7 +27,7 @@ const ProjectPage = ({ pageData }) => {
   });
 
   const nextImage = () => {
-    if (activeIndex === images.length - 1) {
+    if (activeIndex === images?.length - 1) {
       return setActiveIndex(0)
     }
 
@@ -35,7 +36,7 @@ const ProjectPage = ({ pageData }) => {
 
   const previousImage = () => {
     if (activeIndex === 0) {
-      return setActiveIndex(images.length - 1)
+      return setActiveIndex(images?.length - 1)
     }
 
     return setActiveIndex(activeIndex - 1)
@@ -43,14 +44,14 @@ const ProjectPage = ({ pageData }) => {
 
   const beforeIndex = useMemo(() => {
     if (activeIndex === 0) {
-      return images.length - 1
+      return images?.length - 1
     }
 
     return activeIndex - 1
   }, [activeIndex])
 
   const afterIndex = useMemo(() => {
-    if (activeIndex === images.length - 1) {
+    if (activeIndex === images?.length - 1) {
       return 0
     }
 
@@ -67,7 +68,7 @@ const ProjectPage = ({ pageData }) => {
       <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
         <Cursor
           title={title}
-          count={images.length}
+          count={images?.length ?? 0}
           index={activeIndex + 1}
           onRightClick={nextImage}
           onLeftClick={previousImage}
@@ -76,7 +77,7 @@ const ProjectPage = ({ pageData }) => {
           <Box as="h1" p="20px">{title}</Box>
           <Box as="a" p="20px" href="/" position="relative" zIndex="10" cursor="pointer">Close</Box>
         </Box>
-        {images.map((image, index) => {
+        {images && images.map((image, index) => {
           const img = urlFor(image).auto('format').width(1000).url();
           return (
             <StyledImage
@@ -94,7 +95,7 @@ const ProjectPage = ({ pageData }) => {
           )
         })}
         <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" left="20px">
-          {images.map((image, index) => {
+          {images && images.map((image, index) => {
             const img = urlFor(image).auto('format').width(200).url();
             return (
               <Box key={image._key} opacity={index === beforeIndex ? 1 : 0}>
@@ -104,7 +105,7 @@ const ProjectPage = ({ pageData }) => {
           })}
         </Box>
         <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" right="20px">
-          {images.map((image, index) => {
+          {images && images.map((image, index) => {
             const img = urlFor(image).auto('format').width(200).url();
             return (
               <Box key={image._key} opacity={index === afterIndex ? 1 : 0}>
