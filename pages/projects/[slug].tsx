@@ -62,7 +62,7 @@ const ProjectPage = ({ pageData }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      key={title}
+      transition={{ duration: 1.8 }}
     >
       <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
         <Cursor
