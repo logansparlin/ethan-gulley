@@ -7,6 +7,7 @@ import { useAppStore } from "@hooks/useAppStore";
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
+import ProjectLink from "@components/Global/ProjectLink";
 import Link from "next/link";
 import { Box } from "@components/box"
 import Image from "next/image"
@@ -106,32 +107,30 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                 visibility={project._id === focusedProject._id ? 'visible' : 'hidden'}
                 zIndex={project._id === focusedProject._id ? 2 : 1}
               >
-                <Box as="button" onClick={() => setTransitioning(true)}>
-                  <Link href={`/projects/${project.slug.current}`}>
-                    <Box>
-                      <StyledImage
-                        position="relative"
-                        width="25vw"
-                        height="0"
-                        pb={`calc(25vw * ${aspect})`}
-                      >
-                        <Image src={project.image.url || url} layout="fill" objectFit="contain" alt={project.image.alt} loading="eager" />
-                      </StyledImage>
-                      <StyledTitle
-                        pt="8px"
-                        fontSize="14px"
-                        opacity="0"
-                        textAlign="left"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: loaded ? 1 : 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.6, ease: [.8, 0, .1, 0.9] }}
-                      >
-                        {project.title}
-                      </StyledTitle>
-                    </Box>
-                  </Link>
-                </Box>
+                <ProjectLink to={`/projects/${project.slug.current}`}>
+                  <Box>
+                    <StyledImage
+                      position="relative"
+                      width="25vw"
+                      height="0"
+                      pb={`calc(25vw * ${aspect})`}
+                    >
+                      <Image src={project.image.url || url} layout="fill" objectFit="contain" alt={project.image.alt} loading="eager" />
+                    </StyledImage>
+                    <StyledTitle
+                      pt="8px"
+                      fontSize="14px"
+                      opacity="0"
+                      textAlign="left"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: loaded ? 1 : 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.6, ease: [.8, 0, .1, 0.9] }}
+                    >
+                      {project.title}
+                    </StyledTitle>
+                  </Box>
+                </ProjectLink>
               </Box>
             )
           })}
@@ -143,8 +142,8 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           updateProject={updateProject}
           scroll={scroll.current}
         />
-      </Box>
-    </Box>
+      </Box >
+    </Box >
   )
 }
 export default Hero;
