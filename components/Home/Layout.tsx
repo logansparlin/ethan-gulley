@@ -17,7 +17,7 @@ export const HomeHead = () => (
   <Head>
     <title>Ethan Gulley</title>
     <meta name="description" content="Ethan Gulley Portfolio Site." />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.png" />
   </Head>
 )
 
