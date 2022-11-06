@@ -10,9 +10,6 @@ const variants = {
 
 const Layout = ({ children }) => {
   const { setTransitioning } = useAppStore();
-  useEffect(() => {
-    setTransitioning(false)
-  }, [])
   return (
     <motion.div>
       {children}
