@@ -1,7 +1,6 @@
 import { AnimatePresence } from "framer-motion";
 
 const Transition = ({ component, pageProps, path }): JSX.Element => {
-
   const Component = component;
 
   return (
@@ -10,7 +9,7 @@ const Transition = ({ component, pageProps, path }): JSX.Element => {
       initial={true}
       onExitComplete={() => window.scrollTo(0, 0)}
     >
-      <Component {...pageProps} key={`page-${path}`} />
+      <Component {...pageProps} key={path} />
     </AnimatePresence>
   )
 }

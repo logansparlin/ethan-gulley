@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHomeStore } from "@hooks/useHomeStore";
+import { useAppStore } from "@hooks/useAppStore";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Box } from "@components/box";
@@ -24,6 +25,7 @@ const HomeLayout = ({ projects, site }) => {
   const [focusedProject, setFocusedProject] = useState(projects[0]);
   const { activeProject } = useProjectStore();
   const { view, loaded } = useHomeStore();
+  const { transitioning } = useAppStore();
 
   const updateProject = (project) => {
     setFocusedProject(project)
@@ -34,18 +36,11 @@ const HomeLayout = ({ projects, site }) => {
       <Information />
       {activeProject && <Project />}
       <HomeHead />
-      <motion.div
-        initial={{ opacity: loaded ? 1 : 0 }}
-        animate={{ opacity: loaded ? 1 : 0 }}
-        transition={{
-          duration: 0.6,
-          delay: 0.4
-        }}
-      >
+      <motion.div>
         <Header {...site} />
       </motion.div>
-      <AnimatePresence exitBeforeEnter={true} initial={false}>
-        <Box key={view}>
+      <AnimatePresence exitBeforeEnter={true} initial={true}>
+        {!transitioning && <Box key={view}>
           {view === 'default' &&
             <Hero
               projects={projects}
@@ -55,7 +50,7 @@ const HomeLayout = ({ projects, site }) => {
           }
           {view === 'grid' && <Grid projects={projects} key="grid" />}
           {view === 'list' && <List projects={projects} key="list" />}
-        </Box>
+        </Box>}
       </AnimatePresence>
     </Box>
   )
