@@ -28,43 +28,45 @@ const ProjectGrid = ({ projects, category }) => {
   return (
     <Box pt="70px" pb="100px">
       <AnimatePresence exitBeforeEnter={true}>
-        <Plock breakpoints={breakpoints} gap="20px">
-          {filteredProjects.map((project, index) => {
-            const url = urlFor(project.image.src).url();
-            const dimensions = getImageDimensions(project.image.src);
-            return (
-              <StyledImage
-                key={`${project._id}-${category}`}
-                initial={{ y: -20, opacity: 0 }}
-                animate={{
-                  y: 0, opacity: 1, transition: {
-                    duration: 1.8,
-                    ease: 'circOut',
-                    delay: index * 0.03
-                  }
-                }}
-                exit={{
-                  y: 0, opacity: 0, transition: {
-                    duration: 0.4,
-                    ease: 'easeInOut'
-                  }
-                }}
-                willChange="auto"
-              >
-                <Box
-                  position="relative"
-                  width="100%"
-                  height="0"
-                  pb={`${(dimensions.height / dimensions.width) * 100}%`}
+        <Box key={category}>
+          <Plock breakpoints={breakpoints} gap="20px">
+            {filteredProjects.map((project, index) => {
+              const url = urlFor(project.image.src).url();
+              const dimensions = getImageDimensions(project.image.src);
+              return (
+                <StyledImage
+                  key={`${project._id}-${category}`}
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{
+                    y: 0, opacity: 1, transition: {
+                      duration: 1.8,
+                      ease: 'circOut',
+                      delay: index * 0.03
+                    }
+                  }}
+                  exit={{
+                    y: 0, opacity: 0, transition: {
+                      duration: 0.4,
+                      ease: 'easeInOut'
+                    }
+                  }}
+                  willChange="auto"
                 >
-                  <Box as="button" onClick={() => setActiveProject(project)}>
-                    <Image src={url} layout="fill" objectFit="cover" alt={project.image.alt} />
+                  <Box
+                    position="relative"
+                    width="100%"
+                    height="0"
+                    pb={`${(dimensions.height / dimensions.width) * 100}%`}
+                  >
+                    <Box as="button" onClick={() => setActiveProject(project)}>
+                      <Image src={url} layout="fill" objectFit="cover" alt={project.image.alt} />
+                    </Box>
                   </Box>
-                </Box>
-              </StyledImage>
-            )
-          })}
-        </Plock>
+                </StyledImage>
+              )
+            })}
+          </Plock>
+        </Box>
       </AnimatePresence>
     </Box>
   )

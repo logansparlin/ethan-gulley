@@ -20,7 +20,7 @@ export const HomeHead = () => (
   </Head>
 )
 
-const Layout = ({ projects, site }) => {
+const HomeLayout = ({ projects, site }) => {
   const [focusedProject, setFocusedProject] = useState(projects[0]);
   const { activeProject } = useProjectStore();
   const { view, loaded } = useHomeStore();
@@ -57,12 +57,12 @@ const Layout = ({ projects, site }) => {
               updateProject={updateProject}
             />
           }
-          {view === 'grid' && <Grid projects={projects} />}
-          {view === 'list' && <List projects={projects} />}
+          {view === 'grid' && <Grid projects={projects} key="grid" />}
+          {view === 'list' && <List projects={projects} key="list" />}
         </Box>
       </AnimatePresence>
     </motion.div>
   )
 }
 
-export default Layout;
+export default HomeLayout;

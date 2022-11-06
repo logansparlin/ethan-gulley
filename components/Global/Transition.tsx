@@ -6,8 +6,6 @@ const Transition = ({ component, pageProps, path }): JSX.Element => {
 
   return (
     <AnimatePresence
-      exitBeforeEnter
-      initial={true}
       onExitComplete={() => window.scrollTo(0, 0)}
     >
       <Component {...pageProps} key={path} />

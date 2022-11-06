@@ -1,10 +1,11 @@
 import { getHomePage } from '@lib/api';
 
-import Layout, { HomeHead } from '@components/Home/Layout';
+import HomeLayout, { HomeHead } from '@components/Home/Layout';
+import Layout from '@components/Global/Layout'
 
 const Home = ({ pageData }): JSX.Element => {
 
-  if(!pageData) {
+  if (!pageData) {
     return (
       <div>
         <HomeHead />
@@ -14,9 +15,11 @@ const Home = ({ pageData }): JSX.Element => {
   }
 
   const { projects, site } = pageData;
-  
+
   return (
-    <Layout projects={projects} site={site} />
+    <Layout>
+      <HomeLayout projects={projects} site={site} />
+    </Layout>
   )
 }
 

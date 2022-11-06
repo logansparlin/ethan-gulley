@@ -5,6 +5,7 @@ import useKeypress from 'react-use-keypress';
 import styled from 'styled-components';
 import { motion } from "framer-motion";
 
+import Layout from "@components/Global/Layout";
 import { Box } from "@components/box";
 import { Cursor } from '@components/Project/Cursor';
 import Image from "next/image";
@@ -59,12 +60,7 @@ const ProjectPage = ({ pageData }) => {
   }, [activeIndex])
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1.8 }}
-    >
+    <Layout>
       <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
         <Cursor
           title={title}
@@ -115,7 +111,7 @@ const ProjectPage = ({ pageData }) => {
           })}
         </Box>
       </Box>
-    </motion.div>
+    </Layout>
   )
 }
 

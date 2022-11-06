@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { Box } from "@components/box"
 import CategoryList from './CategoryList';
@@ -33,7 +33,7 @@ const Grid = ({ projects }) => {
           duration: 0.6
         }}
       >
-        <GridView key={category} projects={projects} category={category} handleChangeCategory={handleChangeCategory} />
+        <GridView projects={projects} category={category} handleChangeCategory={handleChangeCategory} />
       </motion.div>
     </Box>
   )
@@ -77,12 +77,13 @@ const GridView = ({ projects, category, handleChangeCategory }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        key="project-grid"
         transition={{
           duration: 0.6,
           ease: 'linear'
         }}
       >
-        <ProjectGrid category={category} projects={projects} />
+        <ProjectGrid category={category} projects={projects} key="project-grid" />
       </motion.div>
     </Box>
   )
