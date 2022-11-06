@@ -9,7 +9,7 @@ const Header = ({ title, links }) => {
   const { view, setView } = useHomeStore();
   const { setInformationOpen } = useAppStore();
   return (
-    <Box as="header" p="20px" width="100%" position="fixed" zIndex="10">
+    <Box as="header" p="20px" width="100%" position="fixed" zIndex="10" fontSize="14px">
       <Box display="flex" justifyContent="space-between" width="100%">
         <Link href="/">
           <TextButton onClick={() => setView('default')}>
