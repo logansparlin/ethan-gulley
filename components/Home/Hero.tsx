@@ -85,9 +85,9 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           alignItems="center"
           justifyContent="center"
           cursor="pointer"
-          initial={{ opacity: !loaded ? 1 : 0, scale: !loaded ? 0.8 : 1.05 }}
+          initial={{ opacity: !loaded ? 1 : 1, scale: !loaded ? 0.8 : 1.05 }}
           animate={{ opacity: 1, scale: loaded ? 1 : 0.8 }}
-          exit={{ opacity: 0, scale: 1.05 }}
+          exit={{ opacity: 1, scale: 1.05 }}
           transition={{ duration: 1.2, ease: [.8, 0, .1, 0.9] }}
         >
           {projects.map(project => {

@@ -90,9 +90,9 @@ const ProjectPage = ({ pageData }) => {
               position="absolute"
               top="0"
               left="15vw"
-              initial={{ opacity: 0, scale: 0.7 }}
+              initial={{ opacity: 1, scale: 0.7 }}
               animate={{ opacity: index === activeIndex ? 1 : 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.7 }}
+              exit={{ opacity: 1, scale: 0.7 }}
               transition={{
                 duration: 0.8,
                 ease: [.8, 0, .1, 0.9]
@@ -111,9 +111,9 @@ const ProjectPage = ({ pageData }) => {
             position="absolute"
             top="0"
             left="15vw"
-            initial={{ opacity: 0, scale: 0.7 }}
+            initial={{ opacity: 1, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.7 }}
+            exit={{ opacity: 1, scale: 0.7 }}
             transition={{
               duration: 0.8,
               ease: [.8, 0, .1, 0.9]
