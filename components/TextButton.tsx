@@ -1,4 +1,4 @@
-import { FC, ReactNode, MouseEvent } from 'react';
+import { FC, ReactNode, MouseEvent, forwardRef } from 'react';
 import styled from 'styled-components';
 
 import { Box } from './box';
@@ -23,12 +23,12 @@ interface ButtonOwnProps {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const TextButton: FC<ButtonOwnProps> = ({ children, onClick, ...rest }) => {
+const TextButton = forwardRef<HTMLButtonElement, ButtonOwnProps>(({ children, onClick, ...rest }, forwardedRef) => {
   return (
     <Button as="button" onClick={onClick} {...rest}>
       {children}
     </Button>
   )
-}
+})
 
 export default TextButton;

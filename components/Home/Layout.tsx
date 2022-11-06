@@ -30,11 +30,7 @@ const HomeLayout = ({ projects, site }) => {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <Box>
       <Information />
       {activeProject && <Project />}
       <HomeHead />
@@ -61,7 +57,7 @@ const HomeLayout = ({ projects, site }) => {
           {view === 'list' && <List projects={projects} key="list" />}
         </Box>
       </AnimatePresence>
-    </motion.div>
+    </Box>
   )
 }
 

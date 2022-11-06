@@ -5,6 +5,7 @@ import useKeypress from 'react-use-keypress';
 import styled from 'styled-components';
 import { motion } from "framer-motion";
 
+import Link from "next/link";
 import Layout from "@components/Global/Layout";
 import { Box } from "@components/box";
 import { Cursor } from '@components/Project/Cursor';
@@ -71,7 +72,9 @@ const ProjectPage = ({ pageData }) => {
         />
         <Box as="header" display="flex" justifyContent="space-between">
           <Box as="h1" p="20px">{title}</Box>
-          <Box as="a" p="20px" href="/" position="relative" zIndex="10" cursor="pointer">Close</Box>
+          <Box p="20px" position="relative" zIndex="10" cursor="pointer">
+            <Link href="/">Close</Link>
+          </Box>
         </Box>
         {images && images.map((image, index) => {
           const img = urlFor(image).auto('format').width(1000).url();
