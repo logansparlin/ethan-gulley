@@ -1,5 +1,6 @@
 import { useState, useRef, useMemo } from "react";
 import { getProject, getProjectPaths } from "@lib/api";
+import { useProjectStore } from "@hooks/useProjectStore";
 import { urlFor } from "@lib/sanity";
 import useKeypress from 'react-use-keypress';
 import styled from 'styled-components';
@@ -17,6 +18,7 @@ const ProjectPage = ({ pageData }) => {
   if (!pageData) return "no page data"
   const { title, images, image } = pageData;
   const [activeIndex, setActiveIndex] = useState(0);
+  const { scale } = useProjectStore();
 
   useKeypress(['ArrowLeft', 'ArrowRight'], (e) => {
     if (e.key === 'ArrowRight') {
@@ -90,13 +92,10 @@ const ProjectPage = ({ pageData }) => {
               position="absolute"
               top="0"
               left="15vw"
-              initial={{ opacity: index === activeIndex ? 1 : 0, scale: 0.25 }}
+              initial={{ opacity: index === activeIndex ? 1 : 0, scale: scale }}
               animate={{ opacity: index === activeIndex ? 1 : 0, scale: 1 }}
-              exit={{ opacity: index === activeIndex ? 1 : 0, scale: 0.25 }}
-              transition={{
-                duration: 0.8,
-                ease: [.8, 0, .1, 0.9]
-              }}
+              exit={{ opacity: index === activeIndex ? 1 : 0, scale: scale }}
+              transition={{ duration: 1.4, ease: [1, 0.15, 0.25, 0.9] }}
             >
               <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
             </StyledImage>
@@ -111,13 +110,10 @@ const ProjectPage = ({ pageData }) => {
             position="absolute"
             top="0"
             left="15vw"
-            initial={{ opacity: 1, scale: 0.7 }}
+            initial={{ opacity: 1, scale: scale }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 1, scale: 0.7 }}
-            transition={{
-              duration: 0.8,
-              ease: [.8, 0, .1, 0.9]
-            }}
+            exit={{ opacity: 1, scale: scale }}
+            transition={{ duration: 1.4, ease: [1, 0.15, 0.25, 0.9] }}
           >
             <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
           </StyledImage>
