@@ -100,9 +100,9 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           justifyContent="center"
           cursor="pointer"
           key="home-hero"
-          initial={{ opacity: !loaded ? 1 : 1, scale: !loaded ? 0.8 : 1.05, y: 45 }}
-          animate={{ opacity: 1, scale: loaded ? 1 : 0.8, y: loaded ? 0 : 45 }}
-          exit={{ opacity: 1, scale: 1, y: 45 }}
+          initial={{ scale: !loaded ? 0.8 : 1.05, y: 45 }}
+          animate={{ scale: loaded ? 1 : 0.8, y: loaded ? 0 : 45 }}
+          exit={{ scale: 1, y: 45 }}
           transition={{ duration: 1.4, ease: [.9, 0, .1, 0.9] }}
         >
           {projects.map(project => {
