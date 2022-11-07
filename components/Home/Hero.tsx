@@ -7,12 +7,12 @@ import { useAppStore } from "@hooks/useAppStore";
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-import ProjectLink from "@components/Global/ProjectLink";
 import Link from "next/link";
 import { Box } from "@components/box"
 import Image from "next/image"
 import InfiniteSlider from "./InfiniteSlider";
 import { useProjectStore } from "@hooks/useProjectStore";
+import project from "studio/schemas/documents/project";
 
 const StyledHero = styled(motion(Box))``;
 
@@ -24,7 +24,6 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
   const scroll = useRef({ target: 0, current: 0 });
   const { loaded, setLoaded } = useHomeStore();
   const { setActiveProject } = useProjectStore();
-  const { setTransitioning } = useAppStore();
   const activeIndex = useRef(0);
   const loops = useRef(0);
 
@@ -86,6 +85,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           alignItems="center"
           justifyContent="center"
           cursor="pointer"
+          key="home-hero"
           initial={{ opacity: !loaded ? 1 : 1, scale: !loaded ? 0.8 : 1.05 }}
           animate={{ opacity: 1, scale: loaded ? 1 : 0.8 }}
           exit={{ opacity: 1, scale: 1.05 }}
@@ -107,7 +107,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                 visibility={project._id === focusedProject._id ? 'visible' : 'hidden'}
                 zIndex={project._id === focusedProject._id ? 2 : 1}
               >
-                <ProjectLink to={`/projects/${project.slug.current}`}>
+                <Link href={`/projects/${project.slug.current}`}>
                   <Box>
                     <StyledImage
                       position="relative"
@@ -130,7 +130,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                       {project.title}
                     </StyledTitle>
                   </Box>
-                </ProjectLink>
+                </Link>
               </Box>
             )
           })}
@@ -142,8 +142,8 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           updateProject={updateProject}
           scroll={scroll.current}
         />
-      </Box >
-    </Box >
+      </Box>
+    </Box>
   )
 }
 export default Hero;

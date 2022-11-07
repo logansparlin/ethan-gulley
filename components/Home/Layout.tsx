@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHomeStore } from "@hooks/useHomeStore";
-import { useAppStore } from "@hooks/useAppStore";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/dist/client/router";
 
 import { Box } from "@components/box";
 import Head from 'next/head';
@@ -25,7 +25,7 @@ const HomeLayout = ({ projects, site }) => {
   const [focusedProject, setFocusedProject] = useState(projects[0]);
   const { activeProject } = useProjectStore();
   const { view, loaded } = useHomeStore();
-  const { transitioning } = useAppStore();
+  const { asPath } = useRouter();
 
   const updateProject = (project) => {
     setFocusedProject(project)
@@ -39,19 +39,19 @@ const HomeLayout = ({ projects, site }) => {
       <motion.div>
         <Header {...site} />
       </motion.div>
-      <AnimatePresence exitBeforeEnter={true} initial={true}>
-        {!transitioning && <Box key={view}>
-          {view === 'default' &&
-            <Hero
-              projects={projects}
-              focusedProject={focusedProject}
-              updateProject={updateProject}
-            />
-          }
-          {view === 'grid' && <Grid projects={projects} key="grid" />}
-          {view === 'list' && <List projects={projects} key="list" />}
-        </Box>}
-      </AnimatePresence>
+
+      <Box key={view}>
+        {view === 'default' &&
+          <Hero
+            projects={projects}
+            focusedProject={focusedProject}
+            updateProject={updateProject}
+          />
+        }
+        {view === 'grid' && <Grid projects={projects} key="grid" />}
+        {view === 'list' && <List projects={projects} key="list" />}
+      </Box>
+
     </Box>
   )
 }

@@ -77,13 +77,13 @@ const GridView = ({ projects, category, handleChangeCategory }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        key="project-grid"
+        key="grid"
         transition={{
           duration: 0.6,
           ease: 'linear'
         }}
       >
-        <ProjectGrid category={category} projects={projects} key="project-grid" />
+        <ProjectGrid category={category} projects={projects} />
       </motion.div>
     </Box>
   )
