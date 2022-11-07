@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { getProject, getProjectPaths } from "@lib/api";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { urlFor } from "@lib/sanity";
@@ -74,12 +74,19 @@ const ProjectPage = ({ pageData }) => {
           onRightClick={nextImage}
           onLeftClick={previousImage}
         />
-        <Box as="header" display="flex" justifyContent="space-between">
-          <Box as="h1" p="20px">{title}</Box>
-          <Box p="20px" position="relative" zIndex="10" cursor="pointer">
-            <Link href="/">Close</Link>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.4, ease: [.9, 0, .1, 0.9] }}
+        >
+          <Box as="header" display="flex" justifyContent="space-between">
+            <Box as="h1" p="20px">{title}</Box>
+            <Box p="20px" position="relative" zIndex="10" cursor="pointer">
+              <Link href="/">Close</Link>
+            </Box>
           </Box>
-        </Box>
+        </motion.div>
         {images && images.map((image, index) => {
           const img = urlFor(image).auto('format').width(1000).url();
           return (
@@ -92,9 +99,9 @@ const ProjectPage = ({ pageData }) => {
               position="absolute"
               top="0"
               left="15vw"
-              initial={{ opacity: index === activeIndex ? 1 : 0, scale: scale }}
-              animate={{ opacity: index === activeIndex ? 1 : 0, scale: 1 }}
-              exit={{ opacity: index === activeIndex ? 1 : 0, scale: scale }}
+              initial={{ scale: scale }}
+              animate={{ scale: 1 }}
+              exit={{ scale: scale }}
               transition={{ duration: 1.4, ease: [1, 0.15, 0.25, 0.9] }}
             >
               <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
