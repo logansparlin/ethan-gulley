@@ -81,14 +81,16 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
       <Box height="100vh" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
         <StyledHero
           flex="1"
+          width="100%"
+          height="calc(100vh - 90px)"
           display="flex"
           alignItems="center"
           justifyContent="center"
           cursor="pointer"
           key="home-hero"
-          initial={{ opacity: !loaded ? 1 : 1, scale: !loaded ? 0.8 : 1.05 }}
-          animate={{ opacity: 1, scale: loaded ? 1 : 0.8 }}
-          exit={{ opacity: 1, scale: 1.05 }}
+          initial={{ opacity: !loaded ? 1 : 1, scale: !loaded ? 0.8 : 1.05, y: 45 }}
+          animate={{ opacity: 1, scale: loaded ? 1 : 0.8, y: 0 }}
+          exit={{ opacity: 1, scale: 1.05, y: 45 }}
           transition={{ duration: 1.2, ease: [.8, 0, .1, 0.9] }}
         >
           {projects.map(project => {
