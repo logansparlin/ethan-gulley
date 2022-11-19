@@ -125,16 +125,16 @@ const ProjectPage = ({ pageData }) => {
             <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
           </StyledImage>
         )}
-        <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" left="20px">
+        <Box position="absolute" top="50%" transform="translateY(-50%)" width="100px" height="200px" left="20px">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{
               opacity: 1, transition: {
-                duration: 0.6, ease: 'linear', delay: 1
+                duration: 0.8, ease: 'linear', delay: 0.6
               }
             }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: 'linear' }}
+            transition={{ duration: 0.8, ease: 'linear' }}
           >
             {images && images.map((image, index) => {
               const img = urlFor(image).auto('format').width(200).url();
@@ -146,16 +146,16 @@ const ProjectPage = ({ pageData }) => {
             })}
           </motion.div>
         </Box>
-        <Box position="absolute" top="50%" transform="translateY(-50%)" width="120px" height="200px" right="20px">
+        <Box position="absolute" top="50%" transform="translateY(-50%)" width="100px" height="200px" right="20px">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{
               opacity: 1, transition: {
-                duration: 0.6, ease: 'linear', delay: 1
+                duration: 0.8, ease: 'linear', delay: 0.6
               }
             }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: 'linear' }}
+            transition={{ duration: 0.8, ease: 'linear' }}
           >
             {images && images.map((image, index) => {
               const img = urlFor(image).auto('format').width(200).url();
