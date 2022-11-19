@@ -22,8 +22,8 @@ position: absolute;
 const StyledImage = styled(motion(Box))``;
 
 const Hero = ({ projects, focusedProject, updateProject }) => {
-  const scroll = useRef({ target: 0, current: 0 });
-  const { loaded, setLoaded, lastFocusedIndex, setLastFocusedIndex } = useHomeStore();
+  const { loaded, setLoaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition } = useHomeStore();
+  const scroll = useRef({ target: lastScrollPosition, current: lastScrollPosition });
   const { setScale } = useProjectStore();
   const activeIndex = useRef(lastFocusedIndex);
   const loops = useRef(0);
@@ -94,6 +94,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
     }
     setLastFocusedIndex(activeIndex.current)
     setScale(scale)
+    setLastScrollPosition(scroll.current.current)
   }
 
   return (
