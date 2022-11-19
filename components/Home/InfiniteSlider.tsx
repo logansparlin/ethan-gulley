@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 
 import { Box } from "@components/box"
 import Image from 'next/image'
+import { useHomeStore } from "@hooks/useHomeStore";
 
 const Slider = styled(motion(Box))``;
 
@@ -30,6 +31,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
   const items = useRef(null);
   const wrapWidth = useRef(0);
   const loadingRef = useRef(loading);
+  const { lastFocusedIndex } = useHomeStore();
 
   useEffect(() => {
     loadingRef.current = loading;

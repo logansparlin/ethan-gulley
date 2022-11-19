@@ -27,6 +27,7 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick }) => {
       zIndex="1"
       top="0"
       left="0"
+      cursor="none"
       onMouseLeave={() => setVisible(false)}
       onMouseMove={handleMouseMove}
     >
