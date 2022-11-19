@@ -22,13 +22,13 @@ export const HomeHead = () => (
 )
 
 const HomeLayout = ({ projects, site }) => {
-  const [focusedProject, setFocusedProject] = useState(projects[0]);
+  const { view, loaded, lastFocusedIndex } = useHomeStore();
+  const [focusedProject, setFocusedProject] = useState(projects[lastFocusedIndex]);
   const { activeProject } = useProjectStore();
-  const { view, loaded } = useHomeStore();
   const { asPath } = useRouter();
 
-  const updateProject = (project) => {
-    setFocusedProject(project)
+  const updateProject = (newProject) => {
+    setFocusedProject(newProject)
   }
 
   return (

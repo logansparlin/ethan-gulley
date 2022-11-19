@@ -15,7 +15,7 @@ const Header = ({ title, links }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: loaded ? 1 : 0 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 1.4, ease: [.9, 0, .1, 0.9] }}
+        transition={{ duration: 1, ease: [.9, 0, .1, 0.9] }}
       >
         <Box display="flex" justifyContent="space-between" width="100%">
           <Link href="/">

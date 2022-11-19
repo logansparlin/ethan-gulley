@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { urlFor } from "@lib/sanity"
 import NormalizeWheel from 'normalize-wheel';
 import { getImageDimensions } from '@sanity/asset-utils';
@@ -15,17 +15,24 @@ import InfiniteSlider from "./InfiniteSlider";
 
 const StyledHero = styled(motion(Box))``;
 
-const StyledTitle = styled(motion(Box))``;
+const StyledTitle = styled(motion(Box))`
+position: absolute;
+`;
 
 const StyledImage = styled(motion(Box))``;
 
 const Hero = ({ projects, focusedProject, updateProject }) => {
   const scroll = useRef({ target: 0, current: 0 });
-  const { loaded, setLoaded } = useHomeStore();
+  const { loaded, setLoaded, lastFocusedIndex, setLastFocusedIndex } = useHomeStore();
   const { setScale } = useProjectStore();
-  const activeIndex = useRef(0);
+  const activeIndex = useRef(lastFocusedIndex);
   const loops = useRef(0);
   const windowSize = useWindowSize();
+
+  const handleProjectChange = (index) => {
+    updateProject(projects[index])
+    activeIndex.current = index;
+  }
 
   const handleWheel = (e) => {
     if (!loaded) return;
@@ -49,6 +56,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
     const firstIndex = Number(window.localStorage.getItem('first-index'));
 
     interval = setInterval(() => {
+      if (loaded) return;
       if (loops.current === 0) {
         if (activeIndex.current < projects.length - 1) {
           activeIndex.current = activeIndex.current + 1
@@ -68,7 +76,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           }, 100)
         }
       }
-      updateProject(projects[activeIndex.current])
+      handleProjectChange(activeIndex.current)
     }, 90);
 
     return (() => {
@@ -84,7 +92,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
     } else {
       scale = pos.height / windowSize.height;
     }
-
+    setLastFocusedIndex(activeIndex.current)
     setScale(scale)
   }
 
@@ -100,10 +108,10 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           justifyContent="center"
           cursor="pointer"
           key="home-hero"
-          initial={{ scale: !loaded ? 0.8 : 1.05, y: 45 }}
+          initial={{ scale: !loaded ? 0.8 : 1, y: 45 }}
           animate={{ scale: loaded ? 1 : 0.8, y: loaded ? 0 : 45 }}
           exit={{ scale: 1, y: 45 }}
-          transition={{ duration: 1.4, ease: [.9, 0, .1, 0.9] }}
+          transition={{ duration: 1, ease: [.9, 0, .1, 0.9] }}
         >
           {projects.map(project => {
             const url = project.images?.length >= 1
@@ -155,7 +163,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           loading={!loaded}
           projects={projects}
           focusedProject={focusedProject}
-          updateProject={updateProject}
+          updateProject={handleProjectChange}
           scroll={scroll.current}
         />
       </Box>

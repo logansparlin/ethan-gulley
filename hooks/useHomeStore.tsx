@@ -7,6 +7,8 @@ interface HomeState {
   setView: (view: View) => void;
   loaded: boolean;
   setLoaded: (val: boolean) => void;
+  lastFocusedIndex: number;
+  setLastFocusedIndex: (val: number) => void;
 }
 
 export const useHomeStore = create<HomeState>((set) => ({
@@ -14,8 +16,12 @@ export const useHomeStore = create<HomeState>((set) => ({
   setView: (view) => {
     set({ view: view });
   },
-  loaded: false,
+  loaded: true,
   setLoaded: (val) => {
     set({ loaded: val })
+  },
+  lastFocusedIndex: 0,
+  setLastFocusedIndex: (index) => {
+    set({ lastFocusedIndex: index })
   }
 }));
