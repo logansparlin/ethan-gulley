@@ -8,7 +8,12 @@ import TextButton from "./TextButton";
 
 const Header = ({ title, links }) => {
   const { view, setView, loaded } = useHomeStore();
-  const { setInformationOpen } = useAppStore();
+  const { setInformationOpen, setTransitionType } = useAppStore();
+
+  const updateView = (view) => {
+    setView(view);
+    setTransitionType('view');
+  }
   return (
     <Box as="header" p="20px" width="100%" position="fixed" zIndex="10" fontSize="14px">
       <motion.div
@@ -19,7 +24,7 @@ const Header = ({ title, links }) => {
       >
         <Box display="flex" justifyContent="space-between" width="100%">
           <Link href="/">
-            <TextButton onClick={() => setView('default')}>
+            <TextButton onClick={() => updateView('default')}>
               {title}
             </TextButton>
           </Link>
@@ -29,7 +34,7 @@ const Header = ({ title, links }) => {
               display="inline-block"
               cursor="pointer"
               pr="4px"
-              onClick={() => setView(view === 'grid' ? 'default' : 'grid')}
+              onClick={() => updateView(view === 'grid' ? 'default' : 'grid')}
               color={view === 'list' ? '#D7D7D7' : '#000'}
               transition="color 250ms ease-in-out"
             >
@@ -39,7 +44,7 @@ const Header = ({ title, links }) => {
               as="li"
               display="inline-block"
               cursor="pointer"
-              onClick={() => setView(view === 'list' ? 'default' : 'list')}
+              onClick={() => updateView(view === 'list' ? 'default' : 'list')}
               color={view === 'grid' ? '#D7D7D7' : '#000'}
               transition="color 250ms ease-in-out"
             >

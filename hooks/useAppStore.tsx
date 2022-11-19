@@ -5,6 +5,8 @@ interface AppState {
   setInformationOpen: (open: boolean) => void;
   transitioning: boolean;
   setTransitioning: (transitioning: boolean) => void;
+  transitionType: 'page' | 'view';
+  setTransitionType: (val: 'page' | 'view') => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -15,5 +17,9 @@ export const useAppStore = create<AppState>((set) => ({
   transitioning: false,
   setTransitioning: (transitioning) => {
     set({ transitioning: transitioning })
+  },
+  transitionType: 'page',
+  setTransitionType: (type) => {
+    set({ transitionType: type })
   }
 }));

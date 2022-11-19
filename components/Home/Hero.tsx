@@ -12,6 +12,7 @@ import Link from "next/link";
 import { Box } from "@components/box"
 import Image from "next/image"
 import InfiniteSlider from "./InfiniteSlider";
+import { useAppStore } from "@hooks/useAppStore";
 
 const StyledHero = styled(motion(Box))``;
 
@@ -24,10 +25,11 @@ const StyledImage = styled(motion(Box))``;
 const Hero = ({ projects, focusedProject, updateProject }) => {
   const { loaded, setLoaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition } = useHomeStore();
   const scroll = useRef({ target: lastScrollPosition, current: lastScrollPosition });
-  const { setScale } = useProjectStore();
   const activeIndex = useRef(lastFocusedIndex);
   const loops = useRef(0);
   const windowSize = useWindowSize();
+  const { transitionType, setTransitionType } = useAppStore();
+  const { setScale } = useProjectStore();
 
   const handleProjectChange = (index) => {
     updateProject(projects[index])
@@ -95,6 +97,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
     setLastFocusedIndex(activeIndex.current)
     setScale(scale)
     setLastScrollPosition(scroll.current.current)
+    setTransitionType('page')
   }
 
   return (
@@ -109,9 +112,9 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           justifyContent="center"
           cursor="pointer"
           key="home-hero"
-          initial={{ scale: !loaded ? 0.8 : 1, y: 45 }}
-          animate={{ scale: loaded ? 1 : 0.8, y: loaded ? 0 : 45 }}
-          exit={{ scale: 1, y: 45 }}
+          initial={{ scale: !loaded ? 0.8 : 1, y: 45, opacity: transitionType == 'view' ? 0 : 1 }}
+          animate={{ scale: loaded ? 1 : 0.8, y: loaded ? 0 : 45, opacity: 1 }}
+          exit={{ scale: 1, y: 45, opacity: transitionType == 'view' ? 0 : 1 }}
           transition={{ duration: 1, ease: [.9, 0, .1, 0.9] }}
         >
           {projects.map(project => {
