@@ -39,19 +39,19 @@ const HomeLayout = ({ projects, site }) => {
       <motion.div>
         <Header {...site} />
       </motion.div>
-
-      <Box key={view}>
-        {view === 'default' &&
-          <Hero
-            projects={projects}
-            focusedProject={focusedProject}
-            updateProject={updateProject}
-          />
-        }
-        {view === 'grid' && <Grid projects={projects} key="grid" />}
-        {view === 'list' && <List projects={projects} key="list" />}
-      </Box>
-
+      <AnimatePresence exitBeforeEnter>
+        <Box key={`${view}-${asPath}`}>
+          {view === 'default' &&
+            <Hero
+              projects={projects}
+              focusedProject={focusedProject}
+              updateProject={updateProject}
+            />
+          }
+          {view === 'grid' && <Grid projects={projects} key="grid" />}
+          {view === 'list' && <List projects={projects} key="list" />}
+        </Box>
+      </AnimatePresence>
     </Box>
   )
 }
