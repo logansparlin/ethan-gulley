@@ -67,24 +67,12 @@ const GridView = ({ projects, category, handleChangeCategory }) => {
       scroll.destroy()
       scrollRef.current = null;
     }
-  }, [])
+  }, [category])
 
   return (
     <Box width="100%" ref={container} pb="100px" minHeight="100vh">
       <CategoryList category={category} setCategory={handleChangeCategory} />
-      <motion.div
-        style={{ flex: 1 }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        key="grid"
-        transition={{
-          duration: 0.6,
-          ease: 'linear'
-        }}
-      >
-        <ProjectGrid category={category} projects={projects} />
-      </motion.div>
+      <ProjectGrid category={category} projects={projects} />
     </Box>
   )
 }
