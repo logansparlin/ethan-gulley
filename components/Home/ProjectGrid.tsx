@@ -51,7 +51,7 @@ const ProjectGrid = ({ projects, category }) => {
 
     setTimeout(() => {
       router.push(`/projects/${project.slug.current}`)
-    }, 800)
+    }, 1000)
   }
 
   return (
@@ -72,11 +72,11 @@ const ProjectGrid = ({ projects, category }) => {
                       y: isSelected ? selectedProjectPosition.current.y : 0,
                       x: isSelected ? selectedProjectPosition.current.x : 0,
                       opacity: activeProject && !isSelected ? 0 : 1,
-                      scale: activeProject && isSelected ? selectedProjectPosition.current.scale : activeProject && !isSelected ? 0 : 1,
+                      scale: activeProject && isSelected ? selectedProjectPosition.current.scale : 1,
                       transition: {
-                        duration: isSelected ? 0.6 : activeProject ? 0.8 : 0.6,
-                        ease: isSelected ? [.9, 0, .1, 0.9] : 'circOut',
-                        delay: isSelected ? 0.6 : activeProject ? 0 : index * 0.03
+                        duration: isSelected ? 0.8 : activeProject ? 0.8 : 0.6,
+                        ease: isSelected ? [.92, 0.05, .15, 0.96] : 'circOut',
+                        delay: isSelected ? 0.4 : activeProject ? 0 : index * 0.03
                       }
                     }}
                     exit={{
