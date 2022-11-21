@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { Box } from "@components/box"
 import CategoryList from './CategoryList';
 import ProjectGrid from './ProjectGrid';
+import { useAppStore } from '@hooks/useAppStore';
+import { useProjectStore } from '@hooks/useProjectStore';
 
 type Category = 'all' | 'editorial' | 'commercial' | 'personal';
 

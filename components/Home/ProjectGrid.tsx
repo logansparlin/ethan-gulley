@@ -1,24 +1,20 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { urlFor } from "@lib/sanity";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/dist/client/router";
+import { useAppStore } from "@hooks/useAppStore";
+import { useProjectStore } from "@hooks/useProjectStore";
+import { getImageDimensions } from "@sanity/asset-utils";
 import styled from 'styled-components';
 
 import { Box } from "@components/box";
 import Image from 'next/image';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { getImageDimensions } from "@sanity/asset-utils";
 
 const StyledImage = styled(motion(Box))`
   position: relative;
   will-change: auto;
 `;
-
-// const breakpoints: Breakpoint[] = [
-//   { size: 640, columns: 1 },
-//   { size: 1024, columns: 3 },
-//   { size: 1200, columns: 6 },
-// ];
 
 const breakpoints = {
   640: 1,
@@ -28,17 +24,20 @@ const breakpoints = {
 
 
 const ProjectGrid = ({ projects, category }) => {
-  const [selectedProject, setSelectedProject] = useState(null);
   const selectedProjectPosition = useRef(null);
+  const { setTransitionType } = useAppStore();
+  const { setScale, setActiveProject, activeProject } = useProjectStore();
+  const router = useRouter();
+
   const filteredProjects = category === 'all'
     ? projects
     : projects.filter(project => project.category === category);
-  const router = useRouter();
 
   const handleClick = (e, project) => {
     e.preventDefault();
     e.stopPropagation();
-    setSelectedProject(project._id === selectedProject?._id ? null : project)
+    setActiveProject(project)
+
     const pos = e.target.getBoundingClientRect()
     const scale = window.innerHeight / pos.height;
     selectedProjectPosition.current = {
@@ -46,6 +45,9 @@ const ProjectGrid = ({ projects, category }) => {
       y: ((-1 * pos.y) + window.innerHeight / 2 - pos.height / 2),
       scale: scale
     };
+
+    setTransitionType('page');
+    setScale(1);
 
     setTimeout(() => {
       router.push(`/projects/${project.slug.current}`)
@@ -59,9 +61,9 @@ const ProjectGrid = ({ projects, category }) => {
           <ResponsiveMasonry columnsCountBreakPoints={breakpoints}>
             <Masonry gutter="20px">
               {filteredProjects.map((project, index) => {
-                const url = urlFor(project.image.src).url();
+                const url = urlFor(project.image.src).auto('format').width(1000).url();
                 const dimensions = getImageDimensions(project.image.src);
-                const isSelected = selectedProject?._id === project._id;
+                const isSelected = activeProject ? activeProject._id === project._id : false;
                 return (
                   <StyledImage
                     key={project._id}
@@ -69,12 +71,12 @@ const ProjectGrid = ({ projects, category }) => {
                     animate={{
                       y: isSelected ? selectedProjectPosition.current.y : 0,
                       x: isSelected ? selectedProjectPosition.current.x : 0,
-                      opacity: selectedProject && !isSelected ? 0 : 1,
-                      scale: selectedProject && isSelected ? selectedProjectPosition.current.scale : selectedProject && !isSelected ? 0 : 1,
+                      opacity: activeProject && !isSelected ? 0 : 1,
+                      scale: activeProject && isSelected ? selectedProjectPosition.current.scale : activeProject && !isSelected ? 0 : 1,
                       transition: {
-                        duration: isSelected ? 0.6 : selectedProject ? 0.8 : 0.6,
+                        duration: isSelected ? 0.6 : activeProject ? 0.8 : 0.6,
                         ease: isSelected ? [.9, 0, .1, 0.9] : 'circOut',
-                        delay: isSelected ? 0.8 : selectedProject ? 0 : index * 0.03
+                        delay: isSelected ? 0.8 : activeProject ? 0 : index * 0.03
                       }
                     }}
                     exit={{

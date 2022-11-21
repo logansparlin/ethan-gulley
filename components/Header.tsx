@@ -5,9 +5,11 @@ import { motion } from 'framer-motion';
 import { Box } from "./box";
 import Link from 'next/link';
 import TextButton from "./TextButton";
+import { useProjectStore } from "@hooks/useProjectStore";
 
-const Header = ({ title, links }) => {
+const Header = ({ title }) => {
   const { view, setView, loaded } = useHomeStore();
+  const { activeProject } = useProjectStore();
   const { setInformationOpen, setTransitionType } = useAppStore();
 
   const updateView = (view) => {
@@ -18,9 +20,12 @@ const Header = ({ title, links }) => {
     <Box as="header" p="20px" width="100%" position="fixed" zIndex="10" fontSize="14px">
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: loaded ? 1 : 0 }}
+        animate={{ opacity: activeProject ? 0 : loaded ? 1 : 0 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 1, ease: [.9, 0, .1, 0.9] }}
+        transition={{
+          duration: 0.6,
+          ease: 'circOut'
+        }}
       >
         <Box display="flex" justifyContent="space-between" width="100%">
           <Link href="/">

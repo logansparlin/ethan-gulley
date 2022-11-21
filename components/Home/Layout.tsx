@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useHomeStore } from "@hooks/useHomeStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/dist/client/router";
@@ -10,8 +10,6 @@ import Hero from "./Hero";
 import Grid from "./Grid";
 import List from "./List";
 import Information from "@components/Global/Information";
-import { Project } from "@components/Project/Project";
-import { useProjectStore } from "@hooks/useProjectStore";
 
 export const HomeHead = () => (
   <Head>
@@ -24,23 +22,25 @@ export const HomeHead = () => (
 const HomeLayout = ({ projects, site }) => {
   const { view, loaded, lastFocusedIndex } = useHomeStore();
   const [focusedProject, setFocusedProject] = useState(projects[lastFocusedIndex]);
-  const { activeProject } = useProjectStore();
   const { asPath } = useRouter();
 
   const updateProject = (newProject) => {
     setFocusedProject(newProject)
   }
 
+  const transitionKey = useMemo(() => {
+    return view === 'default' ? `${view}-${asPath}` : view
+  }, [view, asPath])
+
   return (
     <Box>
       <Information />
-      {activeProject && <Project />}
       <HomeHead />
       <motion.div>
         <Header {...site} />
       </motion.div>
       <AnimatePresence exitBeforeEnter>
-        <Box key={`${view}-${asPath}`}>
+        <Box key={transitionKey}>
           {view === 'default' &&
             <Hero
               projects={projects}
