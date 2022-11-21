@@ -76,7 +76,7 @@ const ProjectGrid = ({ projects, category }) => {
                       transition: {
                         duration: isSelected ? 0.6 : activeProject ? 0.8 : 0.6,
                         ease: isSelected ? [.9, 0, .1, 0.9] : 'circOut',
-                        delay: isSelected ? 0.8 : activeProject ? 0 : index * 0.03
+                        delay: isSelected ? 0.6 : activeProject ? 0 : index * 0.03
                       }
                     }}
                     exit={{

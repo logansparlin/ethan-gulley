@@ -78,7 +78,7 @@ const ProjectPage = ({ pageData }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1, ease: [.9, 0, .1, 0.9] }}
+          transition={{ duration: 0.6, ease: 'circOut' }}
         >
           <Box as="header" display="flex" justifyContent="space-between">
             <Box as="h1" p="20px">{title}</Box>
@@ -100,7 +100,10 @@ const ProjectPage = ({ pageData }) => {
               top="0"
               left="15vw"
               initial={{ scale: scale }}
-              animate={{ scale: 1 }}
+              animate={{
+                scale: 1,
+                transition: { duration: 1, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
+              }}
               exit={{ scale: scale }}
               transition={{ duration: 1, ease: [1, 0.15, 0.25, 0.9] }}
             >
@@ -118,7 +121,11 @@ const ProjectPage = ({ pageData }) => {
             top="0"
             left="15vw"
             initial={{ opacity: 1, scale: scale }}
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              transition: { duration: 1, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
+            }}
             exit={{ opacity: 1, scale: scale }}
             transition={{ duration: 1, ease: [1, 0.15, 0.25, 0.9] }}
           >
