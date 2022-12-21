@@ -11,14 +11,16 @@ import Layout from "@components/Global/Layout";
 import { Box } from "@components/box";
 import { Cursor } from '@components/Project/Cursor';
 import Image from "next/image";
+import { useNextPreviousProjects } from "@hooks/useNextPreviousProjects";
 
 const StyledImage = styled(motion(Box))``;
 
 const ProjectPage = ({ pageData }) => {
   if (!pageData) return "no page data"
-  const { title, images, image } = pageData;
+  const { _id, title, images, image, projects } = pageData;
   const [activeIndex, setActiveIndex] = useState(0);
   const { scale } = useProjectStore();
+  const { nextProject, previousProject } = useNextPreviousProjects({ id: _id, projects })
 
   useKeypress(['ArrowLeft', 'ArrowRight'], (e) => {
     if (e.key === 'ArrowRight') {
@@ -73,6 +75,8 @@ const ProjectPage = ({ pageData }) => {
           index={activeIndex + 1}
           onRightClick={nextImage}
           onLeftClick={previousImage}
+          nextProject={nextProject}
+          previousProject={previousProject}
         />
         <motion.div
           initial={{ opacity: 0 }}
@@ -124,7 +128,7 @@ const ProjectPage = ({ pageData }) => {
             animate={{
               opacity: 1,
               scale: 1,
-              transition: { duration: 1, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
+              transition: { duration: 1, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
             }}
             exit={{ opacity: 1, scale: scale }}
             transition={{ duration: 1, ease: [1, 0.15, 0.25, 0.9] }}

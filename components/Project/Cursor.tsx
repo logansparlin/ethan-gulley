@@ -1,17 +1,28 @@
 import { useState, useRef } from 'react';
 
 import { Box } from '@components/box';
+import { useWindowSize } from '@hooks/useWindowSize';
 
-export const Cursor = ({ title, count, index, onLeftClick, onRightClick }) => {
+export const Cursor = ({ title, count, index, onLeftClick, onRightClick, nextProject, previousProject }) => {
   const [visible, setVisible] = useState(false);
   const textRef = useRef(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [side, setSide] = useState(null);
+  const { width } = useWindowSize();
 
   const handleMouseMove = (e) => {
     const { pageX, pageY } = e;
     const elPos = textRef.current?.getBoundingClientRect();
 
     setVisible(true)
+
+    if (pageX < width / 2 && side !== 'left') {
+      setSide('left')
+    }
+
+    if (pageX >= width / 2 && side !== 'right') {
+      setSide('right')
+    }
 
     setPos({
       x: pageX - (elPos.width / 2),
@@ -44,9 +55,37 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick }) => {
         style={{ pointerEvents: 'none' }}
         width="200px"
       >
-        <Box>{title}</Box>
-        <Box>{index}/{count}</Box>
+        {index === 1 && side === 'left' ? <PrevCursor title={previousProject.title} /> : null}
+        {index === count && side === 'right' ? <NextCursor title={nextProject.title} /> : null}
+        {(index === 1 && side === 'right') || (index === count && side === 'left') || index > 1 && index < count ? <CurrentCursor title={title} index={index} count={count} /> : null}
       </Box>
     </Box>
+  )
+}
+
+const NextCursor = ({ title }) => {
+  return (
+    <>
+      <Box>Next Project</Box>
+      <Box>{title}</Box>
+    </>
+  )
+}
+
+const PrevCursor = ({ title }) => {
+  return (
+    <>
+      <Box>Previous Project</Box>
+      <Box>{title}</Box>
+    </>
+  )
+}
+
+const CurrentCursor = ({ title, index, count }) => {
+  return (
+    <>
+      <Box>{title}</Box>
+      <Box>{index}/{count}</Box>
+    </>
   )
 }

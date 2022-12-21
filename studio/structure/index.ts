@@ -2,6 +2,7 @@ import S from '@sanity/desk-tool/structure-builder';
 import { BiHomeAlt, BiBookContent } from 'react-icons/bi';
 import { FiSettings } from 'react-icons/fi';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
 const Structure = () => (
     S.list()
@@ -39,19 +40,13 @@ const Structure = () => (
                 )
                 .icon(IoMdInformationCircleOutline),
             S.divider(),
-            S.listItem()
-                .title('Projects')
-                .schemaType('project')
-                .icon(BiBookContent)
-                .child(
-                    S.documentTypeList('project')
-                        .title('Project')
-                        .child(documentId => (
-                            S.document()
-                                .documentId(documentId)
-                                .schemaType('project')
-                        ))
-                )
+            orderableDocumentListDeskItem({
+                type: 'project',
+                title: 'Projects',
+                params: {
+                    lang: 'en_US'
+                },
+            }),
         ])
 )
 

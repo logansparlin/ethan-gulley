@@ -5,7 +5,7 @@ export async function getHomePage() {
     const query = groq`
         *[_type == "homePage"][0] {
             title,
-            "projects": *[_type == "project"] {
+            "projects": *[_type == "project"]|order(orderRank) {
                 ...,
                 image {
                     src,
@@ -52,7 +52,16 @@ export async function getProject(slug: string) {
                     _key,
                     _type
                 }
-            }
+            },
+            "projects": *[_type == "project"]|order(orderRank) {
+                ...,
+                image {
+                    src,
+                    alt,
+                    "lqip": src.asset -> metadata.lqip
+                },
+                images
+            },
         }
     `;
 

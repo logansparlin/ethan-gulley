@@ -14,7 +14,11 @@ import Image from "next/image"
 import InfiniteSlider from "./InfiniteSlider";
 import { useAppStore } from "@hooks/useAppStore";
 
-const StyledHero = styled(motion(Box))``;
+const WHEEL_SPEED = 0.85;
+
+const StyledHero = styled(motion(Box))`
+  will-change: auto;
+`;
 
 const StyledTitle = styled(motion(Box))`
 position: absolute;
@@ -39,8 +43,8 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
   const handleWheel = (e) => {
     if (!loaded) return;
     const normalized = NormalizeWheel(e);
-    const speed = normalized.pixelY;
-    scroll.current.target += speed * 0.7;
+    const delta = normalized.pixelY;
+    scroll.current.target += delta * WHEEL_SPEED;
   }
 
   useEffect(() => {
@@ -112,10 +116,10 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           justifyContent="center"
           cursor="pointer"
           key="home-hero"
-          initial={{ scale: !loaded ? 0.8 : 1, y: 45, opacity: transitionType == 'view' ? 0 : 1 }}
-          animate={{ scale: loaded ? 1 : 0.8, y: loaded ? 0 : 45, opacity: 1 }}
+          initial={{ scale: !loaded ? 0.6 : 1, y: 45, opacity: transitionType == 'view' ? 0 : 1 }}
+          animate={{ scale: loaded ? 1 : 0.6, y: loaded ? 0 : 45, opacity: 1 }}
           exit={{ scale: 1, y: 45, opacity: transitionType == 'view' ? 0 : 1 }}
-          transition={{ duration: 1, ease: [.9, 0, .1, 0.9] }}
+          transition={{ duration: 1, ease: [.9, 0, .1, .9] }}
         >
           {projects.map(project => {
             const url = project.images?.length >= 1
@@ -142,7 +146,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                         height="0"
                         pb={`calc(25vw * ${aspect})`}
                       >
-                        <Image src={project.image.url || url} layout="fill" objectFit="contain" alt={project.image.alt} loading="eager" />
+                        <Image src={project.image?.url || url} layout="fill" objectFit="contain" alt={project.image?.alt ?? ""} loading="eager" />
                       </StyledImage>
                       <StyledTitle
                         pt="8px"

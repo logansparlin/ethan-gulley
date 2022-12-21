@@ -31,8 +31,8 @@ const Information = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4, ease: 'easeInOut' }}
       >
-        <Box as="header" display="flex" justifyContent="space-between">
-          <Box as="h1">Ethan Gulley</Box>
+        <Box as="header" display="flex" justifyContent="space-between" alignItems="flex-start">
+          <Box as="h1" fontSize="12vw" lineHeight="10vw" letterSpacing="-0.06em">Ethan Gulley</Box>
           <Box as="button" onClick={() => setInformationOpen(false)}>Close</Box>
         </Box>
         <Box as="main">

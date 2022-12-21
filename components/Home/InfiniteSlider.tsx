@@ -103,7 +103,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
       transition={{ duration: 1, ease: [.9, 0, .1, 0.9] }}
     >
       {projects.map((project, index) => {
-        const url = urlFor(project.image.src).auto('format').width(1000).url();
+        const url = project.image ? urlFor(project.image.src).auto('format').width(1000).url() : urlFor(project.images[0].src).auto('format').url();
         return (
           <StyledImage
             ref={index === 0 ? itemRef : null}
@@ -124,7 +124,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
               src={url}
               layout="fill"
               objectFit="cover"
-              alt={project.image.alt}
+              alt={project.image?.alt || ""}
               loading="eager"
               placeholder="blur"
               blurDataURL={project.image.lqip}

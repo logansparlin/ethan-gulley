@@ -4,8 +4,6 @@ import { motion } from 'framer-motion';
 import { Box } from "@components/box"
 import CategoryList from './CategoryList';
 import ProjectGrid from './ProjectGrid';
-import { useAppStore } from '@hooks/useAppStore';
-import { useProjectStore } from '@hooks/useProjectStore';
 
 type Category = 'all' | 'editorial' | 'commercial' | 'personal';
 
@@ -32,7 +30,7 @@ const Grid = ({ projects }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{
-          duration: 0.6
+          duration: 1
         }}
       >
         <GridView projects={projects} category={category} handleChangeCategory={handleChangeCategory} />
