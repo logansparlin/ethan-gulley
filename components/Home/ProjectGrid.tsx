@@ -17,6 +17,7 @@ const StyledImage = styled(motion(Box))`
   will-change: auto;
   opacity: 1;
   transition: opacity 500ms ease-in-out;
+  cursor: none;
 `;
 
 const StyledItem = styled(motion(Box))`
