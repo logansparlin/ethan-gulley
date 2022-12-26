@@ -33,7 +33,7 @@ const StyledTitle = styled.span`
 export const HoverTitle = ({ children }) => {
   const hoverRef = useRef(null);
   const elRef = useRef(null);
-  const { elX, elY } = useMouseHovered(hoverRef, { bound: true, whenHovered: false });
+  const { elX, elY } = useMouseHovered(hoverRef, { bound: false, whenHovered: false });
 
   const animateX = (value) => {
     if (!elRef || !elRef.current) return;
