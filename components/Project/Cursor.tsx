@@ -1,14 +1,27 @@
 import { useState, useRef } from 'react';
+import { useWindowSize } from '@hooks/useWindowSize';
+import { useLerp } from '@hooks/useLerp';
 
 import { Box } from '@components/box';
-import { useWindowSize } from '@hooks/useWindowSize';
 
 export const Cursor = ({ title, count, index, onLeftClick, onRightClick, nextProject, previousProject }) => {
   const [visible, setVisible] = useState(false);
   const textRef = useRef(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
   const [side, setSide] = useState(null);
   const { width } = useWindowSize();
+
+  const animateX = (value) => {
+    if (!textRef || !textRef.current) return;
+    textRef.current.style.left = `${value}px`
+  }
+
+  const animateY = (value) => {
+    if (!textRef || !textRef.current) return;
+    textRef.current.style.top = `${value}px`
+  }
+
+  const { update: updateX } = useLerp(animateX, 0.3);
+  const { update: updateY } = useLerp(animateY, 0.3);
 
   const handleMouseMove = (e) => {
     const { pageX, pageY } = e;
@@ -24,10 +37,11 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick, nextPro
       setSide('right')
     }
 
-    setPos({
-      x: pageX - (elPos.width / 2),
-      y: pageY - (elPos.height / 2)
-    })
+    const x = pageX - (elPos.width / 2)
+    const y = pageY - (elPos.height / 2)
+
+    updateX(x)
+    updateY(y)
   }
 
   return (
@@ -48,8 +62,8 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick, nextPro
         opacity={visible ? 1 : 0}
         transition="opacity 200ms ease-in-out"
         position="absolute"
-        top={`${pos.y}px`}
-        left={`${pos.x}px`}
+        top="0"
+        left="0"
         textAlign="center"
         ref={textRef}
         style={{ pointerEvents: 'none' }}

@@ -3,15 +3,16 @@ import { getProject, getProjectPaths } from "@lib/api";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { urlFor } from "@lib/sanity";
 import useKeypress from 'react-use-keypress';
-import styled from 'styled-components';
 import { motion } from "framer-motion";
+import { useNextPreviousProjects } from "@hooks/useNextPreviousProjects";
+import styled from 'styled-components';
 
 import Link from "next/link";
 import Layout from "@components/Global/Layout";
 import { Box } from "@components/box";
 import { Cursor } from '@components/Project/Cursor';
+import { Overview } from "@components/Project/Overview";
 import Image from "next/image";
-import { useNextPreviousProjects } from "@hooks/useNextPreviousProjects";
 
 const StyledImage = styled(motion(Box))``;
 
@@ -21,6 +22,7 @@ const ProjectPage = ({ pageData }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const { scale } = useProjectStore();
   const { nextProject, previousProject } = useNextPreviousProjects({ id: _id, projects })
+  const [overviewOpen, setOverviewOpen] = useState(false);
 
   useKeypress(['ArrowLeft', 'ArrowRight'], (e) => {
     if (e.key === 'ArrowRight') {
@@ -66,9 +68,17 @@ const ProjectPage = ({ pageData }) => {
 
   const img = urlFor(image.src).auto('format').width(1000).url();
 
+  const toggleOverview = () => {
+    setOverviewOpen(!overviewOpen)
+  }
+
   return (
     <Layout>
       <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
+        {overviewOpen
+          ? <Overview close={toggleOverview} title={title} images={images} />
+          : null
+        }
         <Cursor
           title={title}
           count={images?.length ?? 0}
@@ -86,8 +96,23 @@ const ProjectPage = ({ pageData }) => {
         >
           <Box as="header" display="flex" justifyContent="space-between">
             <Box as="h1" p="20px">{title}</Box>
-            <Box p="20px" position="relative" zIndex="10" cursor="pointer">
-              <Link href="/">Close</Link>
+            <Box display="flex">
+              <Box
+                as="button"
+                type="button"
+                height="auto"
+                pr="24px"
+                position="relative"
+                zIndex="10"
+                cursor="pointer"
+                color={"#B4B4B4"}
+                onClick={toggleOverview}
+              >
+                Overview
+              </Box>
+              <Box pr="20px" pt="20px" position="relative" zIndex="10" cursor="pointer">
+                <Link href="/">Close</Link>
+              </Box>
             </Box>
           </Box>
         </motion.div>

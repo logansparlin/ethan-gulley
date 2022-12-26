@@ -46,7 +46,7 @@ export const HoverTitle = ({ children }) => {
   }
 
   const { update: updateX } = useLerp(animateX);
-  const { update: updateY } = useLerp(animateY)
+  const { update: updateY } = useLerp(animateY);
 
   updateX(elX)
   updateY(elY)

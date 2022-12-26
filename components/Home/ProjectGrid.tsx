@@ -6,6 +6,7 @@ import { useAppStore } from "@hooks/useAppStore";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { getImageDimensions } from "@sanity/asset-utils";
 import styled from 'styled-components';
+import { GRID_BREAKPOINTS } from "@lib/constants";
 
 import { Box } from "@components/box";
 import Image from 'next/image';
@@ -48,21 +49,13 @@ const GridWrapper = styled(Box)`
   }
 `
 
-const breakpoints = {
-  300: 1,
-  500: 2,
-  768: 3,
-  1024: 4,
-  1400: 6
-}
-
 
 const ProjectGrid = ({ projects, category }) => {
   const selectedProjectPosition = useRef(null);
   const { setTransitionType } = useAppStore();
   const { setScale, setActiveProject, activeProject } = useProjectStore();
   const router = useRouter();
-  const { indices, updateIndices, clearIndices } = useAdjacentGridItem(breakpoints);
+  const { indices, updateIndices, clearIndices } = useAdjacentGridItem(GRID_BREAKPOINTS);
 
   const filteredProjects = category === 'all'
     ? projects
@@ -94,7 +87,7 @@ const ProjectGrid = ({ projects, category }) => {
     <Box pt="70px" pb="100px">
       <AnimatePresence exitBeforeEnter={true} initial={false}>
         <GridWrapper key={category}>
-          <ResponsiveMasonry columnsCountBreakPoints={breakpoints}>
+          <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
             <Masonry gutter="20px">
               {filteredProjects.map((project, index) => {
                 const url = urlFor(project.image.src).auto('format').width(1000).url();
