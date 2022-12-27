@@ -90,7 +90,7 @@ const ProjectGrid = ({ projects, category }) => {
           <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
             <Masonry gutter="20px">
               {filteredProjects.map((project, index) => {
-                const url = urlFor(project.image.src).auto('format').width(1000).url();
+                const url = urlFor(project.image.src).auto('format').width(1800).url();
                 const dimensions = getImageDimensions(project.image.src);
                 const isSelected = activeProject ? activeProject._id === project._id : false;
                 return (

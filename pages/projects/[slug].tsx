@@ -18,7 +18,7 @@ const StyledImage = styled(motion(Box))``;
 
 const ProjectPage = ({ pageData }) => {
   if (!pageData) return "no page data"
-  const { _id, title, images, image, projects } = pageData;
+  const { _id, title, images, image, projects, credits } = pageData;
   const [activeIndex, setActiveIndex] = useState(0);
   const { scale } = useProjectStore();
   const { nextProject, previousProject } = useNextPreviousProjects({ id: _id, projects })
@@ -73,7 +73,7 @@ const ProjectPage = ({ pageData }) => {
     return activeIndex + 1
   }, [activeIndex])
 
-  const img = urlFor(image.src).auto('format').width(1000).url();
+  const img = urlFor(image.src).auto('format').width(1800).url();
 
   const toggleOverview = () => {
     setOverviewOpen(!overviewOpen)
@@ -81,7 +81,14 @@ const ProjectPage = ({ pageData }) => {
 
   return (
     <Layout>
-      <Overview title={title} images={images} isOpen={overviewOpen} close={toggleOverview} setActiveIndex={setImage} />
+      <Overview
+        title={title}
+        images={images}
+        isOpen={overviewOpen}
+        close={toggleOverview}
+        setActiveIndex={setImage}
+        credits={credits}
+      />
       <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
         <Cursor
           title={title}
@@ -121,7 +128,7 @@ const ProjectPage = ({ pageData }) => {
           </Box>
         </motion.div>
         {images && images.map((image, index) => {
-          const img = urlFor(image).auto('format').width(2000).url();
+          const img = urlFor(image).auto('format').width(1800).url();
           return (
             <StyledImage
               key={image._key}

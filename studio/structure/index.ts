@@ -46,6 +46,7 @@ const Structure = () => (
                 params: {
                     lang: 'en_US'
                 },
+                icon: () => '📷'
             }),
         ])
 )

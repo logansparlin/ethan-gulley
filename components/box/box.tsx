@@ -59,6 +59,9 @@ const Box = styled.div<Props>`
     },
     willChange: {
         property: 'willChange'
+    },
+    letterSpacing: {
+        property: 'letterSpacing'
     }
 })}
 `;

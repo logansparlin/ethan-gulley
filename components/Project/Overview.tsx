@@ -21,7 +21,6 @@ const StyledOverview = styled(motion.div)`
   z-index: 100;
   cursor: auto;
   padding: 20px;
-  padding-bottom: 100px;
 `
 
 const Header = styled(motion.header)`
@@ -47,7 +46,7 @@ const Title = styled.h1`
 })}
 `;
 
-export const Overview = ({ close, title, images, isOpen, setActiveIndex }) => {
+export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex }) => {
   const container = useRef(null);
 
   useEffect(() => {
@@ -72,7 +71,7 @@ export const Overview = ({ close, title, images, isOpen, setActiveIndex }) => {
     return () => {
       scroll.destroy()
     }
-  }, [])
+  }, [isOpen])
 
   return (
     <AnimatePresence initial={true}>
@@ -117,6 +116,23 @@ export const Overview = ({ close, title, images, isOpen, setActiveIndex }) => {
               })}
             </Masonry>
           </ResponsiveMasonry>
+          <Box pt="100px" lineHeight="98%" letterSpacing="-0.015em">
+            <div>Credits</div>
+            <Box pt="34px">
+              {credits.map(credit => {
+                return (
+                  <Box key={credit._key}>
+                    <span>{credit.title} </span>
+                    {credit.name?.map((item, index) => {
+                      return (
+                        <span key={item._key}>{item.name}{`${index < credit.name.length - 1 ? ', ' : ''}`}</span>
+                      )
+                    })}
+                  </Box>
+                )
+              })}
+            </Box>
+          </Box>
         </StyledOverview>
       </> : null}
     </AnimatePresence>
