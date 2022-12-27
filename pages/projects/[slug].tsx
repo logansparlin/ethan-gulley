@@ -50,6 +50,13 @@ const ProjectPage = ({ pageData }) => {
     return setActiveIndex(activeIndex - 1)
   }
 
+  const setImage = (index) => {
+    if (index !== activeIndex) {
+      setActiveIndex(index)
+      setOverviewOpen(false)
+    }
+  }
+
   const beforeIndex = useMemo(() => {
     if (activeIndex === 0) {
       return images?.length - 1
@@ -74,11 +81,8 @@ const ProjectPage = ({ pageData }) => {
 
   return (
     <Layout>
+      <Overview title={title} images={images} isOpen={overviewOpen} close={toggleOverview} setActiveIndex={setImage} />
       <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0" bg="white">
-        {overviewOpen
-          ? <Overview close={toggleOverview} title={title} images={images} />
-          : null
-        }
         <Cursor
           title={title}
           count={images?.length ?? 0}

@@ -13,9 +13,9 @@ const Layout = ({ children }) => {
   }, [])
 
   return (
-    <motion.div>
+    <div>
       {children}
-    </motion.div>
+    </div>
   )
 }
 
