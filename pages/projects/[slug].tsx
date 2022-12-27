@@ -121,7 +121,7 @@ const ProjectPage = ({ pageData }) => {
           </Box>
         </motion.div>
         {images && images.map((image, index) => {
-          const img = urlFor(image).auto('format').width(1000).url();
+          const img = urlFor(image).auto('format').width(2000).url();
           return (
             <StyledImage
               key={image._key}
