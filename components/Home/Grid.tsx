@@ -67,6 +67,13 @@ const GridView = ({ projects, category, handleChangeCategory }) => {
       scroll.destroy()
       scrollRef.current = null;
     }
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+
+      scrollRef.current?.update();
+    }, 500)
   }, [category])
 
   return (

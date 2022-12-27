@@ -138,7 +138,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                 zIndex={project._id === focusedProject._id ? 2 : 1}
               >
                 <Box as="button" onClick={calculateScale}>
-                  <Link href={`/projects/${project.slug.current}`}>
+                  <Link href={`/projects/${project.slug?.current}`}>
                     <Box>
                       <StyledImage
                         position="relative"

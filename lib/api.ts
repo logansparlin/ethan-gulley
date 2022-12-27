@@ -60,10 +60,7 @@ export async function getProject(slug: string) {
                     alt,
                     "lqip": src.asset -> metadata.lqip
                 },
-                images,
-                credits[] {
-                    ...
-                }
+                images
             },
         }
     `;

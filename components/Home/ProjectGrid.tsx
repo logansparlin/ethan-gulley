@@ -43,7 +43,7 @@ const GridWrapper = styled(Box)`
     ${StyledItem}:hover:not(.active) {
       ${StyledHoverTitle} {
         opacity: 1;
-        transition: opacity 500ms ease-in-out;
+        transition: opacity 300ms ease-in-out;
       }
     }
   }
