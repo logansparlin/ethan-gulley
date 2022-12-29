@@ -16,11 +16,12 @@ const StyledOverview = styled(motion.div)`
   left: 0;
   width: 100%;
   min-height: 100vh;
-  background: white;
-  color: black;
+  background: black;
+  color: white;
   z-index: 100;
   cursor: auto;
   padding: 20px;
+  will-change: transform;
 `
 
 const Header = styled(motion.header)`
@@ -31,7 +32,7 @@ const Header = styled(motion.header)`
   padding: 20px;
   left: 0;
   z-index: 1000;
-  color: black;
+  color: white;
   width: 100%;
   cursor: auto;
   font-size: 14px;
@@ -81,7 +82,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
+          transition={{ duration: 0.6, ease: 'easeInOut' }}
         >
           <Box>{title}</Box>
           <Box as="button" onClick={close} lineHeight="0" p="0">Close</Box>
@@ -91,7 +92,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
           initial={{ opacity: 1, y: '100%' }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 1, y: '100%' }}
-          transition={{ duration: 0.8, ease: [.9, 0, .1, 0.9] }}
+          transition={{ duration: 0.6, ease: [.9, 0, .1, 0.9] }}
           key="overview"
         >
           <Title>{title}</Title>
