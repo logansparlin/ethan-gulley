@@ -23,7 +23,7 @@ const Header = ({ title }) => {
         animate={{ opacity: activeProject ? 0 : loaded ? 1 : 0 }}
         exit={{ opacity: 0 }}
         transition={{
-          duration: 1,
+          duration: 0.6,
           ease: 'circOut'
         }}
       >

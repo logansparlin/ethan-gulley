@@ -16,8 +16,8 @@ const StyledOverview = styled(motion.div)`
   left: 0;
   width: 100%;
   min-height: 100vh;
-  background: black;
-  color: white;
+  background: white;
+  color: black;
   z-index: 100;
   cursor: auto;
   padding: 20px;
@@ -31,9 +31,10 @@ const Header = styled(motion.header)`
   padding: 20px;
   left: 0;
   z-index: 1000;
-  color: white;
+  color: black;
   width: 100%;
   cursor: auto;
+  font-size: 14px;
 `
 
 const Title = styled.h1`
@@ -99,6 +100,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
               {images.map((image, index) => {
                 const url = urlFor(image).width(500).auto('format').url();
                 const dimensions = getImageDimensions(image)
+                const lqip = image.lqip;
                 return (
                   <Box key={url} onClick={() => setActiveIndex(index)}>
                     <Box
@@ -108,7 +110,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
                       pb={`${(dimensions.height / dimensions.width) * 100}%`}
                     >
                       <Box>
-                        <Image src={url} layout="fill" objectFit="cover" alt={image.alt} />
+                        <Image src={url} placeholder="blur" blurDataURL={lqip} layout="fill" objectFit="cover" alt={image.alt} />
                       </Box>
                     </Box>
                   </Box>
@@ -116,7 +118,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
               })}
             </Masonry>
           </ResponsiveMasonry>
-          <Box pt="100px" lineHeight="98%" letterSpacing="-0.015em">
+          {credits && <Box pt="100px" lineHeight="98%" letterSpacing="-0.015em">
             <div>Credits</div>
             <Box pt="34px">
               {credits.map(credit => {
@@ -132,7 +134,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
                 )
               })}
             </Box>
-          </Box>
+          </Box>}
         </StyledOverview>
       </> : null}
     </AnimatePresence>

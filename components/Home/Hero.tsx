@@ -119,12 +119,12 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           initial={{ scale: !loaded ? 0.6 : 1, y: 45, opacity: transitionType == 'view' ? 0 : 1 }}
           animate={{ scale: loaded ? 1 : 0.6, y: loaded ? 0 : 45, opacity: 1 }}
           exit={{ scale: 1, y: 45, opacity: transitionType == 'view' ? 0 : 1 }}
-          transition={{ duration: 1, ease: [.9, 0, .1, .9] }}
+          transition={{ duration: 0.6, ease: [.9, 0, .1, .9] }}
         >
           {projects.map(project => {
             const url = project.images?.length >= 1
-              ? urlFor(project.images[0]).auto('format').width(1000).url()
-              : urlFor(project.image.src).auto('format').width(1000).url()
+              ? urlFor(project.images[0]).auto('format').width(1800).url()
+              : urlFor(project.image.src).auto('format').width(1800).url()
             const dimensions = project.images?.length >= 1
               ? getImageDimensions(project.images[0])
               : getImageDimensions(project.image.src);

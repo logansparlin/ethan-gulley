@@ -142,10 +142,10 @@ const ProjectPage = ({ pageData }) => {
               initial={{ scale: scale }}
               animate={{
                 scale: 1,
-                transition: { duration: 1, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
+                transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
               }}
               exit={{ scale: scale }}
-              transition={{ duration: 1, ease: [1, 0.15, 0.25, 0.9] }}
+              transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
             >
               <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
             </StyledImage>
@@ -164,10 +164,10 @@ const ProjectPage = ({ pageData }) => {
             animate={{
               opacity: 1,
               scale: 1,
-              transition: { duration: 1, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
+              transition: { duration: 0.6, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
             }}
             exit={{ opacity: 1, scale: scale }}
-            transition={{ duration: 1, ease: [1, 0.15, 0.25, 0.9] }}
+            transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
           >
             <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
           </StyledImage>

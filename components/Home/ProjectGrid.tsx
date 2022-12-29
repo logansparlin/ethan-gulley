@@ -92,6 +92,7 @@ const ProjectGrid = ({ projects, category }) => {
               {filteredProjects.map((project, index) => {
                 const url = urlFor(project.image.src).auto('format').width(1800).url();
                 const dimensions = getImageDimensions(project.image.src);
+                const lqip = project.image.lqip;
                 const isSelected = activeProject ? activeProject._id === project._id : false;
                 return (
                   <Box key={project._id} onMouseEnter={() => updateIndices(index)} onMouseLeave={clearIndices}>
@@ -126,7 +127,7 @@ const ProjectGrid = ({ projects, category }) => {
                       >
                         <HoverTitle>{project.title}</HoverTitle>
                         <StyledImage className={isSelected ? 'active' : indices && indices.includes(index) && 'faded'} as="button" onClick={(e) => handleClick(e, project)}>
-                          <Image src={url} layout="fill" objectFit="cover" alt={project.image.alt} />
+                          <Image src={url} placeholder="blur" blurDataURL={lqip} layout="fill" objectFit="cover" alt={project.image.alt} />
                         </StyledImage>
                       </Box>
                     </StyledItem>

@@ -12,7 +12,10 @@ export async function getHomePage() {
                     alt,
                     "lqip": src.asset -> metadata.lqip
                 },
-                images
+                images[] {
+                    ...,
+                    "lqip": asset -> metadata.lqip
+                },
             },
             "site": *[_type == "headerSettings"][0] {
                 title,
@@ -43,7 +46,10 @@ export async function getProject(slug: string) {
                 alt,
                 "lqip": src.asset -> metadata.lqip
             },
-            images,
+            images[] {
+                ...,
+                "lqip": asset -> metadata.lqip
+            },
             "site": *[_type == "headerSettings"][0] {
                 title,
                 links[] {
@@ -60,7 +66,10 @@ export async function getProject(slug: string) {
                     alt,
                     "lqip": src.asset -> metadata.lqip
                 },
-                images
+                images[] {
+                    ...,
+                    "lqip": asset -> metadata.lqip
+                },
             },
         }
     `;

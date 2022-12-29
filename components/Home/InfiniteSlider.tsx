@@ -100,7 +100,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
       initial={{ opacity: 0, y: 90 }}
       animate={{ opacity: 1, y: loading ? 90 : 0 }}
       exit={{ opacity: 0, y: 90 }}
-      transition={{ duration: 1, ease: [.9, 0, .1, 0.9] }}
+      transition={{ duration: 0.6, ease: [.9, 0, .1, 0.9] }}
     >
       {projects.map((project, index) => {
         const url = project.image ? urlFor(project.image.src).auto('format').width(1000).url() : urlFor(project.images[0].src).auto('format').url();
