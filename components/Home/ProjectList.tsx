@@ -28,16 +28,23 @@ const ProjectList = ({ projects }) => {
                 console.log(project)
                 return (
                   <Box
-                    width="50%"
                     key={project._id}
+                    width="100%"
                     display="flex"
-                    justifyContent="space-between"
+                    justifyContent="flex-end"
                     className="list-view-item"
-                    fontSize="15px"
-                    lineHeight="20px"
                   >
-                    <Box>{project.title}</Box>
-                    <Box>{project.images?.length.toString().padStart(2, '0') || '00'}</Box>
+                    <Box
+                      width="50%"
+                      key={project._id}
+                      display="flex"
+                      justifyContent="space-between"
+                      fontSize="15px"
+                      lineHeight="20px"
+                    >
+                      <Box>{project.title}</Box>
+                      <Box>{project.images?.length.toString().padStart(2, '0') || '00'}</Box>
+                    </Box>
                   </Box>
                 )
               })}
