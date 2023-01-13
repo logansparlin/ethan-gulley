@@ -94,6 +94,7 @@ const ProjectPage = ({ pageData }) => {
       animate={{ y: '0' }}
       exit={{ y: '100vh' }}
       transition={{ duration: 0.8, ease: [.9, 0, .1, .9] }}
+      style={{ willChange: 'auto' }}
     >
       <Layout>
         <Overview

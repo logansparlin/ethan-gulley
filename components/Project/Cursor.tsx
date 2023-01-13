@@ -99,7 +99,7 @@ const CurrentCursor = ({ title, index, count }) => {
   return (
     <>
       <Box>{title}</Box>
-      <Box>{index}/{count}</Box>
+      <Box>{index}/{count > 0 ? count : 1}</Box>
     </>
   )
 }

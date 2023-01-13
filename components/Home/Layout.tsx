@@ -38,6 +38,7 @@ const HomeLayout = ({ projects, site }) => {
       animate={{ y: 0 }}
       exit={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.9, 0.1, 0.1, 0.9] }}
+      style={{ willChange: 'auto' }}
     >
       <Box>
         <Information />
