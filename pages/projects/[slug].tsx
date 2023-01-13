@@ -109,7 +109,7 @@ const ProjectPage = ({ pageData }) => {
             initial={{ opacity: 0 }}
             animate={{
               opacity: 1, transition: {
-                duration: 0.6, ease: 'linear', delay: 0.6
+                duration: 0.6, ease: 'linear'
               }
             }}
             exit={{ opacity: 1 }}
@@ -202,7 +202,7 @@ const ProjectPage = ({ pageData }) => {
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 1, transition: {
-                  duration: 0.6, ease: 'linear', delay: 0.6
+                  duration: 0.6, ease: 'linear'
                 }
               }}
               exit={{ opacity: 0 }}
@@ -223,7 +223,7 @@ const ProjectPage = ({ pageData }) => {
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 1, transition: {
-                  duration: 0.6, ease: 'linear', delay: 0.6
+                  duration: 0.6, ease: 'linear'
                 }
               }}
               exit={{ opacity: 0 }}

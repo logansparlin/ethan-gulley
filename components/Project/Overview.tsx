@@ -61,6 +61,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
       scroll = new LocomotiveScroll.default({
         el: container.current,
         smooth: true,
+        lerp: 0.15,
         tablet: {
           smooth: true
         },

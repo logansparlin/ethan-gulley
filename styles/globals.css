@@ -229,6 +229,10 @@ img {
   border-bottom: none;
 }
 
+[data-scroll-section-inview] {
+  will-change: auto;
+}
+
 button {
   border: none;
   background: transparent;
