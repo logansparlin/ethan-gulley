@@ -45,7 +45,7 @@ const HomeLayout = ({ projects, site }) => {
         <motion.div>
           <Header {...site} />
         </motion.div>
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence exitBeforeEnter initial={false}>
           <Box key={transitionKey}>
             {view === 'default' &&
               <Hero

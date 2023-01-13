@@ -191,7 +191,7 @@ const ProjectPage = ({ pageData }) => {
                 scale: 1,
                 transition: { duration: 0.6, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
               }}
-              exit={{ opacity: 1, scale: scale }}
+              exit={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
             >
               <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />

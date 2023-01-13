@@ -32,7 +32,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
   const activeIndex = useRef(lastFocusedIndex);
   const loops = useRef(0);
   const windowSize = useWindowSize();
-  const { transitionType, setTransitionType } = useAppStore();
+  const { transitionType, transitioning, setTransitioning, setTransitionType } = useAppStore();
   const { setScale } = useProjectStore();
 
   const handleProjectChange = (index) => {
@@ -101,6 +101,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
     setLastFocusedIndex(activeIndex.current)
     setScale(scale)
     setLastScrollPosition(scroll.current.current)
+    setTransitioning(true);
     setTransitionType('page')
   }
 
@@ -154,7 +155,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                         opacity="0"
                         textAlign="left"
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: loaded ? 1 : 0 }}
+                        animate={{ opacity: loaded && !transitioning ? 1 : 0 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.6, ease: [.8, 0, .1, 0.9] }}
                       >
