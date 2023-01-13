@@ -33,26 +33,33 @@ const HomeLayout = ({ projects, site }) => {
   }, [view, asPath])
 
   return (
-    <Box>
-      <Information />
-      <HomeHead />
-      <motion.div>
-        <Header {...site} />
-      </motion.div>
-      <AnimatePresence exitBeforeEnter>
-        <Box key={transitionKey}>
-          {view === 'default' &&
-            <Hero
-              projects={projects}
-              focusedProject={focusedProject}
-              updateProject={updateProject}
-            />
-          }
-          {view === 'grid' && <Grid projects={projects} key="grid" />}
-          {view === 'list' && <List projects={projects} key="list" />}
-        </Box>
-      </AnimatePresence>
-    </Box>
+    <motion.div
+      initial={{ y: '-5vh' }}
+      animate={{ y: 0 }}
+      exit={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.9, 0.1, 0.1, 0.9] }}
+    >
+      <Box>
+        <Information />
+        <HomeHead />
+        <motion.div>
+          <Header {...site} />
+        </motion.div>
+        <AnimatePresence exitBeforeEnter>
+          <Box key={transitionKey}>
+            {view === 'default' &&
+              <Hero
+                projects={projects}
+                focusedProject={focusedProject}
+                updateProject={updateProject}
+              />
+            }
+            {view === 'grid' && <Grid projects={projects} key="grid" />}
+            {view === 'list' && <List projects={projects} key="list" />}
+          </Box>
+        </AnimatePresence>
+      </Box>
+    </motion.div>
   )
 }
 
