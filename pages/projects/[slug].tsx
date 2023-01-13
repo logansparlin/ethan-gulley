@@ -93,7 +93,7 @@ const ProjectPage = ({ pageData }) => {
       initial={{ y: '0' }}
       animate={{ y: '0' }}
       exit={{ y: '100vh' }}
-      transition={{ duration: 0.6, ease: [.9, 0, .1, .9] }}
+      transition={{ duration: 0.8, ease: [.9, 0, .1, .9] }}
     >
       <Layout>
         <Overview
@@ -130,8 +130,8 @@ const ProjectPage = ({ pageData }) => {
             exit={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'circOut' }}
           >
-            <Box as="header" display="flex" justifyContent="space-between">
-              <Box as="h1" p="20px">{title}</Box>
+            <Box as="header" position="relative" zIndex="10" display="flex" justifyContent="space-between">
+              <Box as="h1" p="20px" color="black">{title}</Box>
               <Box display="flex">
                 <Box
                   as="button"
@@ -169,7 +169,7 @@ const ProjectPage = ({ pageData }) => {
                   scale: 1,
                   transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
                 }}
-                exit={{ scale: scale }}
+                exit={{ scale: 1 }}
                 transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
               >
                 <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />

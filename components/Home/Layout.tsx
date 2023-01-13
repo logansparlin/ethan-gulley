@@ -37,7 +37,7 @@ const HomeLayout = ({ projects, site }) => {
       initial={{ y: '-5vh' }}
       animate={{ y: 0 }}
       exit={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.9, 0.1, 0.1, 0.9] }}
+      transition={{ duration: 0.8, ease: [0.9, 0.1, 0.1, 0.9] }}
     >
       <Box>
         <Information />
