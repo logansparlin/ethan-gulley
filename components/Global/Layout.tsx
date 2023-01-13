@@ -7,8 +7,11 @@ const Layout = ({ children }) => {
   const { setActiveProject } = useProjectStore();
 
   useEffect(() => {
-    setTransitioning(false);
-    setActiveProject(null);
+    setTimeout(() => {
+      setTransitioning(false);
+      setActiveProject(null);
+
+    }, 600)
   }, [])
 
   return (
