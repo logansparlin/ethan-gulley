@@ -97,7 +97,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
           key="overview"
         >
           <Title>{title}</Title>
-          <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
+          {images ? <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
             <Masonry gutter="20px">
               {images.map((image, index) => {
                 const url = urlFor(image).width(500).auto('format').url();
@@ -119,7 +119,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
                 )
               })}
             </Masonry>
-          </ResponsiveMasonry>
+          </ResponsiveMasonry> : null}
           {credits && <Box pt="100px" lineHeight="98%" letterSpacing="-0.015em">
             <div>Credits</div>
             <Box pt="34px">
