@@ -30,7 +30,7 @@ const Grid = ({ projects }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{
-          duration: 1
+          duration: 0.6
         }}
       >
         <GridView projects={projects} category={category} handleChangeCategory={handleChangeCategory} />

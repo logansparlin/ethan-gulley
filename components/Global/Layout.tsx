@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { motion } from "framer-motion";
 import { useAppStore } from "@hooks/useAppStore";
 import { useProjectStore } from "@hooks/useProjectStore";
 

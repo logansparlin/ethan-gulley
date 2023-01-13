@@ -8,11 +8,13 @@ const Transition = ({ component, pageProps, path }): JSX.Element => {
 
   return (
     <AnimatePresence
-      exitBeforeEnter
+      exitBeforeEnter={false}
       initial={true}
       onExitComplete={() => window.scrollTo(0, 0)}
     >
-      <Component {...pageProps} key={`${path}`} />
+      <Box position="absolute" key={`${path}`} zIndex={path === '/' ? '1' : '2'} top="0" left="0" width="100%" height="100vh">
+        <Component {...pageProps} />
+      </Box>
     </AnimatePresence>
   )
 }

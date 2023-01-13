@@ -3,5 +3,5 @@ export const GRID_BREAKPOINTS = {
   500: 2,
   768: 3,
   1024: 4,
-  1400: 6
+  1400: 5
 }

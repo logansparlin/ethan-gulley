@@ -30,13 +30,13 @@ const GridWrapper = styled(Box)`
   &:hover {
     ${StyledImage} {
       &.faded {
-        opacity: 0.6;
+        opacity: 0.9;
         transition: opacity 500ms ease-in-out;
         transition-delay: 100ms;
       }
       transition: opacity 500ms ease-in-out;
       &:hover:not(.active) {
-        opacity: 0.2;
+        opacity: 0.7;
         transition: opacity 500ms ease-in-out;
       }
     }
@@ -105,7 +105,7 @@ const ProjectGrid = ({ projects, category }) => {
                         opacity: activeProject && !isSelected ? 0 : 1,
                         scale: activeProject && isSelected ? selectedProjectPosition.current.scale : 1,
                         transition: {
-                          duration: isSelected ? 1 : activeProject ? 0.8 : 0.6,
+                          duration: isSelected ? 0.6 : activeProject ? 0.6 : 0.6,
                           ease: isSelected ? [.9, 0, .1, .9] : 'circOut',
                           delay: isSelected ? 0.4 : activeProject ? 0 : index * 0.03
                         }
