@@ -1,12 +1,11 @@
+import { useMemo } from "react"
 import { urlFor } from "@lib/sanity"
 import { randomIntFromInterval } from "@lib/helpers"
-import styled from 'styled-components'
-import { motion } from 'framer-motion'
-
-import { Box } from "@components/box"
 import { useWindowSize } from "react-use"
+import styled from 'styled-components'
+
+import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { useMemo } from "react"
 
 const StyledHover = styled(motion.div)`
   position: absolute;

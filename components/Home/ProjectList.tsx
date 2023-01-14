@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { Box } from "@components/box"
 import { HoverImage } from "./HoverImage"
+import Link from "next/link"
 
 const DELAY = 0.03;
 const DURATION = 0.6;
@@ -74,33 +75,35 @@ const ProjectList = ({ projects }) => {
               {sortedProjects.map(project => {
                 if (project.year !== year) return null;
                 return (
-                  <Project
-                    key={project._id}
-                    className="list-view-item"
-                    width="100%"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 1, transition: { delay: 0 } }}
-                    onMouseEnter={() => setActiveId(project._id)}
-                    onMouseLeave={() => setActiveId(null)}
-                    transition={{
-                      duration: DURATION, ease: 'linear', delay: DELAY * project.animateIndex
-                    }}
-                  >
-                    <HoverImage image={project.images?.length >= 1 ? project.images[0] : project.image} active={project._id === activeId} />
-                    <Box
-                      width="50%"
+                  <Link href={`/projects/${project.slug?.current}`}>
+                    <Project
                       key={project._id}
-                      display="flex"
-                      justifyContent="space-between"
-                      className="list-view-item__content"
-                      fontSize="14px"
-                      lineHeight="20px"
+                      className="list-view-item"
+                      width="100%"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 1, transition: { delay: 0 } }}
+                      onMouseEnter={() => setActiveId(project._id)}
+                      onMouseLeave={() => setActiveId(null)}
+                      transition={{
+                        duration: DURATION, ease: 'linear', delay: DELAY * project.animateIndex
+                      }}
                     >
-                      <Box>{project.title}</Box>
-                      <Box>{project.images?.length.toString().padStart(2, '0') || '00'}</Box>
-                    </Box>
-                  </Project>
+                      <HoverImage image={project.images?.length >= 1 ? project.images[0] : project.image} active={project._id === activeId} />
+                      <Box
+                        width="50%"
+                        key={project._id}
+                        display="flex"
+                        justifyContent="space-between"
+                        className="list-view-item__content"
+                        fontSize="14px"
+                        lineHeight="20px"
+                      >
+                        <Box>{project.title}</Box>
+                        <Box>{project.images?.length.toString().padStart(2, '0') || '00'}</Box>
+                      </Box>
+                    </Project>
+                  </Link>
                 )
               })}
             </Box>
