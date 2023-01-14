@@ -10,11 +10,13 @@ export async function getHomePage() {
                 image {
                     src,
                     alt,
-                    "lqip": src.asset -> metadata.lqip
+                    "lqip": src.asset -> metadata.lqip,
+                    "metadata": src.asset -> metadata
                 },
                 images[] {
                     ...,
-                    "lqip": asset -> metadata.lqip
+                    "lqip": asset -> metadata.lqip,
+                    "metadata": asset -> metadata
                 },
             },
             "site": *[_type == "headerSettings"][0] {
@@ -44,11 +46,13 @@ export async function getProject(slug: string) {
             image {
                 src,
                 alt,
-                "lqip": src.asset -> metadata.lqip
+                "lqip": src.asset -> metadata.lqip,
+                "metadata": src.asset -> metadata
             },
             images[] {
                 ...,
-                "lqip": asset -> metadata.lqip
+                "lqip": asset -> metadata.lqip,
+                "metadata": asset -> metadata
             },
             "site": *[_type == "headerSettings"][0] {
                 title,
@@ -64,11 +68,13 @@ export async function getProject(slug: string) {
                 image {
                     src,
                     alt,
-                    "lqip": src.asset -> metadata.lqip
+                    "lqip": src.asset -> metadata.lqip,
+                    "metadata": src.asset -> metadata
                 },
                 images[] {
                     ...,
-                    "lqip": asset -> metadata.lqip
+                    "lqip": asset -> metadata.lqip,
+                    "metadata": asset -> metadata
                 },
             },
         }

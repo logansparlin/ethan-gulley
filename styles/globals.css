@@ -226,11 +226,11 @@ img {
   position: relative;
 }
 
-.list-view-item>div {
+.list-view-item .list-view-item__content {
   position: relative;
 }
 
-.list-view .list-view-item>div:after {
+.list-view .list-view-item .list-view-item__content:after {
   content: '';
   position: absolute;
   width: 100%;
@@ -240,7 +240,7 @@ img {
   left: 0;
 }
 
-.list-view .list-view-item:last-of-type>div:after {
+.list-view .list-view-item:last-of-type .list-view-item__content:after {
   display: none;
 }
 
