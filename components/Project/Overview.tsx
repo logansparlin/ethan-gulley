@@ -10,14 +10,23 @@ import { Box } from "@components/box"
 import Image from 'next/image'
 import { useEffect, useRef } from 'react';
 
+const OverviewContainer = styled(motion.div)`
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+`
+
 const StyledOverview = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   min-height: 100vh;
-  background: black;
-  color: white;
+  background: white;
+  color: black;
   z-index: 100;
   cursor: auto;
   padding: 20px;
@@ -32,7 +41,7 @@ const Header = styled(motion.header)`
   padding: 20px;
   left: 0;
   z-index: 1000;
-  color: white;
+  color: black;
   width: 100%;
   cursor: auto;
   font-size: 14px;
@@ -57,22 +66,25 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
     }
 
     let scroll;
-    import("locomotive-scroll").then((LocomotiveScroll) => {
-      scroll = new LocomotiveScroll.default({
-        el: container.current,
-        smooth: true,
-        lerp: 0.15,
-        tablet: {
-          smooth: true
-        },
-        smartphone: {
-          smooth: true
-        }
+    if (isOpen) {
+      console.log(isOpen)
+      import("locomotive-scroll").then((LocomotiveScroll) => {
+        scroll = new LocomotiveScroll.default({
+          el: container.current,
+          smooth: true,
+          lerp: 0.15,
+          tablet: {
+            smooth: true
+          },
+          smartphone: {
+            smooth: true
+          }
+        });
       });
-    });
+    }
 
     return () => {
-      scroll.destroy()
+      // scroll.destroy()
     }
   }, [isOpen])
 
@@ -84,60 +96,65 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
+          key="header"
         >
           <Box>{title}</Box>
           <Box as="button" onClick={close} lineHeight="0" p="0">Close</Box>
         </Header>
-        <StyledOverview
-          ref={container}
-          initial={{ opacity: 1, y: '100%' }}
+        <OverviewContainer
+          initial={{ opacity: 1, y: '100vh' }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 1, y: '100%' }}
-          transition={{ duration: 0.6, ease: [.9, 0, .1, 0.9] }}
-          key="overview"
+          exit={{ opacity: 1, y: '100vh' }}
+          transition={{ duration: 0.8, ease: [.85, .1, 0, 1] }}
+          style={{ willChange: 'auto' }}
         >
-          <Title>{title}</Title>
-          {images ? <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
-            <Masonry gutter="20px">
-              {images.map((image, index) => {
-                const url = urlFor(image).width(500).auto('format').url();
-                const dimensions = getImageDimensions(image)
-                const lqip = image.lqip;
-                return (
-                  <Box key={url} onClick={() => setActiveIndex(index)}>
-                    <Box
-                      position="relative"
-                      width="100%"
-                      height="0"
-                      pb={`${(dimensions.height / dimensions.width) * 100}%`}
-                    >
-                      <Box>
-                        <Image src={url} placeholder="blur" blurDataURL={lqip} layout="fill" objectFit="cover" alt={image.alt} />
+          <StyledOverview
+            ref={container}
+            key="overview"
+          >
+            <Title>{title}</Title>
+            {images ? <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
+              <Masonry gutter="20px">
+                {images.map((image, index) => {
+                  const url = urlFor(image).width(500).quality(80).auto('format').url();
+                  const dimensions = getImageDimensions(image)
+                  const lqip = image.lqip;
+                  return (
+                    <Box key={url} onClick={() => setActiveIndex(index)}>
+                      <Box
+                        position="relative"
+                        width="100%"
+                        height="0"
+                        pb={`${(dimensions.height / dimensions.width) * 100}%`}
+                      >
+                        <Box>
+                          <Image src={url} placeholder="blur" blurDataURL={lqip} layout="fill" objectFit="cover" alt={image.alt} />
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
-                )
-              })}
-            </Masonry>
-          </ResponsiveMasonry> : null}
-          {credits && <Box pt="100px" lineHeight="98%" letterSpacing="-0.015em">
-            <div>Credits</div>
-            <Box pt="34px">
-              {credits.map(credit => {
-                return (
-                  <Box key={credit._key}>
-                    <span>{credit.title} </span>
-                    {credit.name?.map((item, index) => {
-                      return (
-                        <span key={item._key}>{item.name}{`${index < credit.name.length - 1 ? ', ' : ''}`}</span>
-                      )
-                    })}
-                  </Box>
-                )
-              })}
-            </Box>
-          </Box>}
-        </StyledOverview>
+                  )
+                })}
+              </Masonry>
+            </ResponsiveMasonry> : null}
+            {credits && <Box pt="100px" lineHeight="98%" letterSpacing="-0.015em">
+              <div>Credits</div>
+              <Box pt="34px">
+                {credits.map(credit => {
+                  return (
+                    <Box key={credit._key}>
+                      <span>{credit.title} </span>
+                      {credit.name?.map((item, index) => {
+                        return (
+                          <span key={item._key}>{item.name}{`${index < credit.name.length - 1 ? ', ' : ''}`}</span>
+                        )
+                      })}
+                    </Box>
+                  )
+                })}
+              </Box>
+            </Box>}
+          </StyledOverview>
+        </OverviewContainer>
       </> : null}
     </AnimatePresence>
   )
