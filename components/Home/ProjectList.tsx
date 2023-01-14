@@ -1,11 +1,47 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
+import styled from 'styled-components'
+
+import { motion } from 'framer-motion'
 import { Box } from "@components/box"
+
+const DELAY = 0.03;
+const DURATION = 0.6;
+
+const YearUnderline = styled(motion.div)`
+  width: 100%;
+  height: 1px;
+  background: black;
+  margin-bottom: 3px;
+  transform-origin: 0 0;
+`
+
+const StyledYear = styled(motion.div)`
+  position: absolute;
+  left: 0;
+  top: 100%;
+`;
+
+const Project = styled(motion.div)`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`
 
 const ProjectList = ({ projects }) => {
   const [years, setYears] = useState([]);
+  const [sortedProjects, setSortedProjects] = useState([]);
 
   useEffect(() => {
     const set = new Set();
+    const sorted = projects.sort((a, b) => a.year < b.year ? 1 : -1);
+    const withIndex = sorted.map((project, index) => {
+      return {
+        ...project,
+        animateIndex: index
+      }
+    })
+
+    setSortedProjects(withIndex)
     projects.forEach(project => {
       set.add(project.year)
     })
@@ -14,38 +50,50 @@ const ProjectList = ({ projects }) => {
   }, [projects]);
 
   return (
-    <Box pt="100px" className="list-view" px="20px">
+    <Box pt="100px" className="list-view" px="20px" fontSize="14px">
       <Box width="100%">
-        {years.map(year => {
+        {years.map((year, index) => {
           return (
             <Box key={year} width="100%" display="flex" flexDirection="column" alignItems="flex-end">
               <Box key={year} width="100%" position="relative">
-                <Box width="100%" height="1px" bg="black" mb="3px" />
-                <Box position="absolute" left="0" top="100%">{year}</Box>
+                <YearUnderline
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  exit={{ scaleX: 1, transition: { delay: 0 } }}
+                  transition={{ duration: DURATION, ease: [0.85, 0.1, 0, 1], delay: DELAY * sortedProjects.find(project => project.year === year).animateIndex }}
+                />
+                <StyledYear
+                  initial={{ opacity: 0, x: -3 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 1, x: 0, transition: { delay: 0 } }}
+                  transition={{ duration: DURATION, ease: [0.85, 0.1, 0, 1], delay: DELAY * sortedProjects.find(project => project.year === year).animateIndex }}
+                >{year}</StyledYear>
               </Box>
-              {projects.map((project, index) => {
+              {sortedProjects.map(project => {
                 if (project.year !== year) return null;
-                console.log(project)
                 return (
-                  <Box
+                  <Project
                     key={project._id}
-                    width="100%"
-                    display="flex"
-                    justifyContent="flex-end"
                     className="list-view-item"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 1, transition: { delay: 0 } }}
+                    transition={{
+                      duration: DURATION, ease: 'linear', delay: DELAY * project.animateIndex
+                    }}
                   >
                     <Box
                       width="50%"
                       key={project._id}
                       display="flex"
                       justifyContent="space-between"
-                      fontSize="15px"
+                      fontSize="14px"
                       lineHeight="20px"
                     >
                       <Box>{project.title}</Box>
                       <Box>{project.images?.length.toString().padStart(2, '0') || '00'}</Box>
                     </Box>
-                  </Box>
+                  </Project>
                 )
               })}
             </Box>

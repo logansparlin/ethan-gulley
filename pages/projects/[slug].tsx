@@ -82,7 +82,7 @@ const ProjectPage = ({ pageData }) => {
     return activeIndex + 1
   }, [activeIndex])
 
-  const img = urlFor(image.src).auto('format').width(1800).url();
+  const img = urlFor(image.src).auto('format').width(1600).url();
 
   const toggleOverview = () => {
     setOverviewOpen(!overviewOpen)
@@ -154,7 +154,7 @@ const ProjectPage = ({ pageData }) => {
             </Box>
           </motion.div>
           {images && images.map((image, index) => {
-            const img = urlFor(image).auto('format').width(1800).url();
+            const img = urlFor(image).auto('format').width(1600).quality(85).url();
             return (
               <StyledImage
                 key={image._key}

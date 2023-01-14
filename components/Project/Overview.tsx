@@ -67,7 +67,6 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
 
     let scroll;
     if (isOpen) {
-      console.log(isOpen)
       import("locomotive-scroll").then((LocomotiveScroll) => {
         scroll = new LocomotiveScroll.default({
           el: container.current,
@@ -84,7 +83,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
     }
 
     return () => {
-      // scroll.destroy()
+      scroll ? scroll.destroy() : null;
     }
   }, [isOpen])
 
