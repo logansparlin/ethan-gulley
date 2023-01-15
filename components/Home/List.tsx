@@ -39,6 +39,13 @@ const List = ({ projects }) => {
     }
   }, [])
 
+  useEffect(() => {
+    setTimeout(() => {
+
+      scrollRef.current?.update();
+    }, 500)
+  }, [category])
+
   return (
     <Box width="100%" ref={container} pb="100px" minHeight="100vh" pt="100px">
       <motion.div
@@ -50,7 +57,7 @@ const List = ({ projects }) => {
         }}
       >
         <CategoryList category={category} setCategory={setCategory} />
-        <ProjectList projects={projects} />
+        <ProjectList projects={projects} category={category} />
       </motion.div>
     </Box>
   )
