@@ -105,7 +105,7 @@ const ProjectGrid = ({ projects, category }) => {
                         opacity: activeProject && !isSelected ? 0 : 1,
                         scale: activeProject && isSelected ? selectedProjectPosition.current.scale : 1,
                         transition: {
-                          duration: isSelected ? 0.6 : activeProject ? 0.6 : 0.6,
+                          duration: isSelected ? 0.6 : activeProject ? 1 : 0.6,
                           ease: isSelected ? [.9, 0, .1, .9] : 'circOut',
                           delay: isSelected ? 0 : activeProject ? 0 : index * 0.03
                         }
@@ -118,6 +118,7 @@ const ProjectGrid = ({ projects, category }) => {
                           ease: 'easeInOut'
                         }
                       }}
+                      style={{ zIndex: isSelected ? 2 : 1 }}
                     >
                       <Box
                         position="relative"
