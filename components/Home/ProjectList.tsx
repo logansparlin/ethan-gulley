@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from "react"
 import styled from 'styled-components'
+import { useRouter } from "next/dist/client/router"
 
 import { motion } from 'framer-motion'
 import { Box } from "@components/box"
 import { HoverImage } from "./HoverImage"
 import Link from "next/link"
+import { useAppStore } from "@hooks/useAppStore"
 
 const DELAY = 0.03;
 const DURATION = 0.6;
@@ -33,6 +35,8 @@ const ProjectList = ({ projects }) => {
   const [years, setYears] = useState([]);
   const [sortedProjects, setSortedProjects] = useState([]);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const { setTransitionType } = useAppStore();
+  const router = useRouter();
 
   useEffect(() => {
     const set = new Set();
@@ -51,6 +55,11 @@ const ProjectList = ({ projects }) => {
 
     setYears([...set].sort().reverse());
   }, [projects]);
+
+  const handleProjectClick = (slug) => {
+    setTransitionType('list');
+    router.push(`/projects/${slug}`)
+  }
 
   return (
     <Box pt="100px" className="list-view" px="20px" fontSize="14px">
@@ -85,6 +94,7 @@ const ProjectList = ({ projects }) => {
                       exit={{ opacity: 1, transition: { delay: 0 } }}
                       onMouseEnter={() => setActiveId(project._id)}
                       onMouseLeave={() => setActiveId(null)}
+                      onClick={() => handleProjectClick(project.slug?.current)}
                       transition={{
                         duration: DURATION, ease: 'linear', delay: DELAY * project.animateIndex
                       }}

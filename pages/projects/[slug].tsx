@@ -6,6 +6,7 @@ import useKeypress from 'react-use-keypress';
 import { motion } from "framer-motion";
 import { useNextPreviousProjects } from "@hooks/useNextPreviousProjects";
 import styled from 'styled-components';
+import { useAppStore } from "@hooks/useAppStore";
 
 import Link from "next/link";
 import Layout from "@components/Global/Layout";
@@ -32,6 +33,7 @@ const ProjectPage = ({ pageData }) => {
   const { scale } = useProjectStore();
   const { nextProject, previousProject } = useNextPreviousProjects({ id: _id, projects })
   const [overviewOpen, setOverviewOpen] = useState(false);
+  const { transitionType } = useAppStore();
 
   useKeypress(['ArrowLeft', 'ArrowRight'], (e) => {
     if (e.key === 'ArrowRight') {
@@ -90,11 +92,11 @@ const ProjectPage = ({ pageData }) => {
 
   return (
     <motion.div
-      initial={{ y: '0' }}
+      initial={{ y: transitionType === 'list' ? '100vh' : 0 }}
       animate={{ y: '0' }}
       exit={{ y: '100vh' }}
       transition={{ duration: 0.8, ease: [.9, 0, .1, .9] }}
-      style={{ willChange: 'auto' }}
+      style={{ willChange: 'auto', background: 'green' }}
     >
       <Layout>
         <Overview
@@ -105,9 +107,9 @@ const ProjectPage = ({ pageData }) => {
           setActiveIndex={setImage}
           credits={credits}
         />
-        <Box fontSize="14px" cursor="none" position="fixed" zIndex="80" width="100vw" height="100vh" top="0" left="0">
+        <Box fontSize="14px" cursor="none" position="fixed" width="100vw" height="100vh" top="0" left="0">
           <StyledBackground
-            initial={{ opacity: 0 }}
+            initial={{ opacity: transitionType === 'list' ? 1 : 0 }}
             animate={{
               opacity: 1, transition: {
                 duration: 0.6, ease: 'linear'

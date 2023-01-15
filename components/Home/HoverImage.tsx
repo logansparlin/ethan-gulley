@@ -21,7 +21,7 @@ export const HoverImage = ({ image, active }) => {
   const { width } = useWindowSize();
 
   const left = useMemo(() => {
-    return randomIntFromInterval(-100, (width / 2) - 200)
+    return randomIntFromInterval(-50, (width / 2) - 200)
   }, [])
 
   return (
