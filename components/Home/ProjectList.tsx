@@ -8,8 +8,8 @@ import { HoverImage } from "./HoverImage"
 import Link from "next/link"
 import { useAppStore } from "@hooks/useAppStore"
 
-const DELAY = 0.03;
-const DURATION = 0.6;
+const DELAY = 0.025;
+const DURATION = 0.65;
 
 const YearUnderline = styled(motion.div)`
   width: 100%;
