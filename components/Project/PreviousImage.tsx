@@ -7,7 +7,7 @@ import { Box } from "@components/box"
 
 export const PreviousImage = ({ images, beforeIndex, previousProject }) => {
   const isFirstImage = useMemo(() => {
-    return images.length - 1 === beforeIndex
+    return images ? images.length - 1 === beforeIndex : false
   }, [images, beforeIndex])
   const previousProjectUrl = previousProject.images
     ? urlFor(previousProject.images[previousProject.images.length - 1]).auto('format').width(200).url()
