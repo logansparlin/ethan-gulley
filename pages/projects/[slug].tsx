@@ -13,7 +13,10 @@ import Layout from "@components/Global/Layout";
 import { Box } from "@components/box";
 import { Cursor } from '@components/Project/Cursor';
 import { Overview } from "@components/Project/Overview";
+import { PreviousImage } from "@components/Project/PreviousImage";
+import { NextImage } from "@components/Project/NextImage";
 import Image from "next/image";
+import { useWindowSize } from "@hooks/useWindowSize";
 
 const StyledImage = styled(motion(Box))``;
 
@@ -30,6 +33,7 @@ const ProjectPage = ({ pageData }) => {
   if (!pageData) return "no page data"
   const { _id, title, images, image, projects, credits } = pageData;
   const [activeIndex, setActiveIndex] = useState(0);
+  const { width } = useWindowSize();
   const { scale } = useProjectStore();
   const { nextProject, previousProject } = useNextPreviousProjects({ id: _id, projects })
   const [overviewOpen, setOverviewOpen] = useState(false);
@@ -59,6 +63,16 @@ const ProjectPage = ({ pageData }) => {
     }
 
     return setActiveIndex(activeIndex - 1)
+  }
+
+  const handleViewClick = (e) => {
+    const { pageX: x } = e;
+
+    if (x > width / 2) {
+      nextImage()
+    } else {
+      previousImage()
+    }
   }
 
   const setImage = (index) => {
@@ -107,7 +121,16 @@ const ProjectPage = ({ pageData }) => {
           setActiveIndex={setImage}
           credits={credits}
         />
-        <Box fontSize="14px" cursor="none" position="fixed" width="100vw" height="100vh" top="0" left="0">
+        <Box
+          fontSize="14px"
+          cursor="none"
+          position="fixed"
+          width="100vw"
+          height="100vh"
+          top="0"
+          left="0"
+          onClick={handleViewClick}
+        >
           <StyledBackground
             initial={{ opacity: transitionType === 'list' ? 1 : 0 }}
             animate={{
@@ -167,7 +190,7 @@ const ProjectPage = ({ pageData }) => {
                 position="absolute"
                 top="0"
                 left="15vw"
-                initial={{ scale: scale }}
+                initial={{ scale: transitionType === 'list' ? 1 : scale }}
                 animate={{
                   scale: 1,
                   transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
@@ -200,48 +223,8 @@ const ProjectPage = ({ pageData }) => {
               <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
             </StyledImage>
           )}
-          <Box position="absolute" top="50%" transform="translateY(-50%)" width="72px" height="90px" left="0">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1, transition: {
-                  duration: 0.6, ease: 'linear'
-                }
-              }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.6, ease: 'linear' }}
-            >
-              {images && images.map((image, index) => {
-                const img = urlFor(image).auto('format').width(200).url();
-                return (
-                  <Box key={image._key} opacity={index === beforeIndex ? 1 : 0}>
-                    <Image src={img} alt={image.alt} layout="fill" objectFit="contain" objectPosition="left" />
-                  </Box>
-                )
-              })}
-            </motion.div>
-          </Box>
-          <Box position="absolute" top="50%" transform="translateY(-50%)" width="72px" height="90px" right="0">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1, transition: {
-                  duration: 0.6, ease: 'linear'
-                }
-              }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.6, ease: 'linear' }}
-            >
-              {images && images.map((image, index) => {
-                const img = urlFor(image).auto('format').width(200).url();
-                return (
-                  <Box key={image._key} opacity={index === afterIndex ? 1 : 0}>
-                    <Image src={img} alt={image.alt} layout="fill" objectFit="contain" objectPosition="right" />
-                  </Box>
-                )
-              })}
-            </motion.div>
-          </Box>
+          <PreviousImage images={images} beforeIndex={beforeIndex} previousProject={previousProject} />
+          <NextImage images={images} afterIndex={afterIndex} nextProject={nextProject} />
         </Box>
       </Layout>
     </motion.div>
