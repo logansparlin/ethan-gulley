@@ -1,16 +1,32 @@
 import { useMemo } from 'react'
 import { urlFor } from '@lib/sanity'
+import { useWindowSize } from '@hooks/useWindowSize'
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Box } from "@components/box"
 
-export const PreviousImage = ({ images, beforeIndex, previousProject }) => {
+export const PreviousImage = ({ images, beforeIndex, transition, previousProject }) => {
+  const { height, width } = useWindowSize();
+
+  const transitionScale = useMemo(() => {
+    return height / 90;
+  }, [height])
+
+  const isTransitioningNext = useMemo(() => {
+    return transition === 'next'
+  }, [transition])
+
+  const isTransitioningPrevious = useMemo(() => {
+    return transition === 'prev'
+  }, [transition])
+
   const isFirstImage = useMemo(() => {
     return images ? images.length - 1 === beforeIndex : false
   }, [images, beforeIndex])
+
   const previousProjectUrl = previousProject.images
-    ? urlFor(previousProject.images[previousProject.images.length - 1]).auto('format').width(200).url()
+    ? urlFor(previousProject.images[previousProject.images.length - 1]).auto('format').width(1600).quality(85).url()
     : '';
 
   return (
@@ -18,12 +34,17 @@ export const PreviousImage = ({ images, beforeIndex, previousProject }) => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{
-          opacity: 1, transition: {
-            duration: 0.6, ease: 'linear'
+          scale: isTransitioningPrevious ? transitionScale : 1,
+          x: isTransitioningPrevious ? (width / 2) - (72 / 2) : 0,
+          opacity: 1,
+          transition: {
+            duration: 0.6,
+            ease: [1, 0.15, 0.25, 0.9]
           }
         }}
-        exit={{ opacity: 0 }}
+        exit={{ opacity: isTransitioningPrevious ? 1 : 0 }}
         transition={{ duration: 0.6, ease: 'linear' }}
+        style={{ width: '72px', height: '90px' }}
       >
         {isFirstImage && (
           <Box opacity={isFirstImage ? 1 : 0}>

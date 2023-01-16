@@ -7,18 +7,22 @@ import { motion } from "framer-motion";
 import { useNextPreviousProjects } from "@hooks/useNextPreviousProjects";
 import styled from 'styled-components';
 import { useAppStore } from "@hooks/useAppStore";
+import { useWindowSize } from "@hooks/useWindowSize";
+import { useRouter } from "next/dist/client/router";
 
-import Link from "next/link";
 import Layout from "@components/Global/Layout";
 import { Box } from "@components/box";
 import { Cursor } from '@components/Project/Cursor';
 import { Overview } from "@components/Project/Overview";
 import { PreviousImage } from "@components/Project/PreviousImage";
 import { NextImage } from "@components/Project/NextImage";
+import { Header } from "@components/Project/Header";
 import Image from "next/image";
-import { useWindowSize } from "@hooks/useWindowSize";
 
-const StyledImage = styled(motion(Box))``;
+const StyledImage = styled(motion(Box))`
+  z-index: 0;
+  will-change: auto;
+`;
 
 const StyledBackground = styled(motion.div)`
   position: fixed;
@@ -32,14 +36,32 @@ const StyledBackground = styled(motion.div)`
 const ProjectPage = ({ pageData }) => {
   if (!pageData) return "no page data"
   const { _id, title, images, image, projects, credits } = pageData;
-  const [activeIndex, setActiveIndex] = useState(0);
-  const { width } = useWindowSize();
+  const { width, height } = useWindowSize();
   const { scale } = useProjectStore();
   const { nextProject, previousProject } = useNextPreviousProjects({ id: _id, projects })
   const [overviewOpen, setOverviewOpen] = useState(false);
-  const { transitionType } = useAppStore();
+  const [projectTransition, setProjectTransition] = useState<'prev' | 'next' | null>(null)
+  const { transitionType, setTransitionType, projectIndex, setProjectIndex } = useAppStore();
+  const [activeIndex, setActiveIndex] = useState(projectIndex ?? 0);
+  const router = useRouter();
+
+  const transitionScale = useMemo(() => {
+    return 90 / height;
+  }, [height]);
+
+  const x = useMemo(() => {
+    if (projectTransition === 'prev') {
+      return ((width * .5) - (72 / 2))
+    }
+
+    if (projectTransition === 'next') {
+      return -1 * ((width * .5) - (72 / 2))
+    }
+  }, [width, projectTransition])
 
   useKeypress(['ArrowLeft', 'ArrowRight'], (e) => {
+    if (projectTransition !== null) return;
+
     if (e.key === 'ArrowRight') {
       nextImage()
     }
@@ -51,28 +73,24 @@ const ProjectPage = ({ pageData }) => {
 
   const nextImage = () => {
     if (activeIndex === images?.length - 1) {
-      return setActiveIndex(0)
+      return setProjectTransition('next');
+      // return setActiveIndex(0)
     }
-
+    setProjectTransition(null)
     return setActiveIndex(activeIndex + 1)
   }
 
   const previousImage = () => {
     if (activeIndex === 0) {
-      return setActiveIndex(images?.length - 1)
+      setTransitionType('project')
+      setProjectIndex(previousProject.images.length - 1)
+      setTimeout(() => {
+        router.push(`/projects/${previousProject.slug.current}`)
+      }, 600)
+      return setProjectTransition('prev')
     }
-
+    setProjectTransition(null)
     return setActiveIndex(activeIndex - 1)
-  }
-
-  const handleViewClick = (e) => {
-    const { pageX: x } = e;
-
-    if (x > width / 2) {
-      nextImage()
-    } else {
-      previousImage()
-    }
   }
 
   const setImage = (index) => {
@@ -108,7 +126,7 @@ const ProjectPage = ({ pageData }) => {
     <motion.div
       initial={{ y: transitionType === 'list' ? '100vh' : 0 }}
       animate={{ y: '0' }}
-      exit={{ y: '100vh' }}
+      exit={{ y: transitionType === 'project' ? 0 : '100vh' }}
       transition={{ duration: 0.8, ease: [.9, 0, .1, .9] }}
       style={{ willChange: 'auto', background: 'green' }}
     >
@@ -129,12 +147,12 @@ const ProjectPage = ({ pageData }) => {
           height="100vh"
           top="0"
           left="0"
-          onClick={handleViewClick}
         >
           <StyledBackground
-            initial={{ opacity: transitionType === 'list' ? 1 : 0 }}
+            initial={{ opacity: transitionType === 'list' || transitionType === 'project' ? 1 : 0 }}
             animate={{
-              opacity: 1, transition: {
+              opacity: 1,
+              transition: {
                 duration: 0.6, ease: 'linear'
               }
             }}
@@ -150,34 +168,7 @@ const ProjectPage = ({ pageData }) => {
             nextProject={nextProject}
             previousProject={previousProject}
           />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: 'circOut' }}
-          >
-            <Box as="header" position="relative" zIndex="10" display="flex" justifyContent="space-between">
-              <Box as="h1" p="20px" color="black">{title}</Box>
-              <Box display="flex">
-                <Box
-                  as="button"
-                  type="button"
-                  height="auto"
-                  pr="24px"
-                  position="relative"
-                  zIndex="10"
-                  cursor="pointer"
-                  color={"#B4B4B4"}
-                  onClick={toggleOverview}
-                >
-                  Overview
-                </Box>
-                <Box pr="20px" pt="20px" position="relative" zIndex="10" cursor="pointer">
-                  <Link href="/">Close</Link>
-                </Box>
-              </Box>
-            </Box>
-          </motion.div>
+          <Header title={title} toggleOverview={toggleOverview} />
           {images && images.map((image, index) => {
             const img = urlFor(image).auto('format').width(1600).quality(85).url();
             return (
@@ -192,7 +183,8 @@ const ProjectPage = ({ pageData }) => {
                 left="15vw"
                 initial={{ scale: transitionType === 'list' ? 1 : scale }}
                 animate={{
-                  scale: 1,
+                  x: projectTransition ? x : 0,
+                  scale: projectTransition ? transitionScale : 1,
                   transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
                 }}
                 exit={{ scale: 1 }}
@@ -223,8 +215,8 @@ const ProjectPage = ({ pageData }) => {
               <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
             </StyledImage>
           )}
-          <PreviousImage images={images} beforeIndex={beforeIndex} previousProject={previousProject} />
-          <NextImage images={images} afterIndex={afterIndex} nextProject={nextProject} />
+          <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} previousProject={previousProject} />
+          <NextImage transition={projectTransition} images={images} afterIndex={afterIndex} nextProject={nextProject} />
         </Box>
       </Layout>
     </motion.div>

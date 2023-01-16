@@ -104,8 +104,8 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
           initial={{ opacity: 1, y: '100vh' }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 1, y: '100vh' }}
-          transition={{ duration: 0.8, ease: [.85, .1, 0, 1] }}
-          style={{ willChange: 'auto' }}
+          transition={{ duration: 0.8, ease: [0.86, 0, 0.07, 1] }}
+          style={{ willChange: 'auto', transform: 'translate3d(0, 0, 0)' }}
         >
           <StyledOverview
             ref={container}

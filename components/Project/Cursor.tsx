@@ -56,8 +56,8 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick, nextPro
       onMouseLeave={() => setVisible(false)}
       onMouseMove={handleMouseMove}
     >
-      <Box as="button" position="fixed" width="50%" height="100%" top="0" left="0" zIndex="2" onClick={onLeftClick} cursor="none" />
-      <Box as="button" position="fixed" width="50%" height="100%" top="0" left="50%" zIndex="2" onClick={onRightClick} cursor="none" />
+      <Box as="button" position="fixed" width="50%" height="100vh" top="0" left="0" zIndex="2" onClick={onLeftClick} cursor="none" />
+      <Box as="button" position="fixed" width="50%" height="100vh" top="0" left="50%" zIndex="2" onClick={onRightClick} cursor="none" />
       <Box
         opacity={visible ? 1 : 0}
         transition="opacity 200ms ease-in-out"
@@ -66,7 +66,6 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick, nextPro
         left="0"
         textAlign="center"
         ref={textRef}
-        style={{ pointerEvents: 'none' }}
         width="200px"
       >
         {index === 1 && side === 'left' ? <PrevCursor title={previousProject.title} /> : null}

@@ -10,7 +10,6 @@ const Layout = ({ children }) => {
     setTimeout(() => {
       setTransitioning(false);
       setActiveProject(null);
-
     }, 600)
   }, [])
 
