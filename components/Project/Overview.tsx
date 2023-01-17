@@ -91,10 +91,10 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
     <AnimatePresence initial={true}>
       {isOpen ? <>
         <Header
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: 'easeInOut' }}
+          initial={{ opacity: 0, y: '100vh' }}
+          animate={{ opacity: 1, y: '0' }}
+          exit={{ opacity: 0, y: '100vh' }}
+          transition={{ duration: 0.8, ease: [0.86, 0, 0.07, 1] }}
           key="header"
         >
           <Box>{title}</Box>
@@ -102,7 +102,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
         </Header>
         <OverviewContainer
           initial={{ opacity: 1, y: '100vh' }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: '0' }}
           exit={{ opacity: 1, y: '100vh' }}
           transition={{ duration: 0.8, ease: [0.86, 0, 0.07, 1] }}
           style={{ willChange: 'auto', transform: 'translate3d(0, 0, 0)' }}

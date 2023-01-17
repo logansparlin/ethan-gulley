@@ -123,103 +123,109 @@ const ProjectPage = ({ pageData }) => {
   }
 
   return (
-    <motion.div
-      initial={{ y: transitionType === 'list' ? '100vh' : 0 }}
-      animate={{ y: '0' }}
-      exit={{ y: transitionType === 'project' ? 0 : '100vh' }}
-      transition={{ duration: 0.8, ease: [.9, 0, .1, .9] }}
-      style={{ willChange: 'auto', background: 'green' }}
-    >
-      <Layout>
-        <Overview
-          title={title}
-          images={images}
-          isOpen={overviewOpen}
-          close={toggleOverview}
-          setActiveIndex={setImage}
-          credits={credits}
-        />
-        <Box
-          fontSize="14px"
-          cursor="none"
-          position="fixed"
-          width="100vw"
-          height="100vh"
-          top="0"
-          left="0"
-        >
-          <StyledBackground
-            initial={{ opacity: transitionType === 'list' || transitionType === 'project' ? 1 : 0 }}
-            animate={{
-              opacity: 1,
-              transition: {
-                duration: 0.6, ease: 'linear'
-              }
-            }}
-            exit={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: 'linear' }}
-          />
-          <Cursor
-            title={title}
-            count={images?.length ?? 0}
-            index={activeIndex + 1}
-            onRightClick={nextImage}
-            onLeftClick={previousImage}
-            nextProject={nextProject}
-            previousProject={previousProject}
-          />
-          <Header title={title} toggleOverview={toggleOverview} />
-          {images && images.map((image, index) => {
-            const img = urlFor(image).auto('format').width(1600).quality(85).url();
-            return (
+    <>
+      <Overview
+        title={title}
+        images={images}
+        isOpen={overviewOpen}
+        close={toggleOverview}
+        setActiveIndex={setImage}
+        credits={credits}
+      />
+      <motion.div
+        initial={{ y: transitionType === 'list' ? '100vh' : 0, filter: 'blur(0px)', opacity: 1 }}
+        animate={{
+          y: overviewOpen ? '-10vh' : '0',
+          filter: overviewOpen ? 'blur(12px)' : 'blur(0px)',
+          opacity: overviewOpen ? 0.8 : 1
+        }}
+        exit={{ y: transitionType === 'project' ? 0 : '100vh', filter: 'blur(0px)', opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.86, 0, 0.07, 1] }}
+        style={{ willChange: 'auto', background: 'green' }}
+      >
+        <Layout>
+          <Box
+            fontSize="14px"
+            cursor="none"
+            position="fixed"
+            width="100vw"
+            height="100vh"
+            top="0"
+            left="0"
+          >
+            <StyledBackground
+              initial={{ opacity: transitionType === 'list' || transitionType === 'project' ? 1 : 0 }}
+              animate={{
+                opacity: 1,
+                transition: {
+                  duration: 0.6, ease: 'linear'
+                }
+              }}
+              exit={{ opacity: 1 }}
+              transition={{ duration: 0.6, ease: 'linear' }}
+            />
+            <Cursor
+              title={title}
+              count={images?.length ?? 0}
+              index={activeIndex + 1}
+              onRightClick={nextImage}
+              onLeftClick={previousImage}
+              nextProject={nextProject}
+              previousProject={previousProject}
+            />
+            <Header title={title} toggleOverview={toggleOverview} />
+            {images && images.map((image, index) => {
+              const img = urlFor(image).auto('format').width(1600).quality(85).url();
+              return (
+                <StyledImage
+                  key={image._key}
+                  $active={index === activeIndex}
+                  opacity={index === activeIndex ? '1' : '0'}
+                  width="70vw"
+                  height="calc(100vh)"
+                  position="absolute"
+                  top="0"
+                  left="15vw"
+                  initial={{ scale: transitionType === 'list' ? 1 : scale }}
+                  animate={{
+                    x: projectTransition ? x : 0,
+                    scale: projectTransition ? transitionScale : 1,
+                    transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
+                  }}
+                  exit={{ scale: 1 }}
+                  transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
+                >
+                  <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
+                </StyledImage>
+              )
+            })}
+            {!images && (
               <StyledImage
                 key={image._key}
-                $active={index === activeIndex}
-                opacity={index === activeIndex ? '1' : '0'}
+                opacity={1}
                 width="70vw"
                 height="calc(100vh)"
                 position="absolute"
                 top="0"
                 left="15vw"
-                initial={{ scale: transitionType === 'list' ? 1 : scale }}
+                initial={{ opacity: 1, scale: scale }}
                 animate={{
-                  x: projectTransition ? x : 0,
-                  scale: projectTransition ? transitionScale : 1,
-                  transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
+                  opacity: 1,
+                  scale: 1,
+                  transition: { duration: 0.6, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
                 }}
-                exit={{ scale: 1 }}
+                exit={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
               >
                 <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
               </StyledImage>
-            )
-          })}
-          {!images && (
-            <StyledImage
-              key={image._key}
-              opacity={1}
-              width="70vw"
-              height="calc(100vh)"
-              position="absolute"
-              top="0"
-              left="15vw"
-              initial={{ opacity: 1, scale: scale }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                transition: { duration: 0.6, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
-              }}
-              exit={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
-            >
-              <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
-            </StyledImage>
-          )}
-          <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} previousProject={previousProject} />
-          <NextImage transition={projectTransition} images={images} afterIndex={afterIndex} nextProject={nextProject} />
-        </Box>
-      </Layout>
-    </motion.div>
+            )}
+            <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} previousProject={previousProject} />
+            <NextImage transition={projectTransition} images={images} afterIndex={afterIndex} nextProject={nextProject} />
+          </Box>
+        </Layout>
+      </motion.div>
+    </>
   )
 }
 
