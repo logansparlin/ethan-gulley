@@ -11,7 +11,7 @@ export const Header = ({ title, toggleOverview }) => {
       transition={{ duration: 0.6, ease: 'circOut' }}
     >
       <Box as="header" position="relative" zIndex="10" display="flex" justifyContent="space-between">
-        <Box as="h1" p="20px" color="black">{title}</Box>
+        <Box as="h1" p={["12px", null, "20px"]} color="black">{title}</Box>
         <Box display="flex">
           <Box
             as="button"
@@ -26,7 +26,7 @@ export const Header = ({ title, toggleOverview }) => {
           >
             Overview
           </Box>
-          <Box pr="20px" pt="20px" position="relative" zIndex="10" cursor="pointer">
+          <Box pr={["12px", null, "20px"]} pt={["12px", null, "20px"]} position="relative" zIndex="10" cursor="pointer">
             <Link href="/">Close</Link>
           </Box>
         </Box>

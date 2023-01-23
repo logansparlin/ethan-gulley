@@ -18,7 +18,7 @@ const Grid = ({ projects }) => {
     <Box
       flex="1"
       pt="100px"
-      px="20px"
+      px={["12px", null, "20px"]}
       width="100%"
       height="100vh"
       overflow="hidden"

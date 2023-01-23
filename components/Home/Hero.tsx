@@ -32,6 +32,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
   const activeIndex = useRef(lastFocusedIndex);
   const loops = useRef(0);
   const windowSize = useWindowSize();
+  const touchStart = useRef(0);
   const { transitionType, transitioning, setTransitioning, setTransitionType } = useAppStore();
   const { setScale } = useProjectStore();
 
@@ -47,10 +48,30 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
     scroll.current.target += delta * WHEEL_SPEED;
   }
 
+  const handleTouchStart = (e) => {
+    const { pageX: x } = e.touches[0] || e.changedTouches[0];
+    touchStart.current = x;
+  }
+
+  const handleTouchMove = (e) => {
+    const { pageX: x } = e.touches[0] || e.changedTouches[0];
+    scroll.current.target += -1 * (touchStart.current - x) * 0.1;
+  }
+
+  const handleTouchEnd = (e) => {
+    touchStart.current = 0;
+  }
+
   useEffect(() => {
     window.addEventListener('wheel', handleWheel);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchend', handleTouchEnd);
     return () => {
       window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
     }
   }, [loaded]);
 
@@ -111,7 +132,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
         <StyledHero
           flex="1"
           width="100%"
-          height="calc(100vh - 90px)"
+          height={["calc(100vh - 80px)", null, "calc(100vh - 90px)"]}
           display="flex"
           alignItems="center"
           justifyContent="center"

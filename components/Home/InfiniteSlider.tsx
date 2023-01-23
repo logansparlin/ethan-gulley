@@ -93,7 +93,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
   return (
     <Slider
       width="100%"
-      height="90px"
+      height={["80px", null, "90px"]}
       style={{ whiteSpace: 'nowrap', willChange: 'auto' }}
       overflow="hidden"
       ref={container}
@@ -108,8 +108,8 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
           <StyledImage
             ref={index === 0 ? itemRef : null}
             position="absolute"
-            width="72px"
-            height="90px"
+            width={["64px", null, "72px"]}
+            height={["80px", null, "90px"]}
             mr="5px"
             key={project._id}
             display="inline-block"

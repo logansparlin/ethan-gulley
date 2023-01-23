@@ -73,7 +73,7 @@ const ProjectList = ({ projects, category }) => {
 
   return (
     <AnimatePresence exitBeforeEnter={true}>
-      <Box pt="100px" className="list-view" px="20px" fontSize="14px" key={category}>
+      <Box pt="100px" className="list-view" px={["12px", null, "20px"]} fontSize="14px" key={category}>
         <Box width="100%">
           {years.map((year, index) => {
             return (

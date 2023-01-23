@@ -34,7 +34,7 @@ export const PortableText = ({ value }) => {
       value={value}
       components={{
         block: {
-          normal: ({ children }) => <Box as="p" pt="32px" fontSize="14px" lineHeight="120%" letterSpacing="-0.015em">{children}</Box>
+          normal: ({ children }) => <Box as="p" pt={["12px", null, "32px"]} fontSize="14px" lineHeight="120%" letterSpacing="-0.015em">{children}</Box>
         },
         marks: {
           link: ({ children, value }) => {

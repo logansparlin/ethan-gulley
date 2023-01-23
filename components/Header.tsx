@@ -17,7 +17,7 @@ const Header = ({ title }) => {
     setTransitionType('view');
   }
   return (
-    <Box as="header" p="20px" width="100%" position="fixed" zIndex="10" fontSize="14px">
+    <Box as="header" p={["12px", null, "20px"]} width="100%" position="fixed" zIndex="10" fontSize={["12px", null, "14px"]}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: activeProject ? 0 : loaded ? 1 : 0 }}
@@ -27,7 +27,7 @@ const Header = ({ title }) => {
           ease: 'circOut'
         }}
       >
-        <Box display="flex" justifyContent="space-between" width="100%">
+        <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
           <Link href="/">
             <TextButton onClick={() => updateView('default')}>
               {title}

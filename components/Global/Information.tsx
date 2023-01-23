@@ -1,5 +1,6 @@
 import { useAppStore } from "@hooks/useAppStore";
 import styled from 'styled-components';
+import css from '@styled-system/css'
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { Box } from "@components/box"
@@ -14,12 +15,15 @@ const StyledContainer = styled(motion.div)`
   left: 0;
   background: black;
   z-index: 100;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   font-size: 14px;
   line-height: 14px;
+  ${css({
+  overflow: ['scroll', null, 'hidden'],
+  padding: ["12px", null, "20px"]
+})}
 `
 
 const StyledLink = styled.a`
@@ -47,69 +51,52 @@ const Information = ({
 
   return (
     <AnimatePresence exitBeforeEnter>
-      {informationOpen && <StyledContainer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.4, ease: 'easeInOut' }}
-      >
-        <Box as="header" display="flex" justifyContent="space-between" alignItems="flex-start">
-          <Box as="h1" fontSize="12vw" lineHeight="10vw" letterSpacing="-0.06em">Ethan Gulley</Box>
-          <Box as="button" onClick={() => setInformationOpen(false)}>Close</Box>
-        </Box>
-        <Box as="main">
-          <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gridGap="20px">
-            <Box>
-              <Box maxWidth="216px" pb="32px">
-                <Box as="h2">Contact</Box>
-                <PortableText value={contact} />
+      {informationOpen && (
+        <StyledContainer
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4, ease: 'easeInOut' }}
+        >
+          <Box as="header" display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="flex-start" pb={["60px", null, 0]}>
+            <Box as="h1" flex="1" fontSize={["26vw", null, "12vw"]} lineHeight={["23vw", null, "10vw"]} letterSpacing="-0.06em">Ethan Gulley</Box>
+            <Box as="button" onClick={() => setInformationOpen(false)}>Close</Box>
+          </Box>
+          <Box as="main">
+            <Box display={["block", null, "grid"]} gridTemplateColumns="repeat(4, 1fr)" gridGap="20px">
+              <Box>
+                <Box maxWidth="216px" pb={["0", null, "32px"]}>
+                  <Box as="h2" pb={["12px", null, 0]}>Contact</Box>
+                  <PortableText value={contact} />
+                </Box>
+                <Box display={["none", null, "block"]}>
+                  <Box as="h2" pb={["12px", null, "32px"]}>Credits</Box>
+                  <Box>
+                    {credits.map(credit => {
+                      return (
+                        <div key={credit._key}>
+                          <span>{credit.role}:</span>
+                          <StyledLink href={credit.url} target="_blank" rel="noreferrer noopener">{credit.name}</StyledLink>
+                        </div>
+                      )
+                    })}
+                  </Box>
+                </Box>
               </Box>
               <Box>
-                <Box as="h2" pb="32px">Credits</Box>
-                <Box>
-                  {credits.map(credit => {
+                <Box as="h2" pb={["12px", null, "32px"]} pt={["75px", null, 0]}>Select Clients</Box>
+                <Box as="ul">
+                  {clients.map(client => {
                     return (
-                      <div key={credit._key}>
-                        <span>{credit.role}:</span>
-                        <StyledLink href={credit.url} target="_blank" rel="noreferrer noopener">{credit.person}</StyledLink>
-                      </div>
+                      <li key={client._key}>{client.name}</li>
                     )
                   })}
                 </Box>
               </Box>
-            </Box>
-            <Box>
-              <Box as="h2" pb="32px">Select Clients</Box>
-              <Box as="ul">
-                {clients.map(client => {
-                  return (
-                    <li key={client._key}>{client.name}</li>
-                  )
-                })}
-              </Box>
-            </Box>
-            <Box>
-              <Box as="h2" pb="32px">Select Publications</Box>
-              <Box as="ul">
-                {publications.map(publication => {
-                  return (
-                    <li key={publication._key}>
-                      {publication.url && (
-                        <StyledLink href={publication.url} target="_blank" rel="noreferrer noopener">{publication.name}</StyledLink>
-                      )}
-                      {!publication.url && (
-                        <span>{publication.name}</span>
-                      )}
-                    </li>
-                  )
-                })}
-              </Box>
-            </Box>
-            <Box>
-              <Box>
-                <Box as="h2" pb="32px">Self Publications</Box>
-                <ul>
-                  {selfPublications.map(publication => {
+              <Box pl={["88px", null, 0]}>
+                <Box as="h2" pb={["12px", null, "32px"]} pt={["75px", null, 0]}>Select Publications</Box>
+                <Box as="ul">
+                  {publications.map(publication => {
                     return (
                       <li key={publication._key}>
                         {publication.url && (
@@ -121,26 +108,58 @@ const Information = ({
                       </li>
                     )
                   })}
-                </ul>
+                </Box>
               </Box>
-              <Box pt="32px">
-                <Box as="h2" pb="12px">Exhibitions</Box>
-                <ul>
-                  {exhibitions.map(exhibition => {
-                    return (
-                      <li key={exhibition._key}>
-                        <StyledExhibition>
-                          <PortableText value={exhibition.details} />
-                        </StyledExhibition>
-                      </li>
-                    )
-                  })}
-                </ul>
+              <Box>
+                <Box pl={["88px", null, 0]}>
+                  <Box as="h2" pb={["12px", null, "32px"]} pt={["36px", null, 0]}>Self Publications</Box>
+                  <ul>
+                    {selfPublications.map(publication => {
+                      return (
+                        <li key={publication._key}>
+                          {publication.url && (
+                            <StyledLink href={publication.url} target="_blank" rel="noreferrer noopener">{publication.name}</StyledLink>
+                          )}
+                          {!publication.url && (
+                            <span>{publication.name}</span>
+                          )}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </Box>
+                <Box pt={["75px", null, "32px"]}>
+                  <Box as="h2" pb="12px">Exhibitions</Box>
+                  <ul>
+                    {exhibitions.map(exhibition => {
+                      return (
+                        <li key={exhibition._key}>
+                          <StyledExhibition>
+                            <PortableText value={exhibition.details} />
+                          </StyledExhibition>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </Box>
+                <Box display={["block", null, "none"]} pt="63px" pb="12px">
+                  <Box as="h2" pb={["12px", null, "32px"]}>Credits</Box>
+                  <Box>
+                    {credits.map(credit => {
+                      return (
+                        <div key={credit._key}>
+                          <span>{credit.role}:</span>
+                          <StyledLink href={credit.url} target="_blank" rel="noreferrer noopener">{credit.name}</StyledLink>
+                        </div>
+                      )
+                    })}
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Box>
-        </Box>
-      </StyledContainer>}
+        </StyledContainer>
+      )}
     </AnimatePresence>
   )
 }

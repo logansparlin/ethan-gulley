@@ -106,7 +106,7 @@ const Loading = ({ projects, site }) => {
           )
         })}
       </Box>
-      <Box width="100%" height="90px" bg="transparent" />
+      <Box width="100%" height={["80px", null, "90px"]} bg="transparent" />
     </Box >
   )
 }

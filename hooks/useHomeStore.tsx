@@ -18,7 +18,7 @@ export const useHomeStore = create<HomeState>((set) => ({
   setView: (view) => {
     set({ view: view });
   },
-  loaded: true,
+  loaded: false,
   setLoaded: (val) => {
     set({ loaded: val })
   },

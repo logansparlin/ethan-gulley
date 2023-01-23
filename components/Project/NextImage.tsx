@@ -1,9 +1,18 @@
 import { useMemo } from 'react'
 import { urlFor } from '@lib/sanity'
+import styled from 'styled-components'
+import css from '@styled-system/css'
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Box } from "@components/box"
+
+const StyledImage = styled(motion.div)`
+  ${css({
+  height: ['80px', null, '90px'],
+  width: ['64px', null, '72px']
+})}
+`
 
 export const NextImage = ({ images, afterIndex, nextProject, transition }) => {
   const isTransitioning = useMemo(() => {
@@ -19,8 +28,8 @@ export const NextImage = ({ images, afterIndex, nextProject, transition }) => {
     : '';
 
   return (
-    <Box position="absolute" top="50%" transform="translateY(-50%)" width="72px" height="90px" right="0">
-      <motion.div
+    <Box display={["none", null, "block"]} position="absolute" top="50%" transform="translateY(-50%)" width="72px" height={["80px", null, "90px"]} right="0">
+      <StyledImage
         initial={{ opacity: 0 }}
         animate={{
           opacity: isTransitioning ? 0 : 1,
@@ -31,7 +40,6 @@ export const NextImage = ({ images, afterIndex, nextProject, transition }) => {
         }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.6, ease: 'easeInOut' }}
-        style={{ width: '72px', height: '90px' }}
       >
         {isLastImage && (
           <Box opacity={isLastImage ? 1 : 0}>
@@ -46,7 +54,7 @@ export const NextImage = ({ images, afterIndex, nextProject, transition }) => {
             </Box>
           )
         })}
-      </motion.div>
+      </StyledImage>
     </Box>
   )
 }

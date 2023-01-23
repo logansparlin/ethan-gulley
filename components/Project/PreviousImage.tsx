@@ -1,10 +1,19 @@
 import { useMemo } from 'react'
 import { urlFor } from '@lib/sanity'
 import { useWindowSize } from '@hooks/useWindowSize'
+import styled from 'styled-components'
+import css from '@styled-system/css'
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Box } from "@components/box"
+
+const StyledImage = styled(motion.div)`
+  ${css({
+  height: ['80px', null, '90px'],
+  width: ['64px', null, '72px']
+})}
+`
 
 export const PreviousImage = ({ images, beforeIndex, transition, previousProject }) => {
   const { height, width } = useWindowSize();
@@ -30,8 +39,8 @@ export const PreviousImage = ({ images, beforeIndex, transition, previousProject
     : '';
 
   return (
-    <Box position="absolute" top="50%" transform="translateY(-50%)" width="72px" height="90px" left="0">
-      <motion.div
+    <Box display={["none", null, "block"]} position="absolute" top="50%" transform="translateY(-50%)" width={["64px", null, "72px"]} height={["80px", null, "90px"]} left="0">
+      <StyledImage
         initial={{ opacity: 0 }}
         animate={{
           scale: isTransitioningPrevious ? transitionScale : 1,
@@ -44,7 +53,6 @@ export const PreviousImage = ({ images, beforeIndex, transition, previousProject
         }}
         exit={{ opacity: isTransitioningPrevious ? 1 : 0 }}
         transition={{ duration: 0.6, ease: 'linear' }}
-        style={{ width: '72px', height: '90px' }}
       >
         {isFirstImage && (
           <Box opacity={isFirstImage ? 1 : 0}>
@@ -59,7 +67,7 @@ export const PreviousImage = ({ images, beforeIndex, transition, previousProject
             </Box>
           )
         })}
-      </motion.div>
+      </StyledImage>
     </Box>
   )
 }
