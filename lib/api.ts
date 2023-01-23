@@ -1,6 +1,12 @@
 import { groq } from 'next-sanity';
 import { sanityClient } from '@lib/sanity';
 
+const info = groq`
+    *[_type == "informationPage"][0] {
+        ...
+    }
+`
+
 export async function getHomePage() {
     const query = groq`
         *[_type == "homePage"][0] {
@@ -27,7 +33,8 @@ export async function getHomePage() {
                     _key,
                     _type
                 }
-            }
+            },
+            "information": ${info}
         }
     `
 
@@ -77,25 +84,9 @@ export async function getProject(slug: string) {
                     "metadata": asset -> metadata
                 },
             },
+            "information": ${info}
         }
     `;
-
-    const data = await sanityClient.fetch(query);
-
-    return {
-        data,
-        query
-    }
-}
-
-export async function getPage(slug: string) {
-    const query = groq`
-        *[_type == "page" && slug.current match '${slug}'][0] {
-            title,
-            slug,
-            body
-        }
-    `
 
     const data = await sanityClient.fetch(query);
 

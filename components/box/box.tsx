@@ -62,6 +62,12 @@ const Box = styled.div<Props>`
     },
     letterSpacing: {
         property: 'letterSpacing'
+    },
+    textDecoration: {
+        property: 'textDecoration'
+    },
+    pointerEvents: {
+        property: 'pointerEvents'
     }
 })}
 `;

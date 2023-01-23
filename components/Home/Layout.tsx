@@ -19,7 +19,7 @@ export const HomeHead = () => (
   </Head>
 )
 
-const HomeLayout = ({ projects, site }) => {
+const HomeLayout = ({ projects, site, info }) => {
   const { view, loaded, lastFocusedIndex } = useHomeStore();
   const [focusedProject, setFocusedProject] = useState(projects[lastFocusedIndex]);
   const { asPath } = useRouter();
@@ -41,7 +41,7 @@ const HomeLayout = ({ projects, site }) => {
       style={{ willChange: 'auto' }}
     >
       <Box>
-        <Information />
+        <Information {...info} />
         <HomeHead />
         <motion.div>
           <Header {...site} />

@@ -14,11 +14,11 @@ const Home = ({ pageData }): JSX.Element => {
     )
   }
 
-  const { projects, site } = pageData;
+  const { projects, site, information } = pageData;
 
   return (
     <Layout>
-      <HomeLayout projects={projects} site={site} />
+      <HomeLayout projects={projects} site={site} info={information} />
     </Layout>
   )
 }

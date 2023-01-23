@@ -2,6 +2,9 @@ import { useAppStore } from "@hooks/useAppStore";
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import { Box } from "@components/box"
+import { PortableText } from "@lib/sanity";
+
 const StyledContainer = styled(motion.div)`
   position: fixed;
   width: 100%;
@@ -19,10 +22,29 @@ const StyledContainer = styled(motion.div)`
   line-height: 14px;
 `
 
-import { Box } from "@components/box"
+const StyledLink = styled.a`
+  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
+`
 
-const Information = () => {
+const StyledExhibition = styled.div`
+  p {
+    padding-top: 20px;
+  }
+`
+
+const Information = ({
+  contact,
+  credits = [],
+  clients = [],
+  publications = [],
+  selfPublications = [],
+  exhibitions = []
+}) => {
   const { informationOpen, setInformationOpen } = useAppStore();
+
   return (
     <AnimatePresence exitBeforeEnter>
       {informationOpen && <StyledContainer
@@ -38,108 +60,83 @@ const Information = () => {
         <Box as="main">
           <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gridGap="20px">
             <Box>
-              <Box as="h2" pb="32px">Get in Touch</Box>
+              <Box maxWidth="216px" pb="32px">
+                <Box as="h2">Contact</Box>
+                <PortableText value={contact} />
+              </Box>
               <Box>
-                <p>E: <a href="mailto:ethan.gulley@gmail.com">ethan.gulley@gmail.com</a></p>
-                <p>IG: <a href="https://instagram.com/ethangulley" rel="noreferrer" target="_blank">@ethangulley</a></p>
+                <Box as="h2" pb="32px">Credits</Box>
+                <Box>
+                  {credits.map(credit => {
+                    return (
+                      <div key={credit._key}>
+                        <span>{credit.role}:</span>
+                        <StyledLink href={credit.url} target="_blank" rel="noreferrer noopener">{credit.person}</StyledLink>
+                      </div>
+                    )
+                  })}
+                </Box>
               </Box>
             </Box>
             <Box>
               <Box as="h2" pb="32px">Select Clients</Box>
               <Box as="ul">
-                <li>Nike</li>
-                <li>Levis</li>
-                <li>Apple</li>
-                <li>Ford</li>
-                <li>Paper Magazine</li>
-                <li>Vogue Magazine</li>
-                <li>Under Armour</li>
-                <li>Stella McCartney</li>
-                <li>Lululemon</li>
-                <li>Goop</li>
-                <li>W Hotels</li>
-                <li>Happy Socks</li>
-                <li>Set Active</li>
-                <li>Freshly</li>
-                <li>MedMen</li>
-                <li>Alternative Apparel</li>
-                <li>Golden Road Brewing</li>
-                <li>Calidad Beer</li>
-                <li>Goldenvoice</li>
-                <li>Blind Barber</li>
-                <li>Alpha Industries</li>
+                {clients.map(client => {
+                  return (
+                    <li key={client._key}>{client.name}</li>
+                  )
+                })}
               </Box>
             </Box>
             <Box>
               <Box as="h2" pb="32px">Select Publications</Box>
               <Box as="ul">
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Paper Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Hypebeast</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">The Photographic Journal</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Native Instruments</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Sports Illustrated</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Vogue Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Booooooom,</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Live FAST Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">C-Heads Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">The Photographic Journal</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Cake Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Woven Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Live FAST Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">MC1R Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Woven Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Rogue Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Cinestill Film</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Live FAST Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Pond Magazine</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Sticks & Stones</a>
-                </li>
-                <li>
-                  <a href="#" target="_blank" rel="noreferrer">Cake Magazine Issue 17</a>
-                </li>
+                {publications.map(publication => {
+                  return (
+                    <li key={publication._key}>
+                      {publication.url && (
+                        <StyledLink href={publication.url} target="_blank" rel="noreferrer noopener">{publication.name}</StyledLink>
+                      )}
+                      {!publication.url && (
+                        <span>{publication.name}</span>
+                      )}
+                    </li>
+                  )
+                })}
               </Box>
             </Box>
             <Box>
-              <Box as="h2" pb="32px">Self Publications</Box>
+              <Box>
+                <Box as="h2" pb="32px">Self Publications</Box>
+                <ul>
+                  {selfPublications.map(publication => {
+                    return (
+                      <li key={publication._key}>
+                        {publication.url && (
+                          <StyledLink href={publication.url} target="_blank" rel="noreferrer noopener">{publication.name}</StyledLink>
+                        )}
+                        {!publication.url && (
+                          <span>{publication.name}</span>
+                        )}
+                      </li>
+                    )
+                  })}
+                </ul>
+              </Box>
+              <Box pt="32px">
+                <Box as="h2" pb="12px">Exhibitions</Box>
+                <ul>
+                  {exhibitions.map(exhibition => {
+                    return (
+                      <li key={exhibition._key}>
+                        <StyledExhibition>
+                          <PortableText value={exhibition.details} />
+                        </StyledExhibition>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </Box>
             </Box>
           </Box>
         </Box>
