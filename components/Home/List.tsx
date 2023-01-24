@@ -47,7 +47,7 @@ const List = ({ projects }) => {
   }, [category])
 
   return (
-    <Box width="100%" ref={container} pb="100px" minHeight="100vh" pt="100px">
+    <Box width="100%" ref={container} pb="100px" minHeight="calc(var(--vh, 1vh) * 100)" pt="100px">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

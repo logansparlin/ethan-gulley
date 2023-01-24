@@ -10,6 +10,7 @@ const StyledContainer = styled(motion.div)`
   position: fixed;
   width: 100%;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   color: white;
   top: 0;
   left: 0;
@@ -18,11 +19,11 @@ const StyledContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-size: 14px;
-  line-height: 14px;
   ${css({
   overflow: ['scroll', null, 'hidden'],
-  padding: ["12px", null, "20px"]
+  padding: ["12px", null, "20px"],
+  fontSize: ['12px', null, '14px'],
+  lineHeight: ['12px', null, '14px'],
 })}
 `
 

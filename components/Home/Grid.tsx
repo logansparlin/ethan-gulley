@@ -20,7 +20,7 @@ const Grid = ({ projects }) => {
       pt="100px"
       px={["12px", null, "20px"]}
       width="100%"
-      height="100vh"
+      height="calc(var(--vh, 1vh) * 100)"
       overflow="hidden"
       willChange="auto"
     >
@@ -78,7 +78,7 @@ const GridView = ({ projects, category, handleChangeCategory }) => {
   }, [category])
 
   return (
-    <Box width="100%" ref={container} pb="100px" minHeight="100vh">
+    <Box width="100%" ref={container} pb="100px" minHeight="calc(var(--vh, 1vh) * 100)">
       <CategoryList category={category} setCategory={handleChangeCategory} />
       <ProjectGrid category={category} projects={projects} />
     </Box>

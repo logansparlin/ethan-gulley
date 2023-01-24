@@ -127,12 +127,12 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
   }
 
   return (
-    <Box position="absolute" flex="1" display="flex" alignItems="center" justifyContent="center" minHeight="100vh" width="100%">
-      <Box height="100vh" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
+    <Box position="absolute" flex="1" display="flex" alignItems="center" justifyContent="center" minHeight="calc(var(--vh, 1vh) * 100)" width="100%">
+      <Box height="calc(var(--vh, 1vh) * 100)" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
         <StyledHero
           flex="1"
           width="100%"
-          height={["calc(100vh - 80px)", null, "calc(100vh - 90px)"]}
+          height={["calc(calc(var(--vh, 1vh) * 100) - 80px)", null, "calc(calc(var(--vh, 1vh) * 100) - 90px)"]}
           display="flex"
           alignItems="center"
           justifyContent="center"

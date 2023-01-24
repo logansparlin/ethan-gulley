@@ -14,6 +14,7 @@ const OverviewContainer = styled(motion.div)`
   position: fixed;
   width: 100%;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   inset: 0;
   z-index: 100;
   overflow: hidden;
@@ -25,6 +26,7 @@ const StyledOverview = styled(motion.div)`
   left: 0;
   width: 100%;
   min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   background: white;
   color: black;
   z-index: 100;

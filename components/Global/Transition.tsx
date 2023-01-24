@@ -20,7 +20,7 @@ const Transition = ({ component, pageProps, path }): JSX.Element => {
       initial={false}
       onExitComplete={() => window.scrollTo(0, 0)}
     >
-      <Box position="absolute" key={`${path}`} zIndex={path === '/' ? '1' : '2'} top="0" left="0" width="100%" height="100vh">
+      <Box position="absolute" key={`${path}`} zIndex={path === '/' ? '1' : '2'} top="0" left="0" width="100%" height="calc(var(--vh, 1vh) * 100)">
         <Component {...pageProps} />
       </Box>
     </AnimatePresence>

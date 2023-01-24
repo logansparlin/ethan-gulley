@@ -54,7 +54,7 @@ export const PortableText = ({ value }) => {
                 <Box
                   position="absolute"
                   width="100%"
-                  height="100vh"
+                  height="calc(var(--vh, 1vh) * 100)"
                   bg="transparent"
                   top="0"
                   left="0"

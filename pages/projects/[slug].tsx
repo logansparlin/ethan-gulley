@@ -30,6 +30,7 @@ const StyledBackground = styled(motion.div)`
   background: white;
   width: 100%;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   inset: 0;
 `
 
@@ -149,7 +150,7 @@ const ProjectPage = ({ pageData }) => {
             cursor="none"
             position="fixed"
             width="100vw"
-            height="100vh"
+            height="calc(var(--vh, 1vh) * 100)"
             top="0"
             left="0"
           >
@@ -182,7 +183,7 @@ const ProjectPage = ({ pageData }) => {
                   $active={index === activeIndex}
                   opacity={index === activeIndex ? '1' : '0'}
                   width="70vw"
-                  height="calc(100vh)"
+                  height="calc(var(--vh, 1vh) * 100)"
                   position="absolute"
                   top="0"
                   left="15vw"
@@ -204,7 +205,7 @@ const ProjectPage = ({ pageData }) => {
                 key={image._key}
                 opacity={1}
                 width="70vw"
-                height="calc(100vh)"
+                height="calc(var(--vh, 1vh) * 100)"
                 position="absolute"
                 top="0"
                 left="15vw"
