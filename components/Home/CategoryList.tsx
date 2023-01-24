@@ -25,6 +25,14 @@ const CATEGORIES = [
   },
 ]
 
+const DownArrow = () => {
+  return (
+    <svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 5L2 1H10L6 5Z" fill="black" stroke="black" />
+    </svg>
+  )
+}
+
 const ListItem = styled(motion(Box))`
   position: relative;
   padding: 0;
@@ -78,29 +86,32 @@ const CategoryList = ({ category, setCategory }) => {
 
       {/* Mobile */}
       <Box display={["block", null, "none"]} as="ul" width="100%" fontSize="32px" textAlign="left" px="12px">
-        <Box display="grid" onClick={() => setExpanded(!expanded)}>
-          <AnimatePresence exitBeforeEnter={false} initial={false}>
-            {CATEGORIES.map(item => {
-              if (item.value === category) {
-                return (
-                  <Box key={item.value} overflow="hidden" position="relative" gridRow="1 / span 1" gridColumn="1 / span 1">
-                    <motion.div
-                      initial={{ y: '100%', opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: '-100%', opacity: 0 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: 0.2,
-                        ease: [0.9, 0.15, 0.1, 0.87]
-                      }}
-                    >
-                      {item.label}
-                    </motion.div>
-                  </Box>
-                )
-              }
-            })}
-          </AnimatePresence>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box flex="1" display="grid" onClick={() => setExpanded(!expanded)}>
+            <AnimatePresence exitBeforeEnter={false} initial={false}>
+              {CATEGORIES.map(item => {
+                if (item.value === category) {
+                  return (
+                    <Box key={item.value} overflow="hidden" position="relative" gridRow="1 / span 1" gridColumn="1 / span 1">
+                      <motion.div
+                        initial={{ y: '100%', opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: '-100%', opacity: 0 }}
+                        transition={{
+                          duration: 0.5,
+                          delay: 0.2,
+                          ease: [0.9, 0.15, 0.1, 0.87]
+                        }}
+                      >
+                        {item.label}
+                      </motion.div>
+                    </Box>
+                  )
+                }
+              })}
+            </AnimatePresence>
+          </Box>
+          <DownArrow />
         </Box>
         <AnimatePresence exitBeforeEnter initial={false}>
           {expanded ? (

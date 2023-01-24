@@ -5,8 +5,9 @@ import { useRouter } from "next/dist/client/router";
 import { useAppStore } from "@hooks/useAppStore";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { getImageDimensions } from "@sanity/asset-utils";
-import styled from 'styled-components';
 import { GRID_BREAKPOINTS } from "@lib/constants";
+import { useIsMobile } from "@hooks/useIsMobile";
+import styled from 'styled-components';
 
 import { Box } from "@components/box";
 import Image from 'next/image';
@@ -54,8 +55,9 @@ const ProjectGrid = ({ projects, category }) => {
   const selectedProjectPosition = useRef(null);
   const { setTransitionType } = useAppStore();
   const { setScale, setActiveProject, activeProject } = useProjectStore();
-  const router = useRouter();
   const { indices, updateIndices, clearIndices } = useAdjacentGridItem(GRID_BREAKPOINTS);
+  const isMobile = useIsMobile();
+  const router = useRouter();
 
   const filteredProjects = category === 'all'
     ? projects
@@ -126,7 +128,7 @@ const ProjectGrid = ({ projects, category }) => {
                         height="0"
                         pb={`${(dimensions.height / dimensions.width) * 100}%`}
                       >
-                        <HoverTitle>{project.title}</HoverTitle>
+                        {!isMobile ? <HoverTitle>{project.title}</HoverTitle> : null}
                         <StyledImage className={isSelected ? 'active' : indices && indices.includes(index) && 'faded'} as="button" onClick={(e) => handleClick(e, project)}>
                           <Image src={url} placeholder="blur" blurDataURL={lqip} layout="fill" objectFit="cover" alt={project.image.alt} />
                         </StyledImage>
