@@ -61,7 +61,7 @@ const Information = ({
         >
           <Box as="header" display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="flex-start" pb={["60px", null, 0]}>
             <Box as="h1" flex="1" fontSize={["26vw", null, "12vw"]} lineHeight={["23vw", null, "10vw"]} letterSpacing="-0.06em">Ethan Gulley</Box>
-            <Box as="button" onClick={() => setInformationOpen(false)}>Close</Box>
+            <Box as="button" p="0" onClick={() => setInformationOpen(false)}>Close</Box>
           </Box>
           <Box as="main">
             <Box display={["block", null, "grid"]} gridTemplateColumns="repeat(4, 1fr)" gridGap="20px">

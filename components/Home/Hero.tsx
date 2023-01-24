@@ -16,6 +16,8 @@ import { useAppStore } from "@hooks/useAppStore";
 
 const WHEEL_SPEED = 0.85;
 
+const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
 const StyledHero = styled(motion(Box))`
   will-change: auto;
 `;
@@ -55,7 +57,11 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
 
   const handleTouchMove = (e) => {
     const { pageX: x } = e.touches[0] || e.changedTouches[0];
-    scroll.current.target += -1 * (touchStart.current - x) * 0.1;
+    scroll.current.target += -1 * clamp(
+      (touchStart.current - x) * 0.15,
+      -10, 10
+    );
+    console.log(scroll.current.target)
   }
 
   const handleTouchEnd = (e) => {
