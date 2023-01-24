@@ -84,7 +84,7 @@ const ProjectGrid = ({ projects, category }) => {
   }
 
   return (
-    <Box pt="70px" pb="100px">
+    <Box pt={["80px", null, "70px"]} pb="100px">
       <AnimatePresence exitBeforeEnter={true} initial={false}>
         <GridWrapper key={category}>
           <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
@@ -130,6 +130,9 @@ const ProjectGrid = ({ projects, category }) => {
                         <StyledImage className={isSelected ? 'active' : indices && indices.includes(index) && 'faded'} as="button" onClick={(e) => handleClick(e, project)}>
                           <Image src={url} placeholder="blur" blurDataURL={lqip} layout="fill" objectFit="cover" alt={project.image.alt} />
                         </StyledImage>
+                      </Box>
+                      <Box as="h3" display={["block", null, "none"]} px="12px" py="8px" fontSize="26px" lineHeight="116%">
+                        {project.title}
                       </Box>
                     </StyledItem>
                   </Box>

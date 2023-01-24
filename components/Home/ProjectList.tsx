@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react"
-import styled from 'styled-components'
 import { useRouter } from "next/dist/client/router"
+import { useIsMobile } from "@hooks/useIsMobile"
+import styled from 'styled-components'
+import css from '@styled-system/css'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { Box } from "@components/box"
@@ -17,24 +19,43 @@ const YearUnderline = styled(motion.div)`
   background: black;
   margin-bottom: 3px;
   transform-origin: 0 0;
+  
+  ${css({
+  display: ['none', null, 'block']
+})}
 `
 
 const StyledYear = styled(motion.div)`
   position: absolute;
+  pointer-events: none;
   left: 0;
-  top: 100%;
+  
+  ${css({
+  top: [0, null, '100%'],
+  position: ['relative', null, 'absolute'],
+  fontSize: ['156px', null, 'inherit'],
+  lineHeight: ['136px', null, 'inherit'],
+  pb: ['8px', null, 0]
+})}
 `;
 
-const Project = styled(motion.div)`
+const Project = styled(motion.button)`
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  padding: 0;
+
+  ${css({
+  fontSize: ["26px", null, "14px"],
+  lineHeight: ["135.5%", null, "20px"],
+})}
 `
 
 const ProjectList = ({ projects, category }) => {
   const [years, setYears] = useState([]);
   const [sortedProjects, setSortedProjects] = useState([]);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const isMobile = useIsMobile();
   const { setTransitionType } = useAppStore();
   const router = useRouter();
 
@@ -73,7 +94,7 @@ const ProjectList = ({ projects, category }) => {
 
   return (
     <AnimatePresence exitBeforeEnter={true}>
-      <Box pt="100px" className="list-view" px={["12px", null, "20px"]} fontSize="14px" key={category}>
+      <Box pt={["50px", null, "100px"]} className="list-view" px={["12px", null, "20px"]} fontSize="14px" key={category}>
         <Box width="100%">
           {years.map((year, index) => {
             return (
@@ -86,11 +107,14 @@ const ProjectList = ({ projects, category }) => {
                     transition={{ duration: DURATION, ease: [0.85, 0.1, 0, 1], delay: DELAY * sortedProjects.find(project => project.year === year).animateIndex }}
                   />
                   <StyledYear
-                    initial={{ opacity: 0, x: -3 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 0, transition: { delay: 0 } }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0, transition: { delay: 0 } }}
                     transition={{ duration: DURATION, ease: [0.85, 0.1, 0, 1], delay: DELAY * sortedProjects.find(project => project.year === year).animateIndex }}
-                  >{year}</StyledYear>
+                  >
+                    <Box as="span" display={["none", null, "block"]}>{year}</Box>
+                    <Box as="span" display={["block", null, "none"]}>{year.toString().slice(-2)}</Box>
+                  </StyledYear>
                 </Box>
                 {sortedProjects.map(project => {
                   if (project.year !== year || (category !== 'all' && project.category !== category)) return null;
@@ -110,18 +134,16 @@ const ProjectList = ({ projects, category }) => {
                           duration: DURATION, ease: 'easeInOut', delay: DELAY * project.animateIndex
                         }}
                       >
-                        <HoverImage image={project.images?.length >= 1 ? project.images[0] : project.image} active={project._id === activeId} />
+                        {!isMobile ? <HoverImage image={project.images?.length >= 1 ? project.images[0] : project.image} active={project._id === activeId} /> : null}
                         <Box
-                          width="50%"
+                          width={["100%", null, "50%"]}
                           key={project._id}
                           display="flex"
                           justifyContent="space-between"
                           className="list-view-item__content"
-                          fontSize="14px"
-                          lineHeight="20px"
                         >
                           <Box>{project.title}</Box>
-                          <Box>{project.images?.length.toString().padStart(2, '0') || '00'}</Box>
+                          <Box display={["none", null, "block"]}>{project.images?.length.toString().padStart(2, '0') || '00'}</Box>
                         </Box>
                       </Project>
                     </Link>

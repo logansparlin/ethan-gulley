@@ -47,8 +47,8 @@ const List = ({ projects }) => {
   }, [category])
 
   return (
-    <Box width="100%" ref={container} pb="100px" minHeight="calc(var(--vh, 1vh) * 100)" pt="100px">
-      <motion.div
+    <Box width="100%" ref={container} pb="100px" minHeight="calc(var(--vh, 1vh) * 100)" pt={["60px", null, "100px"]}>
+      < motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -59,7 +59,7 @@ const List = ({ projects }) => {
         <CategoryList category={category} setCategory={setCategory} />
         <ProjectList projects={projects} category={category} />
       </motion.div>
-    </Box>
+    </Box >
   )
 }
 

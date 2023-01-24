@@ -171,7 +171,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                         position="relative"
                         width={["100vw", null, "25vw"]}
                         height="0"
-                        pb={`calc(100vw * ${aspect})`}
+                        pb={[`calc(100vw * ${aspect})`, null, `calc(100vw * ${aspect})`]}
                       >
                         <Image src={project.image?.url || url} layout="fill" objectFit="contain" alt={project.image?.alt ?? ""} loading="eager" />
                       </StyledImage>
