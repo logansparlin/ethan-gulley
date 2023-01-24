@@ -12,6 +12,8 @@ function MyApp({ Component, pageProps, router }) {
       )
     }
 
+    setVH();
+
     window.addEventListener('resize', setVH)
     return () => {
       window.removeEventListener('resize', setVH)
