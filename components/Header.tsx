@@ -27,13 +27,15 @@ const Header = ({ title }) => {
           ease: 'circOut'
         }}
       >
-        <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
-          <Link href="/">
-            <TextButton onClick={() => updateView('default')}>
-              {title}
-            </TextButton>
-          </Link>
-          <Box as="ul">
+        <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" alignItems="center" width="100%">
+          <Box textAlign="left">
+            <Link href="/">
+              <TextButton onClick={() => updateView('default')}>
+                {title}
+              </TextButton>
+            </Link>
+          </Box>
+          <Box as="ul" textAlign="center">
             <Box
               as="li"
               display="inline-block"
@@ -56,10 +58,8 @@ const Header = ({ title }) => {
               List View
             </Box>
           </Box>
-          <Box as="ul">
-            <Box as="li">
-              <Box as="button" onClick={() => setInformationOpen(true)}>Information</Box>
-            </Box>
+          <Box textAlign="right">
+            <Box as="button" p="0" onClick={() => setInformationOpen(true)}>Information</Box>
           </Box>
         </Box>
       </motion.div>
