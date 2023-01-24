@@ -61,7 +61,6 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
       (touchStart.current - x) * 0.15,
       -10, 10
     );
-    console.log(scroll.current.target)
   }
 
   const handleTouchEnd = (e) => {
@@ -170,14 +169,15 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                     <Box>
                       <StyledImage
                         position="relative"
-                        width="25vw"
+                        width={["100vw", null, "25vw"]}
                         height="0"
-                        pb={`calc(25vw * ${aspect})`}
+                        pb={`calc(100vw * ${aspect})`}
                       >
                         <Image src={project.image?.url || url} layout="fill" objectFit="contain" alt={project.image?.alt ?? ""} loading="eager" />
                       </StyledImage>
                       <StyledTitle
                         pt="8px"
+                        pl={['15px', null, 0]}
                         fontSize="14px"
                         opacity="0"
                         textAlign="left"

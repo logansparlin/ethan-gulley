@@ -182,11 +182,11 @@ const ProjectPage = ({ pageData }) => {
                   key={image._key}
                   $active={index === activeIndex}
                   opacity={index === activeIndex ? '1' : '0'}
-                  width="70vw"
+                  width={["100vw", null, "70vw"]}
                   height="calc(var(--vh, 1vh) * 100)"
                   position="absolute"
                   top="0"
-                  left="15vw"
+                  left={[0, null, "15vw"]}
                   initial={{ scale: transitionType === 'list' ? 1 : scale }}
                   animate={{
                     x: projectTransition ? x : 0,
@@ -204,11 +204,11 @@ const ProjectPage = ({ pageData }) => {
               <StyledImage
                 key={image._key}
                 opacity={1}
-                width="70vw"
+                width={["100vw", null, "70vw"]}
                 height="calc(var(--vh, 1vh) * 100)"
                 position="absolute"
                 top="0"
-                left="15vw"
+                left={[0, null, "15vw"]}
                 initial={{ opacity: 1, scale: scale }}
                 animate={{
                   opacity: 1,
