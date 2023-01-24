@@ -66,7 +66,6 @@ const CategoryList = ({ category, setCategory }) => {
                 onClick={() => setCategory(item.value)}
               >
                 <ListItem
-                  as="button"
                   key="all"
                   initial={{ color: '#D7D7D7' }}
                   animate={{ color: category === item.value ? '#000' : '#D7D7D7' }}
@@ -141,7 +140,6 @@ const CategoryList = ({ category, setCategory }) => {
                       }}
                     >
                       <ListItem
-                        as="button"
                         key="all"
                         initial={{ color: '#D7D7D7' }}
                         animate={{ color: category === item.value ? '#000' : '#D7D7D7' }}
