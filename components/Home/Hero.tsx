@@ -51,15 +51,15 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
   }
 
   const handleTouchStart = (e) => {
-    const { pageX: x } = e.touches[0] || e.changedTouches[0];
-    touchStart.current = x;
+    const { pageY: y } = e.touches[0] || e.changedTouches[0];
+    touchStart.current = y;
   }
 
   const handleTouchMove = (e) => {
-    const { pageX: x } = e.touches[0] || e.changedTouches[0];
+    const { pageY: y } = e.touches[0] || e.changedTouches[0];
     scroll.current.target += -1 * clamp(
-      (touchStart.current - x) * 0.15,
-      -10, 10
+      (touchStart.current - y) * 2,
+      -25, 25
     );
   }
 
