@@ -39,7 +39,7 @@ export const PreviousImage = ({ images, beforeIndex, transition, previousProject
     : '';
 
   return (
-    <Box display={["none", null, "block"]} position="absolute" top="50%" transform="translateY(-50%)" width={["64px", null, "72px"]} height={["80px", null, "90px"]} left="0">
+    <Box display={["none", null, "block"]} position="absolute" top="50%" transform="translateY(-50%)" width={["42px", null, "72px"]} height={["55px", null, "90px"]} left="0">
       <StyledImage
         initial={{ opacity: 0 }}
         animate={{

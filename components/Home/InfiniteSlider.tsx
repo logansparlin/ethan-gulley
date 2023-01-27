@@ -1,18 +1,17 @@
 import { useRef, useEffect } from "react";
 import { useAnimationFrame } from "@hooks/useAnimationFrame";
 import { urlFor } from "@lib/sanity"
-import styled from 'styled-components';
 import { lerp } from "@lib/helpers";
-import gsap from "gsap";
 import { motion } from 'framer-motion';
+import { useWindowSize } from "@hooks/useWindowSize";
+import styled from 'styled-components';
+import gsap from "gsap";
 
 import { Box } from "@components/box"
 import Image from 'next/image'
 import { useHomeStore } from "@hooks/useHomeStore";
 
 const Slider = styled(motion(Box))``;
-
-const GUTTER = 5;
 
 const StyledImage = styled(Box)`
   transition: opacity 850ms ease-in-out;
@@ -32,6 +31,12 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
   const wrapWidth = useRef(0);
   const loadingRef = useRef(loading);
   const { lastFocusedIndex } = useHomeStore();
+  const { width } = useWindowSize();
+  const gutter = useRef(5);
+
+  useEffect(() => {
+    gutter.current = width < 832 ? 2 : 5
+  }, [width])
 
   useEffect(() => {
     loadingRef.current = loading;
@@ -48,7 +53,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
 
     gsap.set(items.current, {
       x: (i) => {
-        return i * (itemWidth.current + GUTTER) + scroll
+        return i * (itemWidth.current + gutter.current) + scroll
       },
       z: 0,
       modifiers: {
@@ -65,15 +70,15 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
 
     itemWidth.current = itemRef.current.clientWidth;
     containerWidth.current = container.current.clientWidth;
-    wrapWidth.current = projects.length * (itemWidth.current + GUTTER);
+    wrapWidth.current = projects.length * (itemWidth.current + gutter.current);
     scroll.current = lerp(scroll.current, scroll.target, 0.05)
 
     const offset = window.innerWidth / 2;
 
     const containerIndex = Math.abs(Math.floor(-1 * (scroll.current - offset) / wrapWidth.current))
     const activeIndex = scroll.current - offset <= 0
-      ? Math.floor(-1 * (wrapWidth.current - (wrapWidth.current - ((scroll.current + (Math.abs(wrapWidth.current) * containerIndex)) - offset))) / (itemWidth.current + GUTTER))
-      : Math.floor((wrapWidth.current - (wrapWidth.current - ((Math.abs(wrapWidth.current) * containerIndex) - scroll.current) - offset)) / (itemWidth.current + GUTTER));
+      ? Math.floor(-1 * (wrapWidth.current - (wrapWidth.current - ((scroll.current + (Math.abs(wrapWidth.current) * containerIndex)) - offset))) / (itemWidth.current + gutter.current))
+      : Math.floor((wrapWidth.current - (wrapWidth.current - ((Math.abs(wrapWidth.current) * containerIndex) - scroll.current) - offset)) / (itemWidth.current + gutter.current));
 
     window.localStorage.setItem('first-index', activeIndex.toString())
 
@@ -86,14 +91,14 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
 
   const handleClick = (project, index) => {
     updateProject(index)
-    const newScroll = (itemWidth.current + GUTTER) * index;
+    const newScroll = (itemWidth.current + gutter.current) * index;
     scroll.target = -1 * newScroll + ((window.innerWidth / 2) - (itemWidth.current / 2));
   }
 
   return (
     <Slider
       width="100%"
-      height={["80px", null, "90px"]}
+      height={["40px", null, "90px"]}
       style={{ whiteSpace: 'nowrap', willChange: 'auto' }}
       overflow="hidden"
       ref={container}
@@ -106,12 +111,12 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
         const url = project.image ? urlFor(project.image.src).auto('format').width(400).url() : urlFor(project.images[0].src).width(400).auto('format').url();
         return (
           <StyledImage
+            key={project._id}
             ref={index === 0 ? itemRef : null}
             position="absolute"
-            width={["64px", null, "72px"]}
-            height={["80px", null, "90px"]}
-            mr="5px"
-            key={project._id}
+            width={["32px", null, "72px"]}
+            height={["40px", null, "90px"]}
+            mr={["2px", null, "5px"]}
             display="inline-block"
             cursor="pointer"
             opacity={focusedProject._id === project._id ? '0.5' : '1'}

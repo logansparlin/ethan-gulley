@@ -1,12 +1,12 @@
+import NormalizeWheel from 'normalize-wheel';
+import styled from 'styled-components';
 import { useEffect, useRef, useCallback } from "react";
 import { urlFor } from "@lib/sanity"
-import NormalizeWheel from 'normalize-wheel';
 import { getImageDimensions } from '@sanity/asset-utils';
 import { useHomeStore } from "@hooks/useHomeStore";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { useWindowSize } from "@hooks/useWindowSize";
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
 
 import Link from "next/link";
 import { Box } from "@components/box"
@@ -139,7 +139,8 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           width="100%"
           height={["calc(calc(var(--vh, 1vh) * 100) - 80px)", null, "calc(calc(var(--vh, 1vh) * 100) - 90px)"]}
           display="flex"
-          alignItems="center"
+          alignItems={["flex-start", null, "center"]}
+          pt={["40px", null, 0]}
           justifyContent="center"
           cursor="pointer"
           key="home-hero"
@@ -171,9 +172,15 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                         position="relative"
                         width={["100vw", null, "25vw"]}
                         height="0"
-                        pb={[`calc(100vw * ${aspect})`, null, `calc(100vw * ${aspect})`]}
+                        pb={[aspect > 1.4 ? '120vw' : `calc(100vw * ${aspect})`, null, `calc(100vw * ${aspect})`]}
                       >
-                        <Image src={project.image?.url || url} layout="fill" objectFit="contain" alt={project.image?.alt ?? ""} loading="eager" />
+                        <Image
+                          src={project.image?.url || url}
+                          layout="fill"
+                          objectFit={aspect > 1.4 && windowSize.width < 832 ? 'cover' : "contain"}
+                          alt={project.image?.alt ?? ""}
+                          loading="eager"
+                        />
                       </StyledImage>
                       <StyledTitle
                         pt="8px"
