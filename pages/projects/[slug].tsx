@@ -20,7 +20,7 @@ import { Header } from "@components/Project/Header";
 import Image from "next/image";
 
 const StyledImage = styled(motion(Box))`
-  z-index: 0;
+  z-index: 10;
   will-change: auto;
 `;
 
@@ -193,7 +193,13 @@ const ProjectPage = ({ pageData }) => {
                     scale: projectTransition ? transitionScale : 1,
                     transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
                   }}
-                  exit={{ scale: 1 }}
+                  exit={{
+                    scale: 1,
+                    opacity: transitionType === 'project' || index !== activeIndex ? 0 : 1,
+                    transition: {
+                      duration: 0
+                    }
+                  }}
                   transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
                 >
                   <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
@@ -215,7 +221,10 @@ const ProjectPage = ({ pageData }) => {
                   scale: 1,
                   transition: { duration: 0.6, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
                 }}
-                exit={{ opacity: 1, scale: 1 }}
+                exit={{
+                  scale: 1,
+                  opacity: transitionType === 'project' ? 0 : 1
+                }}
                 transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
               >
                 <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />

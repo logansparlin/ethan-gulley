@@ -1,8 +1,17 @@
+import { useRouter } from 'next/dist/client/router'
+import { useAppStore } from '@hooks/useAppStore'
+
 import { motion } from 'framer-motion'
 import { Box } from '@components/box'
 import Link from 'next/link'
 
 export const Header = ({ title, toggleOverview }) => {
+  const router = useRouter();
+  const { setTransitionType } = useAppStore();
+  const onClose = () => {
+    setTransitionType('page')
+    router.push('/')
+  }
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -10,7 +19,7 @@ export const Header = ({ title, toggleOverview }) => {
       exit={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: 'circOut' }}
     >
-      <Box as="header" position="relative" zIndex="10" display="flex" justifyContent="space-between">
+      <Box as="header" position="relative" zIndex="20" display="flex" justifyContent="space-between">
         <Box as="h1" p={["12px", null, "20px"]} color="black">{title}</Box>
         <Box display="flex">
           <Box
@@ -26,8 +35,8 @@ export const Header = ({ title, toggleOverview }) => {
           >
             Overview
           </Box>
-          <Box pr={["12px", null, "20px"]} pt={["12px", null, "20px"]} position="relative" zIndex="10" cursor="pointer">
-            <Link href="/">Close</Link>
+          <Box pr={["12px", null, "20px"]} pt={["12px", null, "20px"]} position="relative" zIndex="10" cursor="pointer" onClick={onClose}>
+            Close
           </Box>
         </Box>
       </Box>
