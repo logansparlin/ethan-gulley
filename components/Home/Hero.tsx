@@ -172,7 +172,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                         position="relative"
                         width={["100vw", null, "25vw"]}
                         height="0"
-                        pb={[aspect > 1.4 ? '120vw' : `calc(100vw * ${aspect})`, null, `calc(100vw * ${aspect})`]}
+                        pb={[aspect > 1.4 ? '120vw' : `calc(100vw * ${aspect})`, null, `calc(100% * ${aspect})`]}
                       >
                         <Image
                           src={project.image?.url || url}
