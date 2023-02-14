@@ -207,8 +207,8 @@ export const ProjectPage = ({ data }) => {
                     transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
                   }}
                   exit={{
-                    scale: 1,
-                    opacity: transitionType === 'project' || index !== activeIndex ? 0 : 1,
+                    scale: transitionType === 'project' ? transitionScale : 1,
+                    opacity: index !== activeIndex ? 0 : 1,
                     transition: {
                       duration: 0
                     }
