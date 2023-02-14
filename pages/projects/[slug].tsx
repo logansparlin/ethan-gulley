@@ -247,8 +247,8 @@ const ProjectPage = ({ pageData }) => {
             )}
             <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} />
             <NextImage transition={projectTransition} images={images} afterIndex={afterIndex} />
-            <NextTransition nextProject={nextProject} transitioning={projectTransition === 'next'} visible={isLast} />
-            <PreviousTransition previousProject={previousProject} transitioning={projectTransition === 'prev'} visible={isFirst} />
+            {/* <NextTransition nextProject={nextProject} transitioning={projectTransition === 'next'} visible={isLast} />
+            <PreviousTransition previousProject={previousProject} transitioning={projectTransition === 'prev'} visible={isFirst} /> */}
           </Box>
         </Layout>
       </motion.div>
