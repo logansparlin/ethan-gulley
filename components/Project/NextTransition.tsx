@@ -44,7 +44,7 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
 
   const firstImage = nextProject.images[0]
   const secondImage = nextProject.images[1];
-  const url = urlFor(firstImage).auto('format').width(1200).url();
+  const url = urlFor(firstImage).auto('format').width(1600).quality(95).url();
   const url2 = urlFor(secondImage).auto('format').width(200).url();
 
   return (

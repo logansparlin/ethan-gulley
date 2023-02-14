@@ -45,7 +45,7 @@ export const PreviousTransition = ({ previousProject, transitioning, visible = f
 
   const lastImage = previousProject.images[previousProject.images.length - 1]
   const secondToLastImage = previousProject.images[previousProject.images.length - 2];
-  const url = urlFor(lastImage).auto('format').width(1200).url();
+  const url = urlFor(lastImage).auto('format').width(1600).quality(95).url();
   const url2 = urlFor(secondToLastImage).auto('format').width(200).url();
 
   return (
