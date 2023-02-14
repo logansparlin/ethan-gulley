@@ -18,6 +18,8 @@ import { PreviousImage } from "@components/Project/PreviousImage";
 import { NextImage } from "@components/Project/NextImage";
 import { Header } from "@components/Project/Header";
 import Image from "next/image";
+import { NextTransition } from "@components/Project/NextTransition";
+import { PreviousTransition } from "@components/Project/PreviousTransition";
 
 const StyledImage = styled(motion(Box))`
   z-index: 10;
@@ -35,7 +37,6 @@ const StyledBackground = styled(motion.div)`
 `
 
 const ProjectPage = ({ pageData }) => {
-  if (!pageData) return "no page data"
   const { _id, title, images, image, projects, credits } = pageData;
   const { width, height } = useWindowSize();
   const { scale } = useProjectStore();
@@ -74,8 +75,13 @@ const ProjectPage = ({ pageData }) => {
 
   const nextImage = () => {
     if (activeIndex === images?.length - 1) {
-      return setProjectTransition('next');
-      // return setActiveIndex(0)
+      setProjectTransition('next');
+      setTransitionType('project')
+      setProjectIndex(0)
+      setTimeout(() => {
+        router.push(`/projects/${nextProject.slug.current}`)
+      }, 600)
+      return setActiveIndex(0)
     }
     setProjectTransition(null)
     return setActiveIndex(activeIndex + 1)
@@ -101,6 +107,14 @@ const ProjectPage = ({ pageData }) => {
     }
   }
 
+  const isFirst = useMemo(() => {
+    return activeIndex === 0
+  }, [activeIndex])
+
+  const isLast = useMemo(() => {
+    return activeIndex === images?.length - 1
+  }, [activeIndex, images])
+
   const beforeIndex = useMemo(() => {
     if (activeIndex === 0) {
       return images?.length - 1
@@ -122,6 +136,8 @@ const ProjectPage = ({ pageData }) => {
   const toggleOverview = () => {
     setOverviewOpen(!overviewOpen)
   }
+
+  if (!pageData) return "no page data"
 
   return (
     <>
@@ -230,8 +246,10 @@ const ProjectPage = ({ pageData }) => {
                 <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
               </StyledImage>
             )}
-            <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} previousProject={previousProject} />
-            <NextImage transition={projectTransition} images={images} afterIndex={afterIndex} nextProject={nextProject} />
+            <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} />
+            <NextImage transition={projectTransition} images={images} afterIndex={afterIndex} />
+            <NextTransition nextProject={nextProject} transitioning={projectTransition === 'next'} visible={isLast} />
+            <PreviousTransition previousProject={previousProject} transitioning={projectTransition === 'prev'} visible={isFirst} />
           </Box>
         </Layout>
       </motion.div>
