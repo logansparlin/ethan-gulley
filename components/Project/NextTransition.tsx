@@ -24,7 +24,7 @@ const StyledImage = styled(motion.div)`
   pointer-events: none;
   height: 100vh;
   width: 70vw;
-  z-index: 10;
+  z-index: 12;
 `
 
 export const NextTransition = ({ nextProject, transitioning, visible = false }) => {

@@ -80,7 +80,7 @@ export const ProjectPage = ({ data }) => {
       setTimeout(() => {
         router.push(`/projects/${nextProject.slug.current}`)
       }, 600)
-      return setActiveIndex(0)
+      return setActiveIndex(images?.length - 1)
     }
     setProjectTransition(null)
     return setActiveIndex(activeIndex + 1)
