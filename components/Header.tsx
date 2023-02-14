@@ -29,7 +29,7 @@ const Header = ({ title }) => {
       >
         <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" alignItems="center" width="100%">
           <Box textAlign="left">
-            <Link href="/">
+            <Link href="/" passHref>
               <TextButton onClick={() => updateView('default')}>
                 {title}
               </TextButton>

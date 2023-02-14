@@ -37,6 +37,7 @@ const StyledBackground = styled(motion.div)`
 `
 
 const ProjectPage = ({ pageData }) => {
+  if (!pageData) return "no page data"
   const { _id, title, images, image, projects, credits } = pageData;
   const { width, height } = useWindowSize();
   const { scale } = useProjectStore();
@@ -136,8 +137,6 @@ const ProjectPage = ({ pageData }) => {
   const toggleOverview = () => {
     setOverviewOpen(!overviewOpen)
   }
-
-  if (!pageData) return "no page data"
 
   return (
     <>

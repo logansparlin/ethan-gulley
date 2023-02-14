@@ -24,6 +24,7 @@ const Loading = ({ projects, site }) => {
   const { setView } = useHomeStore();
 
   useEffect(() => {
+    // eslint-disable-next-line prefer-const
     let interval;
 
     if (interval) clearInterval(interval)

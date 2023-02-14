@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/dist/client/router"
 import { useIsMobile } from "@hooks/useIsMobile"
 import styled from 'styled-components'

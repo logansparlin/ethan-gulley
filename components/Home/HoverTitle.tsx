@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components'
 import { useMouseHovered } from 'react-use';
 import { useLerp } from '@hooks/useLerp';

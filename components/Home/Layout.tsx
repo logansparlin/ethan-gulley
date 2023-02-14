@@ -20,7 +20,7 @@ export const HomeHead = () => (
 )
 
 const HomeLayout = ({ projects, site, info }) => {
-  const { view, loaded, lastFocusedIndex } = useHomeStore();
+  const { view, lastFocusedIndex } = useHomeStore();
   const [focusedProject, setFocusedProject] = useState(projects[lastFocusedIndex]);
   const { asPath } = useRouter();
 

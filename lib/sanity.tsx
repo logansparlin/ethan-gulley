@@ -46,6 +46,7 @@ export const PortableText = ({ value }) => {
             )
           },
           imageHover: (props) => {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
             const [hovered, setHovered] = useState(false);
             const url = urlFor(props.value.image).auto('format').width(1200).url();
 

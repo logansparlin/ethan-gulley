@@ -1,6 +1,6 @@
 import NormalizeWheel from 'normalize-wheel';
 import styled from 'styled-components';
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import { urlFor } from "@lib/sanity"
 import { getImageDimensions } from '@sanity/asset-utils';
 import { useHomeStore } from "@hooks/useHomeStore";
@@ -63,7 +63,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
     );
   }
 
-  const handleTouchEnd = (e) => {
+  const handleTouchEnd = () => {
     touchStart.current = 0;
   }
 
@@ -81,6 +81,8 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
   }, [loaded]);
 
   useEffect(() => {
+
+    // eslint-disable-next-line prefer-const
     let interval;
 
     if (interval) clearInterval(interval)

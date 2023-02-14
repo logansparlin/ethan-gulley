@@ -1,4 +1,4 @@
-import { FC, ReactNode, MouseEvent, forwardRef } from 'react';
+import { ReactNode, MouseEvent, forwardRef } from 'react';
 import styled from 'styled-components';
 
 import { Box } from './box';
@@ -25,7 +25,7 @@ interface ButtonOwnProps {
 
 const TextButton = forwardRef<HTMLButtonElement, ButtonOwnProps>(({ children, onClick, ...rest }, forwardedRef) => {
   return (
-    <Button as="button" onClick={onClick} {...rest}>
+    <Button ref={forwardedRef} as="button" onClick={onClick} {...rest}>
       {children}
     </Button>
   )

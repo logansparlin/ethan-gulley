@@ -9,7 +9,6 @@ import gsap from "gsap";
 
 import { Box } from "@components/box"
 import Image from 'next/image'
-import { useHomeStore } from "@hooks/useHomeStore";
 
 const Slider = styled(motion(Box))``;
 
@@ -30,7 +29,6 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
   const items = useRef(null);
   const wrapWidth = useRef(0);
   const loadingRef = useRef(loading);
-  const { lastFocusedIndex } = useHomeStore();
   const { width } = useWindowSize();
   const gutter = useRef(5);
 
@@ -57,7 +55,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
       },
       z: 0,
       modifiers: {
-        x: (x, target) => {
+        x: (x) => {
           const s = gsap.utils.wrap(-itemWidth.current, wrapWidth.current - itemWidth.current, Number(x.replace('px', '')))
           return `${s}px`
         }
@@ -65,7 +63,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
     })
   }
 
-  useAnimationFrame((val) => {
+  useAnimationFrame(() => {
     if (!itemRef.current) return;
 
     itemWidth.current = itemRef.current.clientWidth;
@@ -89,7 +87,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
     animate(scroll.current)
   })
 
-  const handleClick = (project, index) => {
+  const handleClick = (_, index) => {
     updateProject(index)
     const newScroll = (itemWidth.current + gutter.current) * index;
     scroll.target = -1 * newScroll + ((window.innerWidth / 2) - (itemWidth.current / 2));

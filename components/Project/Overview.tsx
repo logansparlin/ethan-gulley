@@ -85,7 +85,9 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
     }
 
     return () => {
-      scroll ? scroll.destroy() : null;
+      if (scroll) {
+        scroll.destroy();
+      }
     }
   }, [isOpen])
 
