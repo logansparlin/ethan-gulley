@@ -67,6 +67,7 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick, nextPro
         textAlign="center"
         ref={textRef}
         width="200px"
+        display={["none", null, "block"]}
       >
         {index === 1 && side === 'left' ? <PrevCursor title={previousProject.title} /> : null}
         {index === count && side === 'right' ? <NextCursor title={nextProject.title} /> : null}

@@ -49,7 +49,7 @@ export const PreviousTransition = ({ previousProject, transitioning, visible = f
   const url2 = urlFor(secondToLastImage).auto('format').width(200).url();
 
   return (
-    <Box opacity={visible ? 1 : 0}>
+    <Box opacity={visible ? 1 : 0} display={["none", null, "block"]}>
       <StyledImage
         initial={{ scale: scale, opacity: 1, x: x }}
         animate={{ scale: transitioning ? 1 : scale, opacity: 1, x: transitioning ? 0 : x }}
