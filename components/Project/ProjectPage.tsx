@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { useAppStore } from "@hooks/useAppStore";
 import { useWindowSize } from "@hooks/useWindowSize";
 import { useRouter } from "next/dist/client/router";
+import { useIsMobile } from "@hooks/useIsMobile";
 
 import Layout from "@components/Global/Layout";
 import { Box } from "@components/box";
@@ -45,6 +46,7 @@ export const ProjectPage = ({ data }) => {
   const { transitionType, setTransitionType, projectIndex, setProjectIndex } = useAppStore();
   const [activeIndex, setActiveIndex] = useState(projectIndex ?? 0);
   const router = useRouter();
+  const isMobile = useIsMobile();
 
   const transitionScale = useMemo(() => {
     return 90 / height;
@@ -200,14 +202,14 @@ export const ProjectPage = ({ data }) => {
                   position="absolute"
                   top="0"
                   left={[0, null, "15vw"]}
-                  initial={{ scale: transitionType === 'list' ? 1 : scale }}
+                  initial={{ scale: transitionType === 'list' || isMobile ? 1 : scale }}
                   animate={{
                     x: projectTransition ? x : 0,
                     scale: projectTransition ? transitionScale : 1,
                     transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
                   }}
                   exit={{
-                    scale: transitionType === 'project' ? transitionScale : 1,
+                    scale: transitionType === 'project' && !isMobile ? transitionScale : 1,
                     opacity: index !== activeIndex ? 0 : 1,
                     transition: {
                       duration: 0
