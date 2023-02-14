@@ -28,12 +28,8 @@ const StyledImage = styled(motion.div)`
 `
 
 export const PreviousTransition = ({ previousProject, transitioning, visible = false }) => {
-  const lastImage = previousProject.images[previousProject.images.length - 1]
-  const secondToLastImage = previousProject.images[previousProject.images.length - 2];
   const { width = 0 } = useWindowSize();
 
-  const url = urlFor(lastImage).auto('format').width(1200).url();
-  const url2 = urlFor(secondToLastImage).auto('format').width(200).url();
 
   const scale = useMemo(() => {
     const scale = width ? 72 / (width * 0.7) : 0;
@@ -44,6 +40,13 @@ export const PreviousTransition = ({ previousProject, transitioning, visible = f
     const x = -1 * ((width * 0.7) / 2) - (width * 0.15) + (72 / 2);
     return x
   }, [width])
+
+  if (!previousProject.images) return null;
+
+  const lastImage = previousProject.images[previousProject.images.length - 1]
+  const secondToLastImage = previousProject.images[previousProject.images.length - 2];
+  const url = urlFor(lastImage).auto('format').width(1200).url();
+  const url2 = urlFor(secondToLastImage).auto('format').width(200).url();
 
   return (
     <Box opacity={visible ? 1 : 0}>

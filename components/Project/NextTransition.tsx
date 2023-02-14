@@ -28,12 +28,7 @@ const StyledImage = styled(motion.div)`
 `
 
 export const NextTransition = ({ nextProject, transitioning, visible = false }) => {
-  const firstImage = nextProject.images[0]
-  const secondImage = nextProject.images[1];
   const { width = 0, height = 0 } = useWindowSize();
-
-  const url = urlFor(firstImage).auto('format').width(1200).url();
-  const url2 = urlFor(secondImage).auto('format').width(200).url();
 
   const scale = useMemo(() => {
     const scale = height ? 90 / height : 0;
@@ -44,6 +39,13 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
     const x = ((width * 0.7) / 2) + (width * 0.15) - (72 / 2);
     return x
   }, [width])
+
+  if (!nextProject.images) return null;
+
+  const firstImage = nextProject.images[0]
+  const secondImage = nextProject.images[1];
+  const url = urlFor(firstImage).auto('format').width(1200).url();
+  const url2 = urlFor(secondImage).auto('format').width(200).url();
 
   return (
     <Box opacity={visible ? 1 : 0}>

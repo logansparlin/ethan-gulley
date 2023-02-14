@@ -21,7 +21,7 @@ export const NextImage = ({ images, afterIndex, transition }) => {
 
   const isLastImage = useMemo(() => {
     return afterIndex === 0
-  }, [images, afterIndex])
+  }, [afterIndex])
 
   return (
     <Box display={["none", null, "block"]} position="absolute" top="50%" transform="translateY(-50%)" width="72px" height={["55px", null, "90px"]} right="0">
