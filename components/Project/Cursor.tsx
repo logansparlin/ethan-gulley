@@ -55,6 +55,7 @@ export const Cursor = ({ title, count, index, onLeftClick, onRightClick, nextPro
       cursor="none"
       onMouseLeave={() => setVisible(false)}
       onMouseMove={handleMouseMove}
+      display={["none", null, "block"]}
     >
       <Box as="button" position="fixed" width="50%" height="calc(var(--vh, 1vh) * 100)" top="0" left="0" zIndex="2" onClick={onLeftClick} cursor="none" />
       <Box as="button" position="fixed" width="50%" height="calc(var(--vh, 1vh) * 100)" top="0" left="50%" zIndex="2" onClick={onRightClick} cursor="none" />
