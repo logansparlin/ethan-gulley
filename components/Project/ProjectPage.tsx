@@ -154,7 +154,7 @@ export const ProjectPage = ({ data }) => {
           opacity: overviewOpen ? 0.8 : 1
         }}
         exit={{ y: transitionType === 'project' ? 0 : '100vh', filter: 'blur(0px)', opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.86, 0, 0.07, 1] }}
+        transition={{ duration: transitionType === 'project' ? 0 : 0.8, ease: [0.86, 0, 0.07, 1] }}
         style={{ willChange: 'auto', background: 'green' }}
       >
         <Layout>
@@ -204,7 +204,11 @@ export const ProjectPage = ({ data }) => {
                   animate={{
                     x: projectTransition ? x : 0,
                     scale: projectTransition ? transitionScale : 1,
-                    transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
+                    transition: {
+                      duration: transitionType === 'project' ? 0 : 0.6,
+                      delay: scale ? 0.4 : 0,
+                      ease: [1, 0.15, 0.25, 0.9]
+                    }
                   }}
                   exit={{
                     scale: 1,
@@ -213,7 +217,10 @@ export const ProjectPage = ({ data }) => {
                       duration: 0
                     }
                   }}
-                  transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
+                  transition={{
+                    duration: transitionType === 'project' ? 0 : 0.6,
+                    ease: [1, 0.15, 0.25, 0.9]
+                  }}
                 >
                   <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
                 </StyledImage>
