@@ -49,7 +49,6 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
 
   return (
     <Box opacity={visible ? 1 : 0} display={["none", null, "block"]}>
-      <StyledImag
       <StyledImage
         initial={{ scale: scale, opacity: 1, x: x }}
         animate={{ scale: transitioning ? 1 : scale, opacity: 1, x: transitioning ? 0 : x }}
