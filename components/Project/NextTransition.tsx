@@ -40,7 +40,7 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
     return x
   }, [width])
 
-  if (!nextProject.images) return null;
+  if (!nextProject?.images || nextProject?.images.length < 2) return null;
 
   const firstImage = nextProject.images[0]
   const secondImage = nextProject.images[1];

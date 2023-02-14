@@ -41,7 +41,7 @@ export const PreviousTransition = ({ previousProject, transitioning, visible = f
     return x
   }, [width])
 
-  if (!previousProject.images) return null;
+  if (!previousProject?.images || previousProject?.images.length < 2) return null;
 
   const lastImage = previousProject.images[previousProject.images.length - 1]
   const secondToLastImage = previousProject.images[previousProject.images.length - 2];

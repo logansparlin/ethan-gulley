@@ -3,7 +3,6 @@ import { useAppStore } from '@hooks/useAppStore'
 
 import { motion } from 'framer-motion'
 import { Box } from '@components/box'
-import Link from 'next/link'
 
 export const Header = ({ title, toggleOverview }) => {
   const router = useRouter();
