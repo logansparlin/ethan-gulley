@@ -151,8 +151,8 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
         >
           {projects.map(project => {
             const url = project.images?.length >= 1
-              ? urlFor(project.images[0]).auto('format').width(1600).url()
-              : urlFor(project.image.src).auto('format').width(1600).url()
+              ? urlFor(project.images[0]).auto('format').width(1600).quality(95).url()
+              : urlFor(project.image.src).auto('format').width(1600).quality(95).url()
             const dimensions = project.images?.length >= 1
               ? getImageDimensions(project.images[0])
               : getImageDimensions(project.image.src);

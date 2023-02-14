@@ -192,7 +192,7 @@ const ProjectPage = ({ pageData }) => {
             />
             <Header title={title} toggleOverview={toggleOverview} />
             {images && images.map((image, index) => {
-              const img = urlFor(image).auto('format').width(1600).quality(85).url();
+              const img = urlFor(image).auto('format').width(1600).quality(95).url();
               return (
                 <StyledImage
                   key={image._key}
