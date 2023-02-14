@@ -14,7 +14,7 @@ const StyledImage = styled(motion.div)`
 })}
 `
 
-export const NextImage = ({ images, afterIndex, transition }) => {
+export const NextImage = ({ images, afterIndex, transition, projectTransition = false }) => {
   const isTransitioning = useMemo(() => {
     return transition === 'prev'
   }, [transition])
@@ -26,7 +26,7 @@ export const NextImage = ({ images, afterIndex, transition }) => {
   return (
     <Box display={["none", null, "block"]} position="absolute" top="50%" transform="translateY(-50%)" width="72px" height={["55px", null, "90px"]} right="0">
       <StyledImage
-        initial={{ opacity: 0 }}
+        initial={{ opacity: projectTransition ? 1 : 0 }}
         animate={{
           opacity: isTransitioning ? 0 : 1,
           x: isTransitioning ? '100%' : 0,

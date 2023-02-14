@@ -243,8 +243,8 @@ export const ProjectPage = ({ data }) => {
                 <Image src={img} alt={image.alt} layout="fill" objectFit="contain" />
               </StyledImage>
             )}
-            <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} />
-            <NextImage transition={projectTransition} images={images} afterIndex={afterIndex} />
+            <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} projectTransition={transitionType === 'project'} />
+            <NextImage transition={projectTransition} images={images} afterIndex={afterIndex} projectTransition={transitionType === 'project'} />
             <NextTransition nextProject={nextProject} transitioning={projectTransition === 'next'} visible={isLast} />
             <PreviousTransition previousProject={previousProject} transitioning={projectTransition === 'prev'} visible={isFirst} />
           </Box>
