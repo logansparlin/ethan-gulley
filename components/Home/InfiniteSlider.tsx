@@ -147,7 +147,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
               layout="fill"
               objectFit="cover"
               alt={project.image?.alt || ""}
-              loading="eager"
+              loading="lazy"
               placeholder="blur"
               blurDataURL={project.image.lqip}
             />

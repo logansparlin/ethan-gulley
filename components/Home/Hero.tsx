@@ -116,7 +116,7 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
           exit={{ scale: 1, y: 45, opacity: transitionType === 'view' ? 0 : 1 }}
           transition={{ duration: 0.6, ease: [.9, 0, .1, .9] }}
         >
-          {projects.map(project => {
+          {projects.map((project, index) => {
             const url = project.images?.length >= 1
               ? urlFor(project.images[0]).auto('format').width(isMobile ? 800 : 1600).quality(95).url()
               : urlFor(project.image.src).auto('format').width(isMobile ? 800 : 1600).quality(95).url()
@@ -146,7 +146,7 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
                           layout="fill"
                           objectFit={aspect > 1.4 && windowSize.width < 832 ? 'cover' : "contain"}
                           alt={project.image?.alt ?? ""}
-                          loading="eager"
+                          loading={index === firstIndex ? "eager" : "lazy"}
                         />
                       </StyledImage>
                       <StyledTitle
