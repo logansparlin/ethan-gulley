@@ -87,24 +87,24 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
     })
   }
 
-  useAnimationFrame(() => {
-    if (!itemRef.current) return;
+  // useAnimationFrame(() => {
+  //   if (!itemRef.current) return;
 
-    // scroll.current = lerp(scroll.current, scroll.target, 0.2);
-    scroll.current = scroll.target
+  //   // scroll.current = lerp(scroll.current, scroll.target, 0.2);
+  //   scroll.current = scroll.target
 
-    const offset = window.innerWidth / 2;
+  //   const offset = window.innerWidth / 2;
 
-    const containerIndex = Math.abs(Math.floor(-1 * (scroll.current - offset) / wrapWidth.current))
+  //   const containerIndex = Math.abs(Math.floor(-1 * (scroll.current - offset) / wrapWidth.current))
 
-    const activeIndex = calculateIndex({ scroll: scroll.current, offset, containerIndex, wrapWidth: wrapWidth.current, itemWidth: itemWidth.current, gutter: gutter.current })
+  //   const activeIndex = calculateIndex({ scroll: scroll.current, offset, containerIndex, wrapWidth: wrapWidth.current, itemWidth: itemWidth.current, gutter: gutter.current })
 
-    if (loadingRef.current) return;
+  //   if (loadingRef.current) return;
 
-    updateProject(activeIndex)
+  //   updateProject(activeIndex)
 
-    animate(scroll.current)
-  })
+  //   animate(scroll.current)
+  // })
 
   const handleClick = (_, index) => {
     updateProject(index)
