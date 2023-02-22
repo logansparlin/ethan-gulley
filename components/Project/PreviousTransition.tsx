@@ -1,6 +1,7 @@
 import { urlFor } from "@lib/sanity";
 import styled from 'styled-components'
 import { useWindowSize } from "@hooks/useWindowSize";
+import { getImageDimensions } from "@sanity/asset-utils";
 
 import { Box } from "@components/box";
 import { motion } from "framer-motion";
@@ -28,15 +29,20 @@ const StyledImage = styled(motion.div)`
 `
 
 export const PreviousTransition = ({ previousProject, transitioning, visible = false }) => {
-  const { width = 0 } = useWindowSize();
+  const { width, height } = useWindowSize();
 
 
   const scale = useMemo(() => {
-    const scale = width ? 72 / (width * 0.7) : 0;
+    if (!height) return 0
+
+    const dimensions = previousProject.images?.length >= 1 ? getImageDimensions(previousProject.images[0]) : { width: 0, height: 0 };
+    const scale = dimensions.width < dimensions.height ? (90 / height) : (72 / (width * 0.7));
+
     return scale
-  }, [width])
+  }, [height])
 
   const x = useMemo(() => {
+    if (!width) return 0
     const x = -1 * ((width * 0.7) / 2) - (width * 0.15) + (72 / 2);
     return x
   }, [width])

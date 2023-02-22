@@ -7,6 +7,7 @@ import { useProjectStore } from "@hooks/useProjectStore";
 import { getImageDimensions } from "@sanity/asset-utils";
 import { GRID_BREAKPOINTS } from "@lib/constants";
 import { useIsMobile } from "@hooks/useIsMobile";
+import { useWindowSize } from "@hooks/useWindowSize";
 import styled from 'styled-components';
 
 import { Box } from "@components/box";
@@ -56,6 +57,7 @@ const ProjectGrid = ({ projects, category }) => {
   const { setTransitionType } = useAppStore();
   const { setScale, setActiveProject, activeProject } = useProjectStore();
   const { indices, updateIndices, clearIndices } = useAdjacentGridItem(GRID_BREAKPOINTS);
+  const { width, height } = useWindowSize();
   const isMobile = useIsMobile();
   const router = useRouter();
 
@@ -69,11 +71,13 @@ const ProjectGrid = ({ projects, category }) => {
     setActiveProject(project)
 
     const pos = e.target.getBoundingClientRect()
-    const scale = window.innerHeight / pos.height;
+    const scale = pos.width < pos.height
+      ? height / pos.height
+      : (width * 0.7) / pos.width
 
     selectedProjectPosition.current = {
-      x: ((-1 * pos.x) + window.innerWidth / 2 - pos.width / 2),
-      y: ((-1 * pos.y) + window.innerHeight / 2 - pos.height / 2),
+      x: ((-1 * pos.x) + width / 2 - pos.width / 2),
+      y: ((-1 * pos.y) + height / 2 - pos.height / 2),
       scale: scale
     };
 

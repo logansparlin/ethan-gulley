@@ -1,6 +1,7 @@
 import { urlFor } from "@lib/sanity";
 import styled from 'styled-components'
 import { useWindowSize } from "@hooks/useWindowSize";
+import { getImageDimensions } from "@sanity/asset-utils";
 
 import { Box } from "@components/box";
 import { motion } from "framer-motion";
@@ -31,11 +32,14 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
   const { width = 0, height = 0 } = useWindowSize();
 
   const scale = useMemo(() => {
-    const scale = height ? 90 / height : 0;
+    if (!height) return 0;
+    const dimensions = nextProject.images?.length >= 1 ? getImageDimensions(nextProject.images[0]) : { width: 0, height: 0 };
+    const scale = dimensions.width < dimensions.height ? (90 / height) : (72 / (width * 0.7));
     return scale
   }, [height])
 
   const x = useMemo(() => {
+    if (!width) return 0;
     const x = ((width * 0.7) / 2) + (width * 0.15) - (72 / 2);
     return x
   }, [width])
@@ -57,7 +61,7 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
           ease: [1, 0.15, 0.25, 0.9]
         }}
       >
-        <Image src={url} alt="" layout="fill" objectFit="contain" />
+        <Image src={url} alt="" layout="fill" objectFit="contain" objectPosition="right" />
       </StyledImage>
       <StyledSecondImage
         initial={{ opacity: 0, y: '-50%', x: 72 }}
@@ -67,7 +71,7 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
           ease: [1, 0.15, 0.25, 0.9],
         }}
       >
-        <Image src={url2} alt="" layout="fill" objectFit="contain" />
+        <Image src={url2} alt="" layout="fill" objectFit="contain" objectPosition="right" />
       </StyledSecondImage>
     </Box>
   )

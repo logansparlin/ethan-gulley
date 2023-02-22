@@ -45,8 +45,8 @@ export const HoverTitle = ({ children }) => {
     elRef.current.style.top = `${value}px`
   }
 
-  const { update: updateX } = useLerp(animateX);
-  const { update: updateY } = useLerp(animateY);
+  const { update: updateX } = useLerp(animateX, 0.5);
+  const { update: updateY } = useLerp(animateY, 0.5);
 
   updateX(elX)
   updateY(elY)

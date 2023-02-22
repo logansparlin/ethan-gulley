@@ -89,9 +89,9 @@ const Loading = ({ projects, site }) => {
             >
               <Box
                 position="relative"
-                width="25vw"
+                width={["100vw", null, "25vw"]}
                 height="0"
-                pb={`calc(25vw * ${aspect})`}
+                pb={[aspect > 1.4 ? '120vw' : `calc(100vw * ${aspect})`, null, `calc(100% * ${aspect})`]}
               >
                 <Image
                   src={url}

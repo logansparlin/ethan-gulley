@@ -20,6 +20,7 @@ import { Header } from "@components/Project/Header";
 import Image from "next/image";
 import { NextTransition } from "@components/Project/NextTransition";
 import { PreviousTransition } from "@components/Project/PreviousTransition";
+import { getImageDimensions } from "@sanity/asset-utils";
 
 const StyledImage = styled(motion(Box))`
   z-index: 10;
@@ -48,9 +49,9 @@ export const ProjectPage = ({ data }) => {
   const router = useRouter();
   const isMobile = useIsMobile();
 
-  const transitionScale = useMemo(() => {
-    return 90 / height;
-  }, [height]);
+  const getTransitionScale = (elWidth, elHeight) => {
+    return elWidth < elHeight ? (90 / height) : (72 / (width * 0.7))
+  }
 
   const x = useMemo(() => {
     if (projectTransition === 'prev') {
@@ -132,7 +133,7 @@ export const ProjectPage = ({ data }) => {
     return activeIndex + 1
   }, [activeIndex])
 
-  const img = urlFor(image.src).auto('format').width(1600).url();
+  const img = urlFor(image.src).auto('format').width(1600).quality(95).url();
 
   const toggleOverview = () => {
     setOverviewOpen(!overviewOpen)
@@ -192,6 +193,7 @@ export const ProjectPage = ({ data }) => {
             <Header title={title} toggleOverview={toggleOverview} />
             {images && images.map((image, index) => {
               const img = urlFor(image).auto('format').width(1600).quality(95).url();
+              const dimensions = getImageDimensions(image)
               return (
                 <StyledImage
                   key={image._key}
@@ -205,11 +207,11 @@ export const ProjectPage = ({ data }) => {
                   initial={{ scale: transitionType === 'list' || isMobile ? 1 : scale }}
                   animate={{
                     x: projectTransition ? x : 0,
-                    scale: projectTransition ? transitionScale : 1,
-                    transition: { duration: 0.6, delay: scale ? 0.4 : 0, ease: [1, 0.15, 0.25, 0.9] }
+                    scale: projectTransition ? getTransitionScale(dimensions.width, dimensions.height) : 1,
+                    transition: { duration: 0.6, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
                   }}
                   exit={{
-                    scale: transitionType === 'project' && !isMobile ? transitionScale : 1,
+                    scale: transitionType === 'project' && !isMobile ? getTransitionScale(dimensions.width, dimensions.height) : 1,
                     opacity: index !== activeIndex ? 0 : 1,
                     transition: {
                       duration: 0
