@@ -32,12 +32,11 @@ export const PreviousTransition = ({ previousProject, transitioning, visible = f
   const { width, height } = useWindowSize();
 
 
+  const dimensions = previousProject.images?.length >= 1 ? getImageDimensions(previousProject.images[0]) : { width: 0, height: 0 };
+
   const scale = useMemo(() => {
     if (!height) return 0
-
-    const dimensions = previousProject.images?.length >= 1 ? getImageDimensions(previousProject.images[0]) : { width: 0, height: 0 };
     const scale = dimensions.width < dimensions.height ? (90 / height) : (72 / (width * 0.7));
-
     return scale
   }, [height])
 

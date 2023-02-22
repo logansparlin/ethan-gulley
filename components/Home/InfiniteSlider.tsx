@@ -136,7 +136,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
             mr={["2px", null, "5px"]}
             display="inline-block"
             cursor="pointer"
-            opacity={focusedProject._id === project._id ? '0.5' : '1'}
+            opacity={focusedProject?._id === project._id ? '0.5' : '1'}
             bg="#eee"
             onClick={() => handleClick(project, index)}
             className="infinite-item"

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { urlFor } from "@lib/sanity";
 import styled from 'styled-components';
 import { motion } from "framer-motion";
+import css from '@styled-system/css'
 
 import { Box } from "@components/box"
 import Image from "next/image";
@@ -12,6 +13,9 @@ import Header from "@components/Header";
 const StyledImage = styled(motion(Box))`
   position: absolute;
   transform: scale(0.6);
+  ${css({
+  transform: ['scale(1)', null, 'scale(0.6)']
+})}
 `;
 
 const StyledHeaderOverlay = styled(motion(Box))`
@@ -76,7 +80,7 @@ const Loading = ({ projects, site }) => {
       >
         <Header {...site} />
       </StyledHeaderOverlay>
-      <Box flex="1" width="100%" position="relative" height="100%" display="flex" alignItems="center" justifyContent="center" top="45px">
+      <Box flex="1" width="100%" position="relative" height="100%" display="flex" alignItems={["flex-start", null, "center"]} justifyContent={["flex-start", null, "center"]} top="45px">
         {projects.map((project, index) => {
           const url = urlFor(project.image.src).auto('format').dpr(2).width(300).quality(90).url();
           const dimensions = getImageDimensions(project.image.src);

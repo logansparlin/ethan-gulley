@@ -61,7 +61,15 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
           ease: [1, 0.15, 0.25, 0.9]
         }}
       >
-        <Image src={url} alt="" layout="fill" objectFit="contain" objectPosition="right" />
+        <Image
+          src={url}
+          alt=""
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+          placeholder="blur"
+          blurDataURL={firstImage.metadata?.lqip}
+        />
       </StyledImage>
       <StyledSecondImage
         initial={{ opacity: 0, y: '-50%', x: 72 }}
@@ -71,7 +79,15 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
           ease: [1, 0.15, 0.25, 0.9],
         }}
       >
-        <Image src={url2} alt="" layout="fill" objectFit="contain" objectPosition="right" />
+        <Image
+          src={url2}
+          alt=""
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+          placeholder="blur"
+          blurDataURL={secondImage.metadata?.lqip}
+        />
       </StyledSecondImage>
     </Box>
   )

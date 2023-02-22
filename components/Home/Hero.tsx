@@ -7,6 +7,7 @@ import { useHomeStore } from "@hooks/useHomeStore";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { useWindowSize } from "@hooks/useWindowSize";
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@hooks/useIsMobile';
 
 import Link from "next/link";
 import { Box } from "@components/box"
@@ -30,13 +31,13 @@ position: absolute;
 const StyledImage = styled(motion(Box))``;
 
 const Hero = ({ projects, focusedProject, updateProject, site }) => {
-  const { loaded, setLoaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition, firstIndex } = useHomeStore();
+  const { loaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition, firstIndex } = useHomeStore();
+  const { transitionType, transitioning, setTransitioning, setTransitionType } = useAppStore();
+  const isMobile = useIsMobile();
   const scroll = useRef({ target: lastScrollPosition, current: lastScrollPosition });
   const activeIndex = useRef(lastFocusedIndex);
-  const loops = useRef(0);
   const windowSize = useWindowSize();
   const touchStart = useRef(0);
-  const { transitionType, transitioning, setTransitioning, setTransitionType } = useAppStore();
   const { setScale } = useProjectStore();
 
   const handleProjectChange = (index) => {
@@ -117,8 +118,8 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
         >
           {projects.map(project => {
             const url = project.images?.length >= 1
-              ? urlFor(project.images[0]).auto('format').width(1600).quality(95).url()
-              : urlFor(project.image.src).auto('format').width(1600).quality(95).url()
+              ? urlFor(project.images[0]).auto('format').width(isMobile ? 800 : 1600).quality(95).url()
+              : urlFor(project.image.src).auto('format').width(isMobile ? 800 : 1600).quality(95).url()
             const dimensions = project.images?.length >= 1
               ? getImageDimensions(project.images[0])
               : getImageDimensions(project.image.src);
@@ -127,9 +128,9 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
               <Box
                 position="absolute"
                 key={project._id}
-                opacity={project._id === focusedProject._id ? '1' : '0'}
-                visibility={project._id === focusedProject._id ? 'visible' : 'hidden'}
-                zIndex={project._id === focusedProject._id ? 2 : 1}
+                opacity={project._id === focusedProject?._id ? '1' : '0'}
+                visibility={project._id === focusedProject?._id ? 'visible' : 'hidden'}
+                zIndex={project._id === focusedProject?._id ? 2 : 1}
               >
                 <Box as="button" onClick={calculateScale}>
                   <Link href={`/projects/${project.slug?.current}`} passHref>
