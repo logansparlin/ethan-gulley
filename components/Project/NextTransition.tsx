@@ -2,6 +2,7 @@ import { urlFor } from "@lib/sanity";
 import styled from 'styled-components'
 import { useWindowSize } from "@hooks/useWindowSize";
 import { getImageDimensions } from "@sanity/asset-utils";
+import { useIsMobile } from "@hooks/useIsMobile";
 
 import { Box } from "@components/box";
 import { motion } from "framer-motion";
@@ -30,6 +31,7 @@ const StyledImage = styled(motion.div)`
 
 export const NextTransition = ({ nextProject, transitioning, visible = false }) => {
   const { width = 0, height = 0 } = useWindowSize();
+  const isMobile = useIsMobile();
 
   const scale = useMemo(() => {
     if (!height) return 0;
@@ -48,7 +50,7 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
 
   const firstImage = nextProject.images[0]
   const secondImage = nextProject.images[1];
-  const url = urlFor(firstImage).auto('format').width(1600).quality(95).url();
+  const url = urlFor(firstImage).auto('format').width(isMobile ? 800 : 1800).dpr(2).quality(95).url();
   const url2 = urlFor(secondImage).auto('format').width(200).url();
 
   return (
