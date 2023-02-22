@@ -13,6 +13,7 @@ import { Box } from "@components/box"
 import Image from "next/image"
 import InfiniteSlider from "./InfiniteSlider";
 import { useAppStore } from "@hooks/useAppStore";
+import Loading from './Loading';
 
 const WHEEL_SPEED = 0.85;
 
@@ -28,8 +29,8 @@ position: absolute;
 
 const StyledImage = styled(motion(Box))``;
 
-const Hero = ({ projects, focusedProject, updateProject }) => {
-  const { loaded, setLoaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition } = useHomeStore();
+const Hero = ({ projects, focusedProject, updateProject, site }) => {
+  const { loaded, setLoaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition, firstIndex } = useHomeStore();
   const scroll = useRef({ target: lastScrollPosition, current: lastScrollPosition });
   const activeIndex = useRef(lastFocusedIndex);
   const loops = useRef(0);
@@ -80,44 +81,6 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
     }
   }, [loaded]);
 
-  useEffect(() => {
-
-    // eslint-disable-next-line prefer-const
-    let interval;
-
-    if (interval) clearInterval(interval)
-    if (typeof window === 'undefined') return null;
-    const firstIndex = Number(window.localStorage.getItem('first-index'));
-
-    interval = setInterval(() => {
-      if (loaded) return;
-      if (loops.current === 0) {
-        if (activeIndex.current < projects.length - 1) {
-          activeIndex.current = activeIndex.current + 1
-        } else {
-          activeIndex.current = 0
-          loops.current = 1
-        }
-      }
-
-      if (loops.current > 0) {
-        if (activeIndex.current < firstIndex) {
-          activeIndex.current = activeIndex.current + 1
-        } else {
-          clearInterval(interval)
-          setTimeout(() => {
-            setLoaded(true)
-          }, 100)
-        }
-      }
-      handleProjectChange(activeIndex.current)
-    }, 90);
-
-    return (() => {
-      clearInterval(interval)
-    })
-  }, [])
-
   const calculateScale = (e) => {
     const pos = e.target.getBoundingClientRect();
     let scale;
@@ -134,8 +97,9 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
   }
 
   return (
-    <Box position="absolute" flex="1" display="flex" alignItems="center" justifyContent="center" minHeight="calc(var(--vh, 1vh) * 100)" width="100%">
-      <Box height="calc(var(--vh, 1vh) * 100)" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
+    <Box position="absolute" flex="1" display="flex" alignItems="center" justifyContent="center" height="calc(var(--vh, 1vh) * 100)" width="100%">
+      {!loaded && <Loading projects={projects} site={site} />}
+      <Box height="100%" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
         <StyledHero
           flex="1"
           width="100%"
@@ -146,9 +110,9 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
           justifyContent="center"
           cursor="pointer"
           key="home-hero"
-          initial={{ scale: !loaded ? 0.6 : 1, y: 45, opacity: transitionType == 'view' ? 0 : 1 }}
+          initial={{ scale: !loaded ? 0.6 : 1, y: 45, opacity: transitionType === 'view' ? 0 : 1 }}
           animate={{ scale: loaded ? 1 : 0.6, y: loaded ? 0 : 45, opacity: 1 }}
-          exit={{ scale: 1, y: 45, opacity: transitionType == 'view' ? 0 : 1 }}
+          exit={{ scale: 1, y: 45, opacity: transitionType === 'view' ? 0 : 1 }}
           transition={{ duration: 0.6, ease: [.9, 0, .1, .9] }}
         >
           {projects.map(project => {
@@ -168,7 +132,7 @@ const Hero = ({ projects, focusedProject, updateProject }) => {
                 zIndex={project._id === focusedProject._id ? 2 : 1}
               >
                 <Box as="button" onClick={calculateScale}>
-                  <Link href={`/projects/${project.slug?.current}`}>
+                  <Link href={`/projects/${project.slug?.current}`} passHref>
                     <Box>
                       <StyledImage
                         position="relative"

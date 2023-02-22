@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { Box } from "@components/box"
@@ -21,8 +21,9 @@ const Grid = ({ projects }) => {
       px={["0", null, "20px"]}
       width="100%"
       height="calc(var(--vh, 1vh) * 100)"
-      overflow="hidden"
+      overflow="scroll"
       willChange="auto"
+      transform="translate3d(0px, 0px, 0px)"
     >
       <motion.div
         style={{ flex: 1 }}
@@ -40,42 +41,8 @@ const Grid = ({ projects }) => {
 }
 
 const GridView = ({ projects, category, handleChangeCategory }) => {
-  const scrollRef = useRef(null);
   const container = useRef(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined" || !container.current) {
-      return;
-    }
-
-    let scroll;
-    import("locomotive-scroll").then((LocomotiveScroll) => {
-      scroll = new LocomotiveScroll.default({
-        el: container.current,
-        smooth: true,
-        lerp: 0.15,
-        tablet: {
-          smooth: true
-        },
-        smartphone: {
-          smooth: true
-        }
-      });
-      scrollRef.current = scroll;
-    });
-
-    return () => {
-      scroll.destroy()
-      scrollRef.current = null;
-    }
-  }, [])
-
-  useEffect(() => {
-    setTimeout(() => {
-
-      scrollRef.current?.update();
-    }, 500)
-  }, [category])
 
   return (
     <Box width="100%" ref={container} pb="100px" minHeight="calc(var(--vh, 1vh) * 100)">

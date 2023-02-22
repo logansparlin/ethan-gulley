@@ -11,6 +11,8 @@ interface HomeState {
   setLastFocusedIndex: (val: number) => void;
   lastScrollPosition: number;
   setLastScrollPosition: (pos: number) => void;
+  firstIndex: number;
+  setFirstIndex: (index: number) => void;
 }
 
 export const useHomeStore = create<HomeState>((set) => ({
@@ -29,5 +31,9 @@ export const useHomeStore = create<HomeState>((set) => ({
   lastScrollPosition: 0,
   setLastScrollPosition: (pos) => {
     set({ lastScrollPosition: pos })
+  },
+  firstIndex: 0,
+  setFirstIndex: (index) => {
+    set({ firstIndex: index })
   }
 }));

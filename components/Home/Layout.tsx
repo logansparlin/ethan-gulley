@@ -53,6 +53,7 @@ const HomeLayout = ({ projects, site, info }) => {
                 projects={projects}
                 focusedProject={focusedProject}
                 updateProject={updateProject}
+                site={site}
               />
             }
             {view === 'grid' && <Grid projects={projects} key="grid" />}

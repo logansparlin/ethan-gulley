@@ -1,9 +1,11 @@
 import { useRef, useEffect } from "react";
 import { useAnimationFrame } from "@hooks/useAnimationFrame";
+import { useHomeStore } from "@hooks/useHomeStore";
 import { urlFor } from "@lib/sanity"
-import { lerp } from "@lib/helpers";
+// import { lerp } from "@lib/helpers";
 import { motion } from 'framer-motion';
 import { useWindowSize } from "@hooks/useWindowSize";
+import { calculateIndex } from "@lib/helpers";
 import styled from 'styled-components';
 import gsap from "gsap";
 
@@ -30,6 +32,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
   const wrapWidth = useRef(0);
   const loadingRef = useRef(loading);
   const { width } = useWindowSize();
+  const { setFirstIndex } = useHomeStore();
   const gutter = useRef(5);
 
   useEffect(() => {
@@ -38,12 +41,33 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
 
   useEffect(() => {
     loadingRef.current = loading;
+
   }, [loading])
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-
     items.current = document.querySelectorAll('.infinite-item');
+
+    const calculate = () => {
+      itemWidth.current = itemRef.current.clientWidth;
+      containerWidth.current = container.current.clientWidth;
+      wrapWidth.current = projects.length * (itemWidth.current + gutter.current);
+      const offset = window.innerWidth / 2;
+
+      const containerIndex = Math.abs(Math.floor(-1 * (scroll.current - offset) / wrapWidth.current))
+      const firstIndex = calculateIndex({ scroll: scroll.current, offset, containerIndex, wrapWidth: wrapWidth.current, itemWidth: itemWidth.current, gutter: gutter.current })
+
+      setFirstIndex(firstIndex)
+    }
+
+    calculate();
+
+    window.addEventListener('resize', calculate);
+
+    return () => {
+      window.removeEventListener('resize', calculate);
+    }
+
   }, []);
 
   const animate = (scroll) => {
@@ -66,19 +90,14 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
   useAnimationFrame(() => {
     if (!itemRef.current) return;
 
-    itemWidth.current = itemRef.current.clientWidth;
-    containerWidth.current = container.current.clientWidth;
-    wrapWidth.current = projects.length * (itemWidth.current + gutter.current);
-    scroll.current = lerp(scroll.current, scroll.target, 0.05)
+    // scroll.current = lerp(scroll.current, scroll.target, 0.2);
+    scroll.current = scroll.target
 
     const offset = window.innerWidth / 2;
 
     const containerIndex = Math.abs(Math.floor(-1 * (scroll.current - offset) / wrapWidth.current))
-    const activeIndex = scroll.current - offset <= 0
-      ? Math.floor(-1 * (wrapWidth.current - (wrapWidth.current - ((scroll.current + (Math.abs(wrapWidth.current) * containerIndex)) - offset))) / (itemWidth.current + gutter.current))
-      : Math.floor((wrapWidth.current - (wrapWidth.current - ((Math.abs(wrapWidth.current) * containerIndex) - scroll.current) - offset)) / (itemWidth.current + gutter.current));
 
-    window.localStorage.setItem('first-index', activeIndex.toString())
+    const activeIndex = calculateIndex({ scroll: scroll.current, offset, containerIndex, wrapWidth: wrapWidth.current, itemWidth: itemWidth.current, gutter: gutter.current })
 
     if (loadingRef.current) return;
 
@@ -106,7 +125,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
       transition={{ duration: 0.6, ease: [.9, 0, .1, 0.9] }}
     >
       {projects.map((project, index) => {
-        const url = project.image ? urlFor(project.image.src).auto('format').width(400).url() : urlFor(project.images[0].src).width(400).auto('format').url();
+        const url = project.image ? urlFor(project.image.src).auto('format').width(100).url() : urlFor(project.images[0].src).width(100).auto('format').url();
         return (
           <StyledImage
             key={project._id}

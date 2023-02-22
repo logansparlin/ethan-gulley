@@ -11,7 +11,7 @@ import Header from "@components/Header";
 
 const StyledImage = styled(motion(Box))`
   position: absolute;
-  transform: scale(0.8);
+  transform: scale(0.6);
 `;
 
 const StyledHeaderOverlay = styled(motion(Box))`
@@ -21,7 +21,7 @@ const StyledHeaderOverlay = styled(motion(Box))`
 const Loading = ({ projects, site }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [loops, setLoops] = useState(0);
-  const { setView } = useHomeStore();
+  const { setView, firstIndex, setLoaded } = useHomeStore();
 
   useEffect(() => {
     // eslint-disable-next-line prefer-const
@@ -29,7 +29,6 @@ const Loading = ({ projects, site }) => {
 
     if (interval) clearInterval(interval)
     if (typeof window === 'undefined') return null;
-    const firstIndex = Number(window.localStorage.getItem('first-index'));
 
     interval = setInterval(() => {
       if (loops === 0) {
@@ -47,6 +46,7 @@ const Loading = ({ projects, site }) => {
         } else {
           clearInterval(interval)
           setView('default')
+          setLoaded(true)
         }
       }
     }, 75);
@@ -61,7 +61,6 @@ const Loading = ({ projects, site }) => {
       position="fixed"
       width="100vw"
       height="calc(var(--vh, 1vh) * 100)"
-      top="0"
       left="0"
       bg="white"
       display="flex"
@@ -77,9 +76,9 @@ const Loading = ({ projects, site }) => {
       >
         <Header {...site} />
       </StyledHeaderOverlay>
-      <Box flex="1" width="100%" position="relative" height="100%" display="flex" alignItems="center" justifyContent="center">
+      <Box flex="1" width="100%" position="relative" height="100%" display="flex" alignItems="center" justifyContent="center" top="45px">
         {projects.map((project, index) => {
-          const url = urlFor(project.image.src).url();
+          const url = urlFor(project.image.src).auto('format').dpr(2).width(300).quality(90).url();
           const dimensions = getImageDimensions(project.image.src);
           const aspect = dimensions.height / dimensions.width;
           return (
@@ -94,12 +93,23 @@ const Loading = ({ projects, site }) => {
                 height="0"
                 pb={`calc(25vw * ${aspect})`}
               >
-                <Image src={project.image.url || url} layout="fill" objectFit="cover" alt={project.image.alt} loading="eager" />
+                <Image
+                  src={url}
+                  placeholder="blur"
+                  blurDataURL={project.image.lqip}
+                  layout="fill"
+                  objectFit="cover"
+                  alt={project.image.alt}
+                  loading="eager"
+                />
               </Box>
               <Box
                 pt="8px"
+                pl={['15px', null, 0]}
                 fontSize="14px"
                 opacity="0"
+                textAlign="left"
+                position="absolute"
               >
                 {project.title}
               </Box>

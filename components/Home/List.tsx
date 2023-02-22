@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { Box } from "@components/box"
@@ -9,46 +9,11 @@ type Category = 'all' | 'editorial' | 'commercial' | 'personal';
 
 const List = ({ projects }) => {
   const [category, setCategory] = useState<Category>('all');
-  const scrollRef = useRef(null);
   const container = useRef(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined" || !container.current) {
-      return;
-    }
-
-    let scroll;
-    import("locomotive-scroll").then((LocomotiveScroll) => {
-      scroll = new LocomotiveScroll.default({
-        el: container.current,
-        smooth: true,
-        lerp: 0.15,
-        tablet: {
-          smooth: true
-        },
-        smartphone: {
-          smooth: true
-        }
-      });
-      scrollRef.current = scroll;
-    });
-
-    return () => {
-      scroll.destroy()
-      scrollRef.current = null;
-    }
-  }, [])
-
-  useEffect(() => {
-    setTimeout(() => {
-
-      scrollRef.current?.update();
-    }, 500)
-  }, [category])
-
   return (
-    <Box width="100%" ref={container} pb="100px" minHeight="calc(var(--vh, 1vh) * 100)" pt={["60px", null, "100px"]}>
-      < motion.div
+    <Box width="100%" ref={container} pb="100px" height="calc(var(--vh, 1vh) * 100)" overflow="scroll" pt={["60px", null, "100px"]} transform="translate3d(0px, 0px, 0px)">
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

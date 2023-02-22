@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { Box } from "@components/box"
 import Image from 'next/image'
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 const OverviewContainer = styled(motion.div)`
   position: fixed;
@@ -17,7 +17,8 @@ const OverviewContainer = styled(motion.div)`
   height: calc(var(--vh, 1vh) * 100);
   inset: 0;
   z-index: 100;
-  overflow: hidden;
+  overflow: scroll;
+  transition: translate3d(0, 0, 0);
 `
 
 const StyledOverview = styled(motion.div)`
@@ -61,35 +62,6 @@ const Title = styled.h1`
 
 export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex }) => {
   const container = useRef(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !container.current) {
-      return;
-    }
-
-    let scroll;
-    if (isOpen) {
-      import("locomotive-scroll").then((LocomotiveScroll) => {
-        scroll = new LocomotiveScroll.default({
-          el: container.current,
-          smooth: true,
-          lerp: 0.15,
-          tablet: {
-            smooth: true
-          },
-          smartphone: {
-            smooth: true
-          }
-        });
-      });
-    }
-
-    return () => {
-      if (scroll) {
-        scroll.destroy();
-      }
-    }
-  }, [isOpen])
 
   return (
     <AnimatePresence initial={true}>
