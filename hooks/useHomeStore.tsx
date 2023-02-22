@@ -7,6 +7,8 @@ interface HomeState {
   setView: (view: View) => void;
   loaded: boolean;
   setLoaded: (val: boolean) => void;
+  focusedIndex: number;
+  setFocusedIndex: (index: number) => void;
   lastFocusedIndex: number;
   setLastFocusedIndex: (val: number) => void;
   lastScrollPosition: number;
@@ -23,6 +25,10 @@ export const useHomeStore = create<HomeState>((set) => ({
   loaded: true,
   setLoaded: (val) => {
     set({ loaded: val })
+  },
+  focusedIndex: 0,
+  setFocusedIndex: (index) => {
+    set({ focusedIndex: index })
   },
   lastFocusedIndex: 0,
   setLastFocusedIndex: (index) => {

@@ -54,6 +54,9 @@ const Box = styled.div<Props>`
     transition: {
         property: 'transition'
     },
+    visibility: {
+        property: 'visibility'
+    },
     transform: {
         property: 'transform'
     },

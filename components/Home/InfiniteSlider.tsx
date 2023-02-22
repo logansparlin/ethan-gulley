@@ -23,16 +23,17 @@ const StyledImage = styled(Box)`
   }
 `
 
-const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loading }) => {
+const InfiniteSlider = ({ projects, focusedIndex, updateProject, scroll, loading }) => {
   const container = useRef(null);
   const itemRef = useRef(null);
   const itemWidth = useRef(0);
   const containerWidth = useRef(0);
+  const lastActiveIndex = useRef(focusedIndex);
   const items = useRef(null);
   const wrapWidth = useRef(0);
   const loadingRef = useRef(loading);
   const { width } = useWindowSize();
-  const { setFirstIndex } = useHomeStore();
+  const { setFirstIndex, setFocusedIndex } = useHomeStore();
   const gutter = useRef(5);
 
   useEffect(() => {
@@ -57,6 +58,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
       const containerIndex = Math.abs(Math.floor(-1 * (scroll.current - offset) / wrapWidth.current))
       const firstIndex = calculateIndex({ scroll: scroll.current, offset, containerIndex, wrapWidth: wrapWidth.current, itemWidth: itemWidth.current, gutter: gutter.current })
 
+      setFocusedIndex(firstIndex)
       setFirstIndex(firstIndex)
     }
 
@@ -101,7 +103,10 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
 
     if (loadingRef.current) return;
 
-    updateProject(activeIndex)
+    if (lastActiveIndex.current !== activeIndex) {
+      lastActiveIndex.current = activeIndex;
+      updateProject(activeIndex)
+    }
 
     animate(scroll.current)
   })
@@ -125,7 +130,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
       transition={{ duration: 0.6, ease: [.9, 0, .1, 0.9] }}
     >
       {projects.map((project, index) => {
-        const url = project.image ? urlFor(project.image.src).auto('format').width(100).url() : urlFor(project.images[0].src).width(100).auto('format').url();
+        const url = project.image ? urlFor(project.image.src).auto('format').width(200).url() : urlFor(project.images[0].src).width(200).auto('format').url();
         return (
           <StyledImage
             key={project._id}
@@ -136,7 +141,7 @@ const InfiniteSlider = ({ projects, focusedProject, updateProject, scroll, loadi
             mr={["2px", null, "5px"]}
             display="inline-block"
             cursor="pointer"
-            opacity={focusedProject?._id === project._id ? '0.5' : '1'}
+            opacity={focusedIndex === index ? '0.5' : '1'}
             bg="#eee"
             onClick={() => handleClick(project, index)}
             className="infinite-item"

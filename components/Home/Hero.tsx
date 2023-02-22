@@ -1,6 +1,6 @@
 import NormalizeWheel from 'normalize-wheel';
 import styled from 'styled-components';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { urlFor } from "@lib/sanity"
 import { getImageDimensions } from '@sanity/asset-utils';
 import { useHomeStore } from "@hooks/useHomeStore";
@@ -30,18 +30,22 @@ position: absolute;
 
 const StyledImage = styled(motion(Box))``;
 
-const Hero = ({ projects, focusedProject, updateProject, site }) => {
+const Hero = ({ projects, site }) => {
   const { loaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition, firstIndex } = useHomeStore();
   const { transitionType, transitioning, setTransitioning, setTransitionType } = useAppStore();
   const isMobile = useIsMobile();
   const scroll = useRef({ target: lastScrollPosition, current: lastScrollPosition });
+  const imagesRef = useRef(null);
   const activeIndex = useRef(lastFocusedIndex);
   const windowSize = useWindowSize();
   const touchStart = useRef(0);
   const { setScale } = useProjectStore();
+  const [focusedIndex, setFocusedIndex] = useState(0)
 
   const handleProjectChange = (index) => {
-    updateProject(projects[index])
+    // setFocusedIndex(index)
+    console.log('changed')
+    setFocusedIndex(index)
     activeIndex.current = index;
   }
 
@@ -70,15 +74,24 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
   }
 
   useEffect(() => {
-    window.addEventListener('wheel', handleWheel);
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchend', handleTouchEnd);
+    imagesRef.current = document.querySelectorAll('.hero-image-large');
+    if (!isMobile) {
+      window.addEventListener('wheel', handleWheel);
+    }
+    else {
+      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchstart', handleTouchStart);
+      window.addEventListener('touchend', handleTouchEnd);
+    }
     return () => {
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchend', handleTouchEnd);
+      if (!isMobile) {
+        window.removeEventListener('wheel', handleWheel);
+
+      } else {
+        window.removeEventListener('touchmove', handleTouchMove);
+        window.removeEventListener('touchstart', handleTouchStart);
+        window.removeEventListener('touchend', handleTouchEnd);
+      }
     }
   }, [loaded]);
 
@@ -118,19 +131,25 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
         >
           {projects.map((project, index) => {
             const url = project.images?.length >= 1
-              ? urlFor(project.images[0]).auto('format').width(isMobile ? 600 : 1800).dpr(2).quality(90).url()
-              : urlFor(project.image.src).auto('format').width(isMobile ? 600 : 1800).dpr(2).quality(90).url()
+              ? urlFor(project.images[0]).auto('format').width(isMobile ? 600 : 800).dpr(2).quality(90).url()
+              : urlFor(project.image.src).auto('format').width(isMobile ? 600 : 800).dpr(2).quality(90).url()
             const dimensions = project.images?.length >= 1
               ? getImageDimensions(project.images[0])
               : getImageDimensions(project.image.src);
+
+            const lqip = project.images?.length >= 1 ? project.images[0].metadata.lqip : project.image.metadata.lqip;
             const aspect = dimensions.height / dimensions.width;
+            // if (index !== focusedIndex) {
+            //   return null
+            // }
             return (
               <Box
+                className="hero-image-large"
                 position="absolute"
                 key={project._id}
-                opacity={project._id === focusedProject?._id ? '1' : '0'}
-                visibility={project._id === focusedProject?._id ? 'visible' : 'hidden'}
-                zIndex={project._id === focusedProject?._id ? 2 : 1}
+                opacity={index === focusedIndex ? '1' : '0'}
+                visibility={index === focusedIndex ? 'visible' : 'hidden'}
+                zIndex={index === focusedIndex ? 2 : 1}
               >
                 <Box as="button" onClick={calculateScale}>
                   <Link href={`/projects/${project.slug?.current}`} passHref>
@@ -142,9 +161,11 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
                         pb={[aspect > 1.4 ? '120vw' : `calc(100vw * ${aspect})`, null, `calc(100% * ${aspect})`]}
                       >
                         <Image
-                          src={project.image?.url || url}
+                          src={url}
+                          placeholder="blur"
+                          blurDataURL={lqip}
                           layout="fill"
-                          objectFit={aspect > 1.4 && windowSize.width < 832 ? 'cover' : "contain"}
+                          objectFit={"cover"}
                           alt={project.image?.alt ?? ""}
                           loading={index === firstIndex ? "eager" : "lazy"}
                         />
@@ -172,7 +193,7 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
         <InfiniteSlider
           loading={!loaded}
           projects={projects}
-          focusedProject={focusedProject}
+          focusedIndex={1}
           updateProject={handleProjectChange}
           scroll={scroll.current}
         />

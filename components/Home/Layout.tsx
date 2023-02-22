@@ -20,13 +20,8 @@ export const HomeHead = () => (
 )
 
 const HomeLayout = ({ projects, site, info }) => {
-  const { view, lastFocusedIndex } = useHomeStore();
-  const [focusedProject, setFocusedProject] = useState(projects[lastFocusedIndex]);
+  const { view } = useHomeStore();
   const { asPath } = useRouter();
-
-  const updateProject = (newProject) => {
-    setFocusedProject(newProject)
-  }
 
   const transitionKey = useMemo(() => {
     return view === 'default' ? `${view}-${asPath}` : view
@@ -51,8 +46,6 @@ const HomeLayout = ({ projects, site, info }) => {
             {view === 'default' &&
               <Hero
                 projects={projects}
-                focusedProject={focusedProject}
-                updateProject={updateProject}
                 site={site}
               />
             }
