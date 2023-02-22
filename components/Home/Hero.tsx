@@ -63,7 +63,6 @@ const Hero = ({ projects, site }) => {
 
   const handleTouchMove = (e) => {
     const { pageY: y } = e.touches[0] || e.changedTouches[0];
-    console.log(touchStart.current)
     scroll.current.target += -1 * clamp(
       (touchStart.current - y) * 2,
       -25, 25
@@ -104,7 +103,7 @@ const Hero = ({ projects, site }) => {
 
   return (
     <Box position="absolute" flex="1" display="flex" alignItems="center" justifyContent="center" height="calc(var(--vh, 1vh) * 100)" width="100%">
-      {/* {!loaded && <Loading projects={projects} site={site} />} */}
+      {!loaded && <Loading projects={projects} site={site} />}
       <Box height="100%" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
         <StyledHero
           flex="1"
