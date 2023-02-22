@@ -118,8 +118,8 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
         >
           {projects.map((project, index) => {
             const url = project.images?.length >= 1
-              ? urlFor(project.images[0]).auto('format').width(isMobile ? 800 : 1800).dpr(2).quality(95).url()
-              : urlFor(project.image.src).auto('format').width(isMobile ? 800 : 1800).dpr(2).quality(95).url()
+              ? urlFor(project.images[0]).auto('format').width(isMobile ? 800 : 1800).dpr(2).quality(10).url()
+              : urlFor(project.image.src).auto('format').width(isMobile ? 800 : 1800).dpr(2).quality(10).url()
             const dimensions = project.images?.length >= 1
               ? getImageDimensions(project.images[0])
               : getImageDimensions(project.image.src);
