@@ -91,7 +91,7 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
             {images ? <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
               <Masonry gutter="20px">
                 {images.map((image, index) => {
-                  const url = urlFor(image).width(500).quality(95).auto('format').url();
+                  const url = urlFor(image).width(500).quality(90).auto('format').url();
                   const dimensions = getImageDimensions(image)
                   const lqip = image.lqip;
                   return (
