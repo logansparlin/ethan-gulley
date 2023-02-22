@@ -63,6 +63,7 @@ const Hero = ({ projects, site }) => {
 
   const handleTouchMove = (e) => {
     const { pageY: y } = e.touches[0] || e.changedTouches[0];
+    console.log(touchStart.current)
     scroll.current.target += -1 * clamp(
       (touchStart.current - y) * 2,
       -25, 25
@@ -74,24 +75,15 @@ const Hero = ({ projects, site }) => {
   }
 
   useEffect(() => {
-    imagesRef.current = document.querySelectorAll('.hero-image-large');
-    if (!isMobile) {
-      window.addEventListener('wheel', handleWheel);
-    }
-    else {
-      window.addEventListener('touchmove', handleTouchMove);
-      window.addEventListener('touchstart', handleTouchStart);
-      window.addEventListener('touchend', handleTouchEnd);
-    }
+    window.addEventListener('wheel', handleWheel);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchend', handleTouchEnd);
     return () => {
-      if (!isMobile) {
-        window.removeEventListener('wheel', handleWheel);
-
-      } else {
-        window.removeEventListener('touchmove', handleTouchMove);
-        window.removeEventListener('touchstart', handleTouchStart);
-        window.removeEventListener('touchend', handleTouchEnd);
-      }
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
     }
   }, [loaded]);
 
