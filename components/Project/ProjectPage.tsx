@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { urlFor } from "@lib/sanity";
 import useKeypress from 'react-use-keypress';
@@ -48,6 +48,12 @@ export const ProjectPage = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(projectIndex ?? 0);
   const router = useRouter();
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (transitionType !== 'project') {
+      setProjectIndex(0)
+    }
+  }, [transitionType])
 
   const getTransitionScale = (elWidth, elHeight) => {
     return elWidth < elHeight ? (90 / height) : (72 / (width * 0.7))
