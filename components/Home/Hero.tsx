@@ -99,7 +99,7 @@ const Hero = ({ projects, focusedProject, updateProject, site }) => {
 
   return (
     <Box position="absolute" flex="1" display="flex" alignItems="center" justifyContent="center" height="calc(var(--vh, 1vh) * 100)" width="100%">
-      {!loaded && <Loading projects={projects} site={site} />}
+      {/* {!loaded && <Loading projects={projects} site={site} />} */}
       <Box height="100%" overflow="hidden" width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column" position="relative">
         <StyledHero
           flex="1"
