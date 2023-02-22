@@ -16,8 +16,8 @@ const StyledImage = styled(motion.div)`
 
 export const PreviousImage = ({ images, beforeIndex, transition, projectTransition = false }) => {
 
-  const isTransitioningPrevious = useMemo(() => {
-    return transition === 'prev'
+  const isTransitioning = useMemo(() => {
+    return transition === 'next'
   }, [transition])
 
   const isFirstImage = useMemo(() => {
@@ -29,16 +29,14 @@ export const PreviousImage = ({ images, beforeIndex, transition, projectTransiti
       <StyledImage
         initial={{ opacity: projectTransition ? 1 : 0 }}
         animate={{
-          scale: 1,
-          x: 0,
-          opacity: 1,
+          opacity: isTransitioning ? 0 : 1,
+          x: isTransitioning ? '-100%' : 0,
           transition: {
-            duration: 0.6,
-            ease: [1, 0.15, 0.25, 0.9]
+            duration: 0.6, ease: 'easeInOut'
           }
         }}
-        exit={{ opacity: isTransitioningPrevious ? 1 : 0 }}
-        transition={{ duration: 0.6, ease: 'linear' }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.6, ease: 'easeInOut' }}
       >
         {!isFirstImage && images && images.map((image, index) => {
           const img = urlFor(image).auto('format').width(200).url();

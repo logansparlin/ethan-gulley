@@ -92,6 +92,7 @@ export const ProjectPage = ({ data }) => {
   const previousImage = () => {
     if (activeIndex === 0) {
       setTransitionType('project')
+      setProjectTransition('prev');
       setProjectIndex(previousProject.images.length - 1)
       setTimeout(() => {
         router.push(`/projects/${previousProject.slug.current}`)
