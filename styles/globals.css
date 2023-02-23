@@ -223,10 +223,10 @@ html.has-scroll-dragging {
   margin: 2px;
 }
 
-img {
+/* img {
   will-change: auto;
   transform: translate3d(0, 0, 0);
-}
+} */
 
 .list-view-item {
   cursor: pointer;

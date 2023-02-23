@@ -140,7 +140,7 @@ export const ProjectPage = ({ data }) => {
     return activeIndex + 1
   }, [activeIndex])
 
-  const img = urlFor(image.src).auto('format').width(isMobile ? 600 : 1800).dpr(2).quality(90).url();
+  const img = urlFor(image.src).auto('format').width(isMobile ? 600 : 1400).dpr(2).quality(90).url();
 
   const toggleOverview = () => {
     setOverviewOpen(!overviewOpen)
@@ -199,7 +199,7 @@ export const ProjectPage = ({ data }) => {
             />
             <Header title={title} toggleOverview={toggleOverview} />
             {images && images.map((image, index) => {
-              const img = urlFor(image).auto('format').width(isMobile ? 600 : 1800).dpr(2).quality(90).url();
+              const img = urlFor(image).auto('format').width(isMobile ? 600 : 1400).dpr(2).quality(90).url();
               const dimensions = getImageDimensions(image)
               return (
                 <StyledImage
