@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components'
 import { useMouseHovered } from 'react-use';
 import { useLerp } from '@hooks/useLerp';
@@ -35,25 +35,25 @@ export const HoverTitle = ({ children }) => {
   const elRef = useRef(null);
   const { elX, elY } = useMouseHovered(hoverRef, { bound: false, whenHovered: false });
 
-  const animateX = (value) => {
-    if (!elRef || !elRef.current) return;
-    elRef.current.style.left = `${value}px`
-  }
+  // const animateX = (value) => {
+  //   if (!elRef || !elRef.current) return;
+  //   elRef.current.style.left = `${value}px`
+  // }
 
-  const animateY = (value) => {
-    if (!elRef || !elRef.current) return;
-    elRef.current.style.top = `${value}px`
-  }
+  // const animateY = (value) => {
+  //   if (!elRef || !elRef.current) return;
+  //   elRef.current.style.top = `${value}px`
+  // }
 
-  const { update: updateX } = useLerp(animateX, 0.5);
-  const { update: updateY } = useLerp(animateY, 0.5);
+  // const { update: updateX } = useLerp(animateX, 1);
+  // const { update: updateY } = useLerp(animateY, 1);
 
-  updateX(elX)
-  updateY(elY)
+  // updateX(elX)
+  // updateY(elY)
 
   return (
     <StyledHoverTitle ref={hoverRef}>
-      <StyledTitle ref={elRef}>{children}</StyledTitle>
+      <StyledTitle ref={elRef} style={{ left: `${elX}px`, top: `${elY}px` }}>{children}</StyledTitle>
     </StyledHoverTitle>
   )
 }
