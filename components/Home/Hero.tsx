@@ -154,6 +154,7 @@ const Hero = ({ projects, site }) => {
                           objectFit={"cover"}
                           alt={project.image?.alt ?? ""}
                           loading={index === firstIndex ? "eager" : "lazy"}
+                          priority={true}
                         />
                       </StyledImage>
                       <StyledTitle
