@@ -7,7 +7,6 @@ import { useHomeStore } from "@hooks/useHomeStore";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { useWindowSize } from "@hooks/useWindowSize";
 import { motion } from 'framer-motion';
-import { useIsMobile } from '@hooks/useIsMobile';
 
 import Link from "next/link";
 import { Box } from "@components/box"
@@ -33,9 +32,7 @@ const StyledImage = styled(motion(Box))``;
 const Hero = ({ projects, site }) => {
   const { loaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition, firstIndex } = useHomeStore();
   const { transitionType, transitioning, setTransitioning, setTransitionType } = useAppStore();
-  const isMobile = useIsMobile();
   const scroll = useRef({ target: lastScrollPosition, current: lastScrollPosition });
-  const imagesRef = useRef(null);
   const activeIndex = useRef(lastFocusedIndex);
   const windowSize = useWindowSize();
   const touchStart = useRef(0);
@@ -43,8 +40,6 @@ const Hero = ({ projects, site }) => {
   const [focusedIndex, setFocusedIndex] = useState(0)
 
   const handleProjectChange = (index) => {
-    // setFocusedIndex(index)
-    console.log('changed')
     setFocusedIndex(index)
     activeIndex.current = index;
   }
@@ -122,8 +117,8 @@ const Hero = ({ projects, site }) => {
         >
           {projects.map((project, index) => {
             const url = project.images?.length >= 1
-              ? urlFor(project.images[0]).auto('format').width(isMobile ? 600 : 1200).dpr(2).quality(90).url()
-              : urlFor(project.image.src).auto('format').width(isMobile ? 600 : 1200).dpr(2).quality(90).url()
+              ? urlFor(project.images[0]).auto('format').fit('max').dpr(2).quality(90).url()
+              : urlFor(project.image.src).auto('format').fit('max').dpr(2).quality(90).url()
             const dimensions = project.images?.length >= 1
               ? getImageDimensions(project.images[0])
               : getImageDimensions(project.image.src);
