@@ -86,7 +86,7 @@ const ProjectGrid = ({ projects, category }) => {
 
     setTimeout(() => {
       router.push(`/projects/${project.slug.current}`)
-    }, 1000)
+    }, 600)
   }
 
   return (
