@@ -49,6 +49,31 @@ export default class MyDocument extends Document {
           `
             }}
           />
+          <link
+            rel="preload"
+            href="/fonts/Unica77LLWeb-Medium.woff"
+            as="font"
+            type="font/woff"
+          />
+          <link
+            rel="preload"
+            href="/fonts/Unica77LLWeb-Medium.woff2"
+            as="font"
+            type="font/woff2"
+          />
+
+          <link
+            rel="preload"
+            href="/fonts/Unica77LLSub-Medium.woff"
+            as="font"
+            type="font/woff"
+          />
+          <link
+            rel="preload"
+            href="/fonts/Unica77LLSub-Medium.woff2"
+            as="font"
+            type="font/woff2"
+          />
         </Head>
         <body>
           <Main />

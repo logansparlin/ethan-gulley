@@ -286,11 +286,13 @@ button {
 @font-face {
   font-family: "Unica77LLWeb-Medium";
   src: url("/fonts/Unica77LLWeb-Medium.woff") format("woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Unica77LLWeb-Medium";
   src: url("/fonts/Unica77LLWeb-Medium.woff2") format("woff2");
+  font-display: swap;
 }
 
 
@@ -299,9 +301,11 @@ button {
 @font-face {
   font-family: "Unica77LLSub-Medium";
   src: url("/fonts/Unica77LLSub-Medium.woff") format("woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Unica77LLSub-Medium";
   src: url("/fonts/Unica77LLSub-Medium.woff2") format("woff2");
+  font-display: swap;
 }
