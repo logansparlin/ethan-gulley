@@ -37,9 +37,10 @@ const Hero = ({ projects, site }) => {
   const windowSize = useWindowSize();
   const touchStart = useRef(0);
   const { setScale } = useProjectStore();
-  const [focusedIndex, setFocusedIndex] = useState(0)
+  const [focusedIndex, setFocusedIndex] = useState(lastFocusedIndex ?? 0)
 
   const handleProjectChange = (index) => {
+    if (transitioning) return;
     setFocusedIndex(index)
     activeIndex.current = index;
   }
@@ -92,6 +93,7 @@ const Hero = ({ projects, site }) => {
     setLastFocusedIndex(activeIndex.current)
     setScale(scale)
     setLastScrollPosition(scroll.current.current)
+    setFocusedIndex(activeIndex.current)
     setTransitioning(true);
     setTransitionType('page')
   }
@@ -153,7 +155,6 @@ const Hero = ({ projects, site }) => {
                           layout="fill"
                           objectFit={"cover"}
                           alt={project.image?.alt ?? ""}
-                          loading={index === firstIndex ? "eager" : "lazy"}
                           priority={true}
                         />
                       </StyledImage>
