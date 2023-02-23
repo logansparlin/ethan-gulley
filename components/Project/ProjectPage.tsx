@@ -227,7 +227,7 @@ export const ProjectPage = ({ data }) => {
                   }}
                   transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
                 >
-                  <Image src={img} placeholder="blur" blurDataURL={lqip} alt={image.alt} layout="fill" objectFit="contain" priority={true} />
+                  <Image src={img} placeholder="blur" blurDataURL={lqip} alt={image.alt} layout="fill" objectFit="contain" priority={index === 0 ? true : false} />
                 </StyledImage>
               )
             })}
