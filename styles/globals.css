@@ -156,6 +156,7 @@ a:hover {
 * {
   box-sizing: border-box;
   font-kerning: auto;
+  scroll-behavior: smooth;
 }
 
 html,
