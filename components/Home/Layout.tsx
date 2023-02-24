@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useHomeStore } from "@hooks/useHomeStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/dist/client/router";
+import { Preload } from "./Preload";
 
 import { Box } from "@components/box";
 import Head from 'next/head';
@@ -35,6 +36,7 @@ const HomeLayout = ({ projects, site, info }) => {
       transition={{ duration: 0.8, ease: [0.9, 0.1, 0.1, 0.9] }}
       style={{ willChange: 'auto' }}
     >
+      <Preload projects={projects} />
       <Box>
         <Information {...info} />
         <HomeHead />

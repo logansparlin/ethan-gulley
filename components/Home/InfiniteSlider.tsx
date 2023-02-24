@@ -89,27 +89,27 @@ const InfiniteSlider = ({ projects, focusedIndex, updateProject, scroll, loading
     })
   }
 
-  useAnimationFrame(() => {
-    if (!itemRef.current) return;
+  // useAnimationFrame(() => {
+  //   if (!itemRef.current) return;
 
-    // scroll.current = lerp(scroll.current, scroll.target, 0.2);
-    scroll.current = scroll.target
+  //   // scroll.current = lerp(scroll.current, scroll.target, 0.2);
+  //   scroll.current = scroll.target
 
-    const offset = window.innerWidth / 2;
+  //   const offset = window.innerWidth / 2;
 
-    const containerIndex = Math.abs(Math.floor(-1 * (scroll.current - offset) / wrapWidth.current))
+  //   const containerIndex = Math.abs(Math.floor(-1 * (scroll.current - offset) / wrapWidth.current))
 
-    const activeIndex = calculateIndex({ scroll: scroll.current, offset, containerIndex, wrapWidth: wrapWidth.current, itemWidth: itemWidth.current, gutter: gutter.current })
+  //   const activeIndex = calculateIndex({ scroll: scroll.current, offset, containerIndex, wrapWidth: wrapWidth.current, itemWidth: itemWidth.current, gutter: gutter.current })
 
-    if (loadingRef.current) return;
+  //   if (loadingRef.current) return;
 
-    if (lastActiveIndex.current !== activeIndex) {
-      lastActiveIndex.current = activeIndex;
-      updateProject(activeIndex)
-    }
+  //   if (lastActiveIndex.current !== activeIndex) {
+  //     lastActiveIndex.current = activeIndex;
+  //     updateProject(activeIndex)
+  //   }
 
-    animate(scroll.current)
-  })
+  //   animate(scroll.current)
+  // })
 
   const handleClick = (_, index) => {
     updateProject(index)
@@ -122,7 +122,7 @@ const InfiniteSlider = ({ projects, focusedIndex, updateProject, scroll, loading
       width="100%"
       height={["40px", null, "90px"]}
       style={{ whiteSpace: 'nowrap', willChange: 'auto' }}
-      overflow="hidden"
+      overflow="scroll"
       ref={container}
       initial={{ opacity: 0, y: 90 }}
       animate={{ opacity: 1, y: loading ? 90 : 0 }}
@@ -135,7 +135,7 @@ const InfiniteSlider = ({ projects, focusedIndex, updateProject, scroll, loading
           <StyledImage
             key={project._id}
             ref={index === 0 ? itemRef : null}
-            position="absolute"
+            position="relative"
             width={["32px", null, "72px"]}
             height={["40px", null, "90px"]}
             mr={["2px", null, "5px"]}

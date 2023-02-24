@@ -150,8 +150,6 @@ const Hero = ({ projects, site }) => {
                       >
                         <Image
                           src={url}
-                          placeholder="blur"
-                          blurDataURL={lqip}
                           layout="fill"
                           objectFit={"cover"}
                           alt={project.image?.alt ?? ""}
