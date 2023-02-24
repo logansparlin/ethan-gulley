@@ -17,7 +17,7 @@ const StyledHover = styled(motion.div)`
 `
 
 export const HoverImage = ({ image, active }) => {
-  const url = image.asset ? urlFor(image.asset).auto('format').width(300).dpr(3).url() : urlFor(image.src).auto('format').width(500).url();
+  const url = image.asset ? urlFor(image.asset).auto('format').width(500).url() : urlFor(image.src).auto('format').width(500).url();
   const { width } = useWindowSize();
 
   const left = useMemo(() => {
@@ -35,7 +35,7 @@ export const HoverImage = ({ image, active }) => {
         delay: active ? 0 : 0.45
       }}
     >
-      <Image src={url} alt={image.alt ?? ""} layout="fill" objectFit="contain" objectPosition="center" />
+      <Image src={url} alt={image.alt ?? ""} layout="fill" objectFit="contain" objectPosition="center" sizes='300px' />
     </StyledHover>
   )
 }
