@@ -41,7 +41,7 @@ export const NextImage = ({ images, afterIndex, transition, projectTransition = 
           const img = urlFor(image).auto('format').width(200).url();
           return (
             <Box key={image._key} opacity={index === afterIndex ? 1 : 0}>
-              <Image src={img} alt={image.alt} layout="fill" objectFit="contain" objectPosition="right" />
+              <Image src={img} alt={image.alt} layout="fill" objectFit="contain" objectPosition="right" placeholder="blur" blurDataURL={image.metadata.lqip} />
             </Box>
           )
         })}

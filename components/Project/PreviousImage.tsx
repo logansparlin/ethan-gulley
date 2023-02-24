@@ -42,7 +42,7 @@ export const PreviousImage = ({ images, beforeIndex, transition, projectTransiti
           const img = urlFor(image).auto('format').width(200).url();
           return (
             <Box key={image._key} opacity={index === beforeIndex ? 1 : 0}>
-              <Image src={img} alt={image.alt} layout="fill" objectFit="contain" objectPosition="left" />
+              <Image src={img} alt={image.alt} layout="fill" objectFit="contain" objectPosition="left" placeholder="blur" blurDataURL={image.metadata.lqip} />
             </Box>
           )
         })}
