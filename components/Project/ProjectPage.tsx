@@ -218,9 +218,9 @@ export const ProjectPage = ({ data }) => {
                   left={[0, null, "15vw"]}
                   initial={{ scale: transitionType === 'list' || transitionType === 'project' || isMobile ? 1 : scale }}
                   animate={{
-                    x: projectTransition ? x : 0,
-                    scale: projectTransition ? getTransitionScale(dimensions.width, dimensions.height) : 1,
-                    transition: { duration: 0.6, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
+                    x: projectTransition && !isMobile ? x : 0,
+                    scale: projectTransition && !isMobile ? getTransitionScale(dimensions.width, dimensions.height) : 1,
+                    transition: { duration: isMobile ? 0 : 0.6, delay: 0, ease: [1, 0.15, 0.25, 0.9] }
                   }}
                   exit={{
                     scale: transitionType === 'project' && !isMobile ? getTransitionScale(dimensions.width, dimensions.height) : 1,
