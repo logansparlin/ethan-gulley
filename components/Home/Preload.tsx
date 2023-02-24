@@ -9,7 +9,7 @@ export const Preload = ({ projects }) => {
           ? urlFor(project.images[0]).auto('format').width(1200).dpr(2).quality(90).url()
           : urlFor(project.image.src).auto('format').width(1200).dpr(2).quality(90).url();
         return (
-          <Image src={img} width={1200} height={800} alt="" aria-hidden={true} key={project._id} priority />
+          <Image src={img} width={1200} height={800} alt="" aria-hidden={true} key={project._id} loading="lazy" />
         )
       })}
     </div>
