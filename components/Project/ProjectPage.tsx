@@ -253,7 +253,7 @@ export const ProjectPage = ({ data }) => {
                 }}
                 transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
               >
-                <Image src={img} alt={image.alt} layout="fill" objectFit="contain" priority={true} sizes="(min-width: 768px) 70vw, 100vw" placeholder="blur" blurDataURL={lqip} />
+                <Image src={img} alt={image.alt} layout="fill" objectFit="contain" priority={true} sizes="(min-width: 768px) 70vw, 100vw" />
               </StyledImage>
             )}
             <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} projectTransition={transitionType === 'project'} />
