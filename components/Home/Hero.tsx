@@ -115,7 +115,7 @@ const Hero = ({ projects, site }) => {
           initial={{ scale: !loaded ? 0.6 : 1, y: 45, opacity: transitionType === 'view' ? 0 : 1 }}
           animate={{ scale: loaded ? 1 : 0.6, y: loaded ? 0 : 45, opacity: 1 }}
           exit={{ scale: 1, y: 45, opacity: transitionType === 'view' ? 0 : 1 }}
-          transition={{ duration: 0.6, ease: [.9, 0, .1, .9] }}
+          transition={{ duration: 0.8, ease: [.9, 0, .1, .9] }}
         >
           {projects.map((project, index) => {
             const url = project.images?.length >= 1
@@ -148,9 +148,12 @@ const Hero = ({ projects, site }) => {
                         <Image
                           src={url}
                           layout="fill"
+                          placeholder="blur"
+                          blurDataURL={lqip}
                           objectFit={"cover"}
                           alt={project.image?.alt ?? ""}
                           priority
+                          sizes="(max-width: 768px) 100vw, 25vw"
                         />
                       </StyledImage>
                       <StyledTitle
