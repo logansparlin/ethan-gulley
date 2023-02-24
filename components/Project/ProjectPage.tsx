@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useNextPreviousProjects } from "@hooks/useNextPreviousProjects";
 import styled from 'styled-components';
 import { useAppStore } from "@hooks/useAppStore";
+import { useHomeStore } from "@hooks/useHomeStore";
 import { useWindowSize } from "@hooks/useWindowSize";
 import { useRouter } from "next/dist/client/router";
 
@@ -44,8 +45,13 @@ export const ProjectPage = ({ data }) => {
   const [overviewOpen, setOverviewOpen] = useState(false);
   const [projectTransition, setProjectTransition] = useState<'prev' | 'next' | null>(null)
   const { isMobile, transitionType, setTransitionType, projectIndex, setProjectIndex } = useAppStore();
+  const { setLoaded } = useHomeStore();
   const [activeIndex, setActiveIndex] = useState(projectIndex ?? 0);
   const router = useRouter();
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [])
 
   useEffect(() => {
     if (transitionType !== 'project') {
