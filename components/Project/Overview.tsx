@@ -103,7 +103,16 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
                         pb={`${(dimensions.height / dimensions.width) * 100}%`}
                       >
                         <Box>
-                          <Image src={url} placeholder="blur" blurDataURL={lqip} layout="fill" objectFit="cover" alt={image.alt} loading="lazy" />
+                          <Image
+                            src={url}
+                            placeholder="blur"
+                            blurDataURL={lqip}
+                            layout="fill"
+                            objectFit="cover"
+                            alt={image.alt}
+                            loading="lazy"
+                            sizes="(max-width: 300px) 100vw, (max-width: 500px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                          />
                         </Box>
                       </Box>
                     </Box>
