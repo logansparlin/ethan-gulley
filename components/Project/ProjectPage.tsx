@@ -225,7 +225,7 @@ export const ProjectPage = ({ data }) => {
                   }}
                   transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
                 >
-                  <Image src={img} placeholder={index > 0 ? 'blur' : 'empty'} blurDataURL={lqip} alt={image.alt} layout="fill" priority={index === 0} objectFit="contain" sizes="(min-width: 768px) 70vw, 100vw" />
+                  <Image src={img} placeholder={index > 0 ? 'blur' : 'empty'} blurDataURL={lqip} alt={image.alt} layout="fill" priority={index === 0} objectFit="contain" sizes="(min-width: 768px) 70vw, 100vw" quality={90} />
                 </StyledImage>
               )
             })}
@@ -238,7 +238,7 @@ export const ProjectPage = ({ data }) => {
                 position="absolute"
                 top="0"
                 left={[0, null, "15vw"]}
-                initial={{ opacity: 1, scale: scale }}
+                initial={{ opacity: 1, scale: isMobile ? 1 : scale }}
                 animate={{
                   opacity: 1,
                   scale: 1,
@@ -250,7 +250,7 @@ export const ProjectPage = ({ data }) => {
                 }}
                 transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
               >
-                <Image src={img} alt={image.alt} layout="fill" objectFit="contain" priority={true} sizes="(min-width: 768px) 70vw, 100vw" />
+                <Image src={img} quality={90} alt={image.alt} layout="fill" objectFit="contain" priority={true} sizes="(min-width: 768px) 70vw, 100vw" />
               </StyledImage>
             )}
             <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} projectTransition={transitionType === 'project'} />

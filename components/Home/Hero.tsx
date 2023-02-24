@@ -114,12 +114,12 @@ const Hero = ({ projects, site }) => {
           justifyContent="center"
           cursor="pointer"
           key="home-hero"
-          initial={{ scale: !loaded ? 0.6 : 1, y: isMobile ? 0 : 45, opacity: transitionType === 'view' ? 0 : 1 }}
-          animate={{ scale: loaded ? 1 : 0.6, y: loaded ? 0 : 45, opacity: 1 }}
+          initial={{ scale: !loaded && !isMobile ? 0.6 : 1, y: isMobile ? 0 : 45, opacity: transitionType === 'view' ? 0 : 1 }}
+          animate={{ scale: loaded || isMobile ? 1 : 0.6, y: loaded || isMobile ? 0 : 45, opacity: 1 }}
           exit={{
             scale: 1,
             y: isMobile && transitioning
-              ? ((windowSize.height / 2) - (imageHeight / 2)) - 40
+              ? ((windowSize.height / 2) - (imageHeight / 2)) - 41
               : isMobile ? 0 : 45,
             opacity: transitionType === 'view' ? 0 : 1
           }}
@@ -162,6 +162,7 @@ const Hero = ({ projects, site }) => {
                           alt={project.image?.alt ?? ""}
                           sizes="(min-width: 768px) 70vw, 100vw"
                           priority
+                          quality={90}
                         />
                       </StyledImage>
                       <StyledTitle
