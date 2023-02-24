@@ -151,7 +151,7 @@ const Hero = ({ projects, site }) => {
                         position="relative"
                         width={["100vw", null, "25vw"]}
                         height="0"
-                        pb={[`calc(100vw * ${aspect})`, null, `calc(100% * ${aspect})`]}
+                        pb={[aspect > 1.4 ? '124%' : `calc(100vw * ${aspect})`, null, `calc(100% * ${aspect})`]}
                       >
                         <Image
                           src={url}
