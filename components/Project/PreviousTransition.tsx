@@ -73,7 +73,7 @@ export const PreviousTransition = ({ previousProject, transitioning, visible = f
           ease: [1, 0.15, 0.25, 0.9],
         }}
       >
-        <Image src={url2} alt="" layout="fill" objectFit="contain" />
+        <Image src={url2} alt="" layout="fill" objectFit="contain" unoptimized={true} />
       </StyledSecondImage>
     </Box>
   )

@@ -119,8 +119,8 @@ const Hero = ({ projects, site }) => {
         >
           {projects.map((project, index) => {
             const url = project.images?.length >= 1
-              ? urlFor(project.images[0]).auto('format').width(1000).dpr(2).quality(90).url()
-              : urlFor(project.image.src).auto('format').width(1000).dpr(2).quality(90).url()
+              ? urlFor(project.images[0]).auto('format').width(800).height(800).dpr(2).quality(90).url()
+              : urlFor(project.image.src).auto('format').width(800).height(800).dpr(2).quality(90).url()
             const dimensions = project.images?.length >= 1
               ? getImageDimensions(project.images[0])
               : getImageDimensions(project.image.src);
@@ -152,8 +152,8 @@ const Hero = ({ projects, site }) => {
                           blurDataURL={lqip}
                           objectFit={"cover"}
                           alt={project.image?.alt ?? ""}
+                          unoptimized={true}
                           priority
-                          sizes="(max-width: 768px) 100vw, 70vw"
                         />
                       </StyledImage>
                       <StyledTitle

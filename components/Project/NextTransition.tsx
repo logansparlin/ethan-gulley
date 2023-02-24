@@ -89,6 +89,7 @@ export const NextTransition = ({ nextProject, transitioning, visible = false }) 
           objectPosition="center"
           placeholder="blur"
           blurDataURL={secondImage.metadata?.lqip}
+          unoptimized={true}
         />
       </StyledSecondImage>
     </Box>
