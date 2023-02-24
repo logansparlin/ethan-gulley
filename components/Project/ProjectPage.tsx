@@ -199,7 +199,7 @@ export const ProjectPage = ({ data }) => {
             />
             <Header title={title} toggleOverview={toggleOverview} />
             {images && images.map((image, index) => {
-              const img = urlFor(image).auto('format').width(800).dpr(3).quality(90).url();
+              const img = urlFor(image).auto('format').width(800).quality(90).url();
               const lqip = image.metadata.lqip;
               const dimensions = getImageDimensions(image)
               return (
