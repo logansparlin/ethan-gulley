@@ -36,7 +36,7 @@ const HomeLayout = ({ projects, site, info }) => {
       transition={{ duration: 0.8, ease: [0.9, 0.1, 0.1, 0.9] }}
       style={{ willChange: 'auto' }}
     >
-      <Preload projects={projects} />
+      {/* <Preload projects={projects} /> */}
       <Box>
         <Information {...info} />
         <HomeHead />

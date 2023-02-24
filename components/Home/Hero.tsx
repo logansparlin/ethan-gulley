@@ -119,17 +119,14 @@ const Hero = ({ projects, site }) => {
         >
           {projects.map((project, index) => {
             const url = project.images?.length >= 1
-              ? urlFor(project.images[0]).auto('format').width(550).dpr(2).quality(90).url()
-              : urlFor(project.image.src).auto('format').width(550).dpr(2).quality(90).url()
+              ? urlFor(project.images[0]).auto('format').width(1000).dpr(2).quality(90).url()
+              : urlFor(project.image.src).auto('format').width(1000).dpr(2).quality(90).url()
             const dimensions = project.images?.length >= 1
               ? getImageDimensions(project.images[0])
               : getImageDimensions(project.image.src);
 
             const lqip = project.images?.length >= 1 ? project.images[0].metadata.lqip : project.image.metadata.lqip;
             const aspect = dimensions.height / dimensions.width;
-            // if (index !== focusedIndex) {
-            //   return null
-            // }
             return (
               <Box
                 className="hero-image-large"
