@@ -96,7 +96,7 @@ const ProjectGrid = ({ projects, category }) => {
           <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
             <Masonry gutter="20px">
               {filteredProjects.map((project, index) => {
-                const url = urlFor(project.image.src).width(isMobile ? 600 : 600).dpr(3).quality(90).url();
+                const url = urlFor(project.image.src).width(800).quality(90).url();
                 const dimensions = getImageDimensions(project.image.src);
                 const lqip = project.image.lqip;
                 const isSelected = activeProject ? activeProject._id === project._id : false;
@@ -134,7 +134,15 @@ const ProjectGrid = ({ projects, category }) => {
                       >
                         {!isMobile ? <HoverTitle>{project.title}</HoverTitle> : null}
                         <StyledImage className={isSelected ? 'active' : indices && indices.includes(index) && 'faded'} as="button" onClick={(e) => handleClick(e, project)}>
-                          <Image src={url} placeholder="blur" blurDataURL={lqip} layout="fill" objectFit="cover" alt={project.image.alt} />
+                          <Image
+                            src={url}
+                            placeholder="blur"
+                            blurDataURL={lqip}
+                            layout="fill"
+                            objectFit="cover"
+                            alt={project.image.alt}
+                            sizes="(max-width: 300px) 100vw, (max-width: 500px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                          />
                         </StyledImage>
                       </Box>
                       <Box as="h3" display={["block", null, "none"]} px="12px" py="8px" fontSize="26px" lineHeight="116%">
