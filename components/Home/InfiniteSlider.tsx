@@ -135,7 +135,7 @@ const InfiniteSlider = ({ projects, focusedIndex, updateProject, scroll, loading
           <StyledImage
             key={project._id}
             ref={index === 0 ? itemRef : null}
-            position="relative"
+            position="absolute"
             width={["32px", null, "72px"]}
             height={["40px", null, "90px"]}
             mr={["2px", null, "5px"]}
