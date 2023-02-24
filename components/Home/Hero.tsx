@@ -152,7 +152,7 @@ const Hero = ({ projects, site }) => {
                           blurDataURL={lqip}
                           objectFit={"cover"}
                           alt={project.image?.alt ?? ""}
-                          sizes="10px"
+                          sizes="(min-width: 768px) 70vw, 100vw"
                           priority
                         />
                       </StyledImage>
