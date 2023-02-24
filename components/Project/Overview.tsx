@@ -17,7 +17,6 @@ const OverviewContainer = styled(motion.div)`
   height: calc(var(--vh, 1vh) * 100);
   inset: 0;
   z-index: 100;
-  overflow: scroll;
   transition: translate3d(0, 0, 0);
 `
 
@@ -34,6 +33,7 @@ const StyledOverview = styled(motion.div)`
   cursor: auto;
   padding: 20px;
   will-change: transform;
+  overflow: scroll;
 `
 
 const Header = styled(motion.header)`
