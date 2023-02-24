@@ -53,7 +53,6 @@ const InfiniteSlider = ({ projects, focusedIndex, updateProject, scroll, loading
       itemWidth.current = itemRef.current.clientWidth;
       containerWidth.current = container.current.clientWidth;
       wrapWidth.current = projects.length * (itemWidth.current + gutter.current);
-      console.log(wrapWidth.current)
       document.body.style.height = `${wrapWidth.current}px`
       document.body.style.overflow = 'scroll';
 

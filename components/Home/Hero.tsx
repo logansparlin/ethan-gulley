@@ -7,6 +7,7 @@ import { useHomeStore } from "@hooks/useHomeStore";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { useWindowSize } from "@hooks/useWindowSize";
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@hooks/useIsMobile';
 
 import Link from "next/link";
 import { Box } from "@components/box"
@@ -32,12 +33,14 @@ const StyledImage = styled(motion(Box))``;
 const Hero = ({ projects, site }) => {
   const { loaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition, firstIndex } = useHomeStore();
   const { transitionType, transitioning, setTransitioning, setTransitionType } = useAppStore();
+  const [focusedIndex, setFocusedIndex] = useState(lastFocusedIndex ?? 0)
+  const [imageHeight, setImageHeight] = useState(0);
   const scroll = useRef({ target: lastScrollPosition, current: lastScrollPosition });
+  const { setScale } = useProjectStore();
   const activeIndex = useRef(lastFocusedIndex);
   const windowSize = useWindowSize();
   const touchStart = useRef(0);
-  const { setScale } = useProjectStore();
-  const [focusedIndex, setFocusedIndex] = useState(lastFocusedIndex ?? 0)
+  const isMobile = useIsMobile();
 
   const handleProjectChange = (index) => {
     if (transitioning) return;
@@ -90,6 +93,7 @@ const Hero = ({ projects, site }) => {
     } else {
       scale = pos.height / windowSize.height;
     }
+    setImageHeight(pos.height);
     setLastFocusedIndex(activeIndex.current)
     setScale(scale)
     setLastScrollPosition(scroll.current.current)
@@ -112,9 +116,15 @@ const Hero = ({ projects, site }) => {
           justifyContent="center"
           cursor="pointer"
           key="home-hero"
-          initial={{ scale: !loaded ? 0.6 : 1, y: 45, opacity: transitionType === 'view' ? 0 : 1 }}
+          initial={{ scale: !loaded ? 0.6 : 1, y: isMobile ? 0 : 45, opacity: transitionType === 'view' ? 0 : 1 }}
           animate={{ scale: loaded ? 1 : 0.6, y: loaded ? 0 : 45, opacity: 1 }}
-          exit={{ scale: 1, y: 45, opacity: transitionType === 'view' ? 0 : 1 }}
+          exit={{
+            scale: 1,
+            y: isMobile && transitioning
+              ? ((windowSize.height / 2) - (imageHeight / 2)) - 40
+              : isMobile ? 0 : 45,
+            opacity: transitionType === 'view' ? 0 : 1
+          }}
           transition={{ duration: transitioning ? 0.8 : 0.6, ease: [.9, 0, .1, .9] }}
         >
           {projects.map((project, index) => {
@@ -143,7 +153,7 @@ const Hero = ({ projects, site }) => {
                         position="relative"
                         width={["100vw", null, "25vw"]}
                         height="0"
-                        pb={[aspect > 1.4 ? '120vw' : `calc(100vw * ${aspect})`, null, `calc(100% * ${aspect})`]}
+                        pb={[`calc(100vw * ${aspect})`, null, `calc(100% * ${aspect})`]}
                       >
                         <Image
                           src={url}

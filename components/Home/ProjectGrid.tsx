@@ -9,6 +9,7 @@ import { GRID_BREAKPOINTS } from "@lib/constants";
 import { useIsMobile } from "@hooks/useIsMobile";
 import { useWindowSize } from "@hooks/useWindowSize";
 import styled from 'styled-components';
+import css from '@styled-system/css'
 
 import { Box } from "@components/box";
 import Image from 'next/image';
@@ -26,6 +27,15 @@ const StyledImage = styled(motion(Box))`
 const StyledItem = styled(motion(Box))`
   position: relative;
   will-change: auto;
+`;
+
+const StyledMobileTitle = styled(motion.h3)`
+  padding: 8px 12px;
+  font-size: 26px;
+  line-height: 116%;
+  ${css({
+  display: ["block", null, "none"],
+})}
 `;
 
 const GridWrapper = styled(Box)`
@@ -109,7 +119,7 @@ const ProjectGrid = ({ projects, category }) => {
                         y: isSelected ? selectedProjectPosition.current.y : 0,
                         x: isSelected ? selectedProjectPosition.current.x : 0,
                         opacity: activeProject && !isSelected ? 0 : 1,
-                        scale: activeProject && isSelected ? selectedProjectPosition.current.scale : 1,
+                        scale: activeProject && isSelected && !isMobile ? selectedProjectPosition.current.scale : 1,
                         transition: {
                           duration: isSelected ? 0.6 : activeProject ? 1 : 0.6,
                           ease: isSelected ? [.9, 0, .1, .9] : 'circOut',
@@ -145,9 +155,16 @@ const ProjectGrid = ({ projects, category }) => {
                           />
                         </StyledImage>
                       </Box>
-                      <Box as="h3" display={["block", null, "none"]} px="12px" py="8px" fontSize="26px" lineHeight="116%">
+                      <StyledMobileTitle
+                        initial={{ opacity: 1 }}
+                        animate={{ opacity: activeProject ? 0 : 1 }}
+                        transition={{
+                          duration: 0.4,
+                          ease: 'easeInOut'
+                        }}
+                      >
                         {project.title}
-                      </Box>
+                      </StyledMobileTitle>
                     </StyledItem>
                   </Box>
                 )
