@@ -159,6 +159,7 @@ const InfiniteSlider = ({ projects, focusedIndex, updateProject, scroll, loading
               loading="eager"
               placeholder="blur"
               blurDataURL={project.image.lqip}
+              sizes="72px"
             />
           </StyledImage>
         )
