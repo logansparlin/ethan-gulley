@@ -141,7 +141,6 @@ export const ProjectPage = ({ data }) => {
   }, [activeIndex])
 
   const img = urlFor(image.src).auto('format').width(800).quality(90).url();
-  const lqip = image.metadata.lqip;
 
   const toggleOverview = () => {
     setOverviewOpen(!overviewOpen)
@@ -228,7 +227,7 @@ export const ProjectPage = ({ data }) => {
                   }}
                   transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
                 >
-                  <Image src={img} placeholder={index > 0 ? 'blur' : 'empty'} blurDataURL={lqip} alt={image.alt} layout="fill" priority={index === 0} objectFit="contain" priority={index === 0} sizes="(min-width: 768px) 70vw, 100vw" />
+                  <Image src={img} placeholder={index > 0 ? 'blur' : 'empty'} blurDataURL={lqip} alt={image.alt} layout="fill" priority={index === 0} objectFit="contain" sizes="(min-width: 768px) 70vw, 100vw" />
                 </StyledImage>
               )
             })}
