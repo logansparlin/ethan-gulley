@@ -15,7 +15,7 @@ import InfiniteSlider from "./InfiniteSlider";
 import { useAppStore } from "@hooks/useAppStore";
 import Loading from './Loading';
 
-const WHEEL_SPEED = 0.85;
+const WHEEL_SPEED = 0.9;
 
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 

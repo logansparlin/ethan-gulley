@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { useAnimationFrame } from "@hooks/useAnimationFrame";
 import { useHomeStore } from "@hooks/useHomeStore";
 import { urlFor } from "@lib/sanity"
-// import { lerp } from "@lib/helpers";
+import { lerp } from "@lib/helpers";
 import { motion } from 'framer-motion';
 import { useWindowSize } from "@hooks/useWindowSize";
 import { calculateIndex } from "@lib/helpers";
@@ -96,8 +96,8 @@ const InfiniteSlider = ({ projects, focusedIndex, updateProject, scroll, loading
   useAnimationFrame(() => {
     if (!itemRef.current) return;
 
-    // scroll.current = lerp(scroll.current, scroll.target, 0.2);
-    scroll.current = scroll.target
+    scroll.current = lerp(scroll.current, scroll.target, 0.9);
+    // scroll.current = scroll.target
 
     const offset = window.innerWidth / 2;
 

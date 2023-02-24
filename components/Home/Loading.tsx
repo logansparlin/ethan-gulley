@@ -104,7 +104,7 @@ const Loading = ({ projects, site }) => {
                   layout="fill"
                   objectFit="cover"
                   alt={project.image.alt}
-                  loading="lazy"
+                  priority
                 />
               </Box>
               <Box
