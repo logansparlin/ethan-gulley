@@ -227,7 +227,7 @@ export const ProjectPage = ({ data }) => {
                   }}
                   transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
                 >
-                  <Image src={img} placeholder={index > 0 ? 'blur' : 'empty'} blurDataURL={lqip} alt={image.alt} layout="fill" loading={index === 0 ? 'eager' : 'lazy'} objectFit="contain" priority={index === 0} />
+                  <Image src={img} placeholder={index > 0 ? 'blur' : 'empty'} blurDataURL={lqip} alt={image.alt} layout="fill" loading={index === 0 ? 'eager' : 'lazy'} objectFit="contain" priority={index === 0} sizes="(max-width: 768px) 100vw, 70vw" />
                 </StyledImage>
               )
             })}
@@ -252,7 +252,7 @@ export const ProjectPage = ({ data }) => {
                 }}
                 transition={{ duration: 0.6, ease: [1, 0.15, 0.25, 0.9] }}
               >
-                <Image src={img} alt={image.alt} layout="fill" objectFit="contain" priority={true} />
+                <Image src={img} alt={image.alt} layout="fill" objectFit="contain" priority={true} sizes="(max-width: 768px) 100vw, 70vw" />
               </StyledImage>
             )}
             <PreviousImage transition={projectTransition} images={images} beforeIndex={beforeIndex} projectTransition={transitionType === 'project'} />
