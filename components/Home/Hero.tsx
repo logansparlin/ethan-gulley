@@ -153,7 +153,7 @@ const Hero = ({ projects, site }) => {
                           objectFit={"cover"}
                           alt={project.image?.alt ?? ""}
                           priority
-                          sizes="(max-width: 768px) 100vw, 25vw"
+                          sizes="(max-width: 768px) 100vw, 70vw"
                         />
                       </StyledImage>
                       <StyledTitle
