@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import { useAppStore } from "@hooks/useAppStore";
 import { useWindowSize } from "@hooks/useWindowSize";
 import { useRouter } from "next/dist/client/router";
-import { useIsMobile } from "@hooks/useIsMobile";
 
 import Layout from "@components/Global/Layout";
 import { Box } from "@components/box";
@@ -44,10 +43,9 @@ export const ProjectPage = ({ data }) => {
   const { nextProject, previousProject } = useNextPreviousProjects({ id: _id, projects })
   const [overviewOpen, setOverviewOpen] = useState(false);
   const [projectTransition, setProjectTransition] = useState<'prev' | 'next' | null>(null)
-  const { transitionType, setTransitionType, projectIndex, setProjectIndex } = useAppStore();
+  const { isMobile, transitionType, setTransitionType, projectIndex, setProjectIndex } = useAppStore();
   const [activeIndex, setActiveIndex] = useState(projectIndex ?? 0);
   const router = useRouter();
-  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (transitionType !== 'project') {

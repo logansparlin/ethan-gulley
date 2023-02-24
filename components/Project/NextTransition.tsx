@@ -2,7 +2,7 @@ import { urlFor } from "@lib/sanity";
 import styled from 'styled-components'
 import { useWindowSize } from "@hooks/useWindowSize";
 import { getImageDimensions } from "@sanity/asset-utils";
-import { useIsMobile } from "@hooks/useIsMobile";
+import { useAppStore } from "@hooks/useAppStore";
 
 import { Box } from "@components/box";
 import { motion } from "framer-motion";
@@ -31,7 +31,7 @@ const StyledImage = styled(motion.div)`
 
 export const NextTransition = ({ nextProject, transitioning, visible = false }) => {
   const { width = 0, height = 0 } = useWindowSize();
-  const isMobile = useIsMobile();
+  const { isMobile } = useAppStore();
 
   const scale = useMemo(() => {
     if (!height) return 0;

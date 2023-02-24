@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/dist/client/router"
-import { useIsMobile } from "@hooks/useIsMobile"
 import styled from 'styled-components'
 import css from '@styled-system/css'
 
@@ -55,8 +54,7 @@ const ProjectList = ({ projects, category }) => {
   const [years, setYears] = useState([]);
   const [sortedProjects, setSortedProjects] = useState([]);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const isMobile = useIsMobile();
-  const { setTransitionType } = useAppStore();
+  const { setTransitionType, isMobile } = useAppStore();
   const router = useRouter();
 
 

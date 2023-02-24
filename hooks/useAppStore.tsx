@@ -3,6 +3,8 @@ import create from 'zustand';
 type TRANSITION_TYPES = 'page' | 'view' | 'list' | 'project';
 
 interface AppState {
+  isMobile: boolean;
+  setIsMobile: (val: boolean) => void;
   informationOpen: boolean;
   setInformationOpen: (open: boolean) => void;
   transitioning: boolean;
@@ -14,6 +16,10 @@ interface AppState {
 }
 
 export const useAppStore = create<AppState>((set) => ({
+  isMobile: true,
+  setIsMobile: (val) => {
+    set({ isMobile: val });
+  },
   informationOpen: false,
   setInformationOpen: (open) => {
     set({ informationOpen: open });

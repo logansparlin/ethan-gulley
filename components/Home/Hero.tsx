@@ -7,7 +7,6 @@ import { useHomeStore } from "@hooks/useHomeStore";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { useWindowSize } from "@hooks/useWindowSize";
 import { motion } from 'framer-motion';
-import { useIsMobile } from '@hooks/useIsMobile';
 
 import Link from "next/link";
 import { Box } from "@components/box"
@@ -31,8 +30,8 @@ position: absolute;
 const StyledImage = styled(motion(Box))``;
 
 const Hero = ({ projects, site }) => {
-  const { loaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition, firstIndex } = useHomeStore();
-  const { transitionType, transitioning, setTransitioning, setTransitionType } = useAppStore();
+  const { loaded, lastFocusedIndex, setLastFocusedIndex, lastScrollPosition, setLastScrollPosition } = useHomeStore();
+  const { transitionType, transitioning, setTransitioning, setTransitionType, isMobile } = useAppStore();
   const [focusedIndex, setFocusedIndex] = useState(lastFocusedIndex ?? 0)
   const [imageHeight, setImageHeight] = useState(0);
   const scroll = useRef({ target: lastScrollPosition, current: lastScrollPosition });
@@ -40,7 +39,6 @@ const Hero = ({ projects, site }) => {
   const activeIndex = useRef(lastFocusedIndex);
   const windowSize = useWindowSize();
   const touchStart = useRef(0);
-  const isMobile = useIsMobile();
 
   const handleProjectChange = (index) => {
     if (transitioning) return;

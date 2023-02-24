@@ -6,7 +6,6 @@ import { useAppStore } from "@hooks/useAppStore";
 import { useProjectStore } from "@hooks/useProjectStore";
 import { getImageDimensions } from "@sanity/asset-utils";
 import { GRID_BREAKPOINTS } from "@lib/constants";
-import { useIsMobile } from "@hooks/useIsMobile";
 import { useWindowSize } from "@hooks/useWindowSize";
 import styled from 'styled-components';
 import css from '@styled-system/css'
@@ -64,11 +63,10 @@ const GridWrapper = styled(Box)`
 
 const ProjectGrid = ({ projects, category }) => {
   const selectedProjectPosition = useRef(null);
-  const { setTransitionType } = useAppStore();
+  const { setTransitionType, isMobile } = useAppStore();
   const { setScale, setActiveProject, activeProject } = useProjectStore();
   const { indices, updateIndices, clearIndices } = useAdjacentGridItem(GRID_BREAKPOINTS);
   const { width, height } = useWindowSize();
-  const isMobile = useIsMobile();
   const router = useRouter();
 
   const filteredProjects = category === 'all'
