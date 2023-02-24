@@ -21,12 +21,12 @@ const OverviewContainer = styled(motion.div)`
 `
 
 const StyledOverview = styled(motion.div)`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100vh;
-  min-height: calc(var(--vh, 1vh) * 100);
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background: white;
   color: black;
   z-index: 100;
@@ -87,56 +87,58 @@ export const Overview = ({ title, images, credits, close, isOpen, setActiveIndex
             ref={container}
             key="overview"
           >
-            <Title>{title}</Title>
-            {images ? <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
-              <Masonry gutter="20px">
-                {images.map((image, index) => {
-                  const url = urlFor(image).width(600).quality(90).auto('format').url();
-                  const dimensions = getImageDimensions(image)
-                  const lqip = image.lqip;
-                  return (
-                    <Box key={url} onClick={() => setActiveIndex(index)}>
-                      <Box
-                        position="relative"
-                        width="100%"
-                        height="0"
-                        pb={`${(dimensions.height / dimensions.width) * 100}%`}
-                      >
-                        <Box>
-                          <Image
-                            src={url}
-                            placeholder="blur"
-                            blurDataURL={lqip}
-                            layout="fill"
-                            objectFit="cover"
-                            alt={image.alt}
-                            loading="lazy"
-                            sizes="(max-width: 300px) 100vw, (max-width: 500px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                          />
+            <div>
+              <Title>{title}</Title>
+              {images ? <ResponsiveMasonry columnsCountBreakPoints={GRID_BREAKPOINTS}>
+                <Masonry gutter="20px">
+                  {images.map((image, index) => {
+                    const url = urlFor(image).width(600).quality(90).auto('format').url();
+                    const dimensions = getImageDimensions(image)
+                    const lqip = image.lqip;
+                    return (
+                      <Box key={url} onClick={() => setActiveIndex(index)}>
+                        <Box
+                          position="relative"
+                          width="100%"
+                          height="0"
+                          pb={`${(dimensions.height / dimensions.width) * 100}%`}
+                        >
+                          <Box>
+                            <Image
+                              src={url}
+                              placeholder="blur"
+                              blurDataURL={lqip}
+                              layout="fill"
+                              objectFit="cover"
+                              alt={image.alt}
+                              loading="lazy"
+                              sizes="(max-width: 300px) 100vw, (max-width: 500px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                            />
+                          </Box>
                         </Box>
                       </Box>
-                    </Box>
-                  )
-                })}
-              </Masonry>
-            </ResponsiveMasonry> : null}
-            {credits && <Box pt="100px" lineHeight="98%" letterSpacing="-0.015em">
-              <div>Credits</div>
-              <Box pt="34px">
-                {credits.map(credit => {
-                  return (
-                    <Box key={credit._key}>
-                      <span>{credit.title} </span>
-                      {credit.name?.map((item, index) => {
-                        return (
-                          <span key={item._key}>{item.name}{`${index < credit.name.length - 1 ? ', ' : ''}`}</span>
-                        )
-                      })}
-                    </Box>
-                  )
-                })}
-              </Box>
-            </Box>}
+                    )
+                  })}
+                </Masonry>
+              </ResponsiveMasonry> : null}
+              {credits && <Box pt="100px" lineHeight="98%" letterSpacing="-0.015em">
+                <div>Credits</div>
+                <Box pt="34px">
+                  {credits.map(credit => {
+                    return (
+                      <Box key={credit._key}>
+                        <span>{credit.title} </span>
+                        {credit.name?.map((item, index) => {
+                          return (
+                            <span key={item._key}>{item.name}{`${index < credit.name.length - 1 ? ', ' : ''}`}</span>
+                          )
+                        })}
+                      </Box>
+                    )
+                  })}
+                </Box>
+              </Box>}
+            </div>
           </StyledOverview>
         </OverviewContainer>
       </> : null}
