@@ -105,6 +105,7 @@ const Loading = ({ projects, site }) => {
                   objectFit="cover"
                   alt={project.image.alt}
                   loading="eager"
+                  unoptimized={true}
                 />
               </Box>
               <Box
