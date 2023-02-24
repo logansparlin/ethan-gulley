@@ -153,7 +153,7 @@ const Hero = ({ projects, site }) => {
                           layout="fill"
                           objectFit={"cover"}
                           alt={project.image?.alt ?? ""}
-                          priority={true}
+                          priority={index === firstIndex}
                         />
                       </StyledImage>
                       <StyledTitle
