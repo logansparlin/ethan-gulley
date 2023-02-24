@@ -212,7 +212,7 @@ export const ProjectPage = ({ data }) => {
                   position="absolute"
                   top="0"
                   left={[0, null, "15vw"]}
-                  initial={{ scale: transitionType === 'list' || isMobile ? 1 : scale }}
+                  initial={{ scale: transitionType === 'list' || transitionType === 'project' || isMobile ? 1 : scale }}
                   animate={{
                     x: projectTransition ? x : 0,
                     scale: projectTransition ? getTransitionScale(dimensions.width, dimensions.height) : 1,
