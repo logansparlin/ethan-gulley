@@ -82,7 +82,7 @@ const Loading = ({ projects, site }) => {
       </StyledHeaderOverlay>
       <Box flex="1" width="100%" position="relative" height="100%" display="flex" alignItems={["flex-start", null, "center"]} justifyContent={["flex-start", null, "center"]} top="45px">
         {projects.map((project, index) => {
-          const url = urlFor(project.image.src).auto('format').dpr(2).width(300).quality(90).url();
+          const url = urlFor(project.image.src).auto('format').dpr(3).width(300).quality(90).url();
           const dimensions = getImageDimensions(project.image.src);
           const aspect = dimensions.height / dimensions.width;
           return (
